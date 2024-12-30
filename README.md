@@ -30,12 +30,9 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const createDatasetResponse = await client.datasets.create({
-    dataset_name: 'x',
-    file: fs.createReadStream('path/to/file'),
-  });
+  const evaluateResponse = await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] });
 
-  console.log(createDatasetResponse.dataset_id);
+  console.log(evaluateResponse.results);
 }
 
 main();
@@ -54,11 +51,8 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const params: PatronusAPI.DatasetCreateParams = {
-    dataset_name: 'x',
-    file: fs.createReadStream('path/to/file'),
-  };
-  const createDatasetResponse: PatronusAPI.CreateDatasetResponse = await client.datasets.create(params);
+  const params: PatronusAPI.EvaluationEvaluateParams = { evaluators: [{ evaluator: 'evaluator' }] };
+  const evaluateResponse: PatronusAPI.EvaluateResponse = await client.evaluations.evaluate(params);
 }
 
 main();
@@ -75,8 +69,8 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const createDatasetResponse = await client.datasets
-    .create({ dataset_name: 'x', file: fs.createReadStream('path/to/file') })
+  const evaluateResponse = await client.evaluations
+    .evaluate({ evaluators: [{ evaluator: 'evaluator' }] })
     .catch(async (err) => {
       if (err instanceof PatronusAPI.APIError) {
         console.log(err.status); // 400
@@ -120,7 +114,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.datasets.create({ dataset_name: 'x', file: fs.createReadStream('path/to/file') }, {
+await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
   maxRetries: 5,
 });
 ```
@@ -137,7 +131,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.datasets.create({ dataset_name: 'x', file: fs.createReadStream('path/to/file') }, {
+await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -158,17 +152,15 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new PatronusAPI();
 
-const response = await client.datasets
-  .create({ dataset_name: 'x', file: fs.createReadStream('path/to/file') })
-  .asResponse();
+const response = await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: createDatasetResponse, response: raw } = await client.datasets
-  .create({ dataset_name: 'x', file: fs.createReadStream('path/to/file') })
+const { data: evaluateResponse, response: raw } = await client.evaluations
+  .evaluate({ evaluators: [{ evaluator: 'evaluator' }] })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(createDatasetResponse.dataset_id);
+console.log(evaluateResponse.results);
 ```
 
 ### Making custom/undocumented requests
@@ -272,8 +264,8 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.datasets.create(
-  { dataset_name: 'x', file: fs.createReadStream('path/to/file') },
+await client.evaluations.evaluate(
+  { evaluators: [{ evaluator: 'evaluator' }] },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
