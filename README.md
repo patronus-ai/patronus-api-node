@@ -30,7 +30,12 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const evaluateResponse = await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] });
+  const evaluateResponse = await client.evaluations.evaluate({
+    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
+    evaluated_model_input: 'What is the largest animal in the world?',
+    evaluated_model_output: 'The giant sandworm.',
+    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
+  });
 
   console.log(evaluateResponse.results);
 }
@@ -51,7 +56,12 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const params: PatronusAPI.EvaluationEvaluateParams = { evaluators: [{ evaluator: 'evaluator' }] };
+  const params: PatronusAPI.EvaluationEvaluateParams = {
+    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
+    evaluated_model_input: 'What is the largest animal in the world?',
+    evaluated_model_output: 'The giant sandworm.',
+    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
+  };
   const evaluateResponse: PatronusAPI.EvaluateResponse = await client.evaluations.evaluate(params);
 }
 
@@ -70,7 +80,12 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const evaluateResponse = await client.evaluations
-    .evaluate({ evaluators: [{ evaluator: 'evaluator' }] })
+    .evaluate({
+      evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
+      evaluated_model_input: 'What is the largest animal in the world?',
+      evaluated_model_output: 'The giant sandworm.',
+      evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
+    })
     .catch(async (err) => {
       if (err instanceof PatronusAPI.APIError) {
         console.log(err.status); // 400
@@ -114,7 +129,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
+await client.evaluations.evaluate({ evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }], evaluated_model_input: 'What is the largest animal in the world?', evaluated_model_output: 'The giant sandworm.', evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'] }, {
   maxRetries: 5,
 });
 ```
@@ -131,7 +146,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
+await client.evaluations.evaluate({ evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }], evaluated_model_input: 'What is the largest animal in the world?', evaluated_model_output: 'The giant sandworm.', evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -152,12 +167,24 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new PatronusAPI();
 
-const response = await client.evaluations.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }).asResponse();
+const response = await client.evaluations
+  .evaluate({
+    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
+    evaluated_model_input: 'What is the largest animal in the world?',
+    evaluated_model_output: 'The giant sandworm.',
+    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
+  })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: evaluateResponse, response: raw } = await client.evaluations
-  .evaluate({ evaluators: [{ evaluator: 'evaluator' }] })
+  .evaluate({
+    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
+    evaluated_model_input: 'What is the largest animal in the world?',
+    evaluated_model_output: 'The giant sandworm.',
+    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(evaluateResponse.results);
@@ -265,7 +292,12 @@ const client = new PatronusAPI({
 
 // Override per-request:
 await client.evaluations.evaluate(
-  { evaluators: [{ evaluator: 'evaluator' }] },
+  {
+    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
+    evaluated_model_input: 'What is the largest animal in the world?',
+    evaluated_model_output: 'The giant sandworm.',
+    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
+  },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
