@@ -29,7 +29,7 @@ describe('resource evaluationResults', () => {
 
   test('batchCreate: only required params', async () => {
     const responsePromise = client.evaluationResults.batchCreate({
-      evaluation_results: [{ evaluator_id: 'x' }],
+      evaluation_results: [{ evaluator_id: 'evaluator_id' }],
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -44,9 +44,9 @@ describe('resource evaluationResults', () => {
     const response = await client.evaluationResults.batchCreate({
       evaluation_results: [
         {
-          evaluator_id: 'x',
-          app: 'xx',
-          criteria: 'x',
+          evaluator_id: 'evaluator_id',
+          app: 'app',
+          criteria: 'criteria',
           dataset_id: 'dataset_id',
           dataset_sample_id: 0,
           evaluated_model_attachments: [{ media_type: 'media_type', url: 'url', usage_type: 'usage_type' }],
@@ -65,7 +65,7 @@ describe('resource evaluationResults', () => {
           explanation: 'explanation',
           explanation_duration: 'explanation_duration',
           pass: true,
-          profile_name: 'x',
+          profile_name: 'profile_name',
           score_raw: 0,
           tags: {},
           text_output: 'text_output',
