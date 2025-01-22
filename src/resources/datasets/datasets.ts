@@ -7,12 +7,12 @@ import * as CsvAPI from './csv';
 import { Csv, CsvRetrieveResponse } from './csv';
 import * as DataAPI from './data';
 import { Data, ListDatasetDataResponse } from './data';
-import * as JsonlAPI from './jsonl';
-import { Jsonl, JsonlRetrieveResponse } from './jsonl';
+import * as JSONLAPI from './jsonl';
+import { JSONL, JSONLRetrieveResponse } from './jsonl';
 
 export class Datasets extends APIResource {
   data: DataAPI.Data = new DataAPI.Data(this._client);
-  jsonl: JsonlAPI.Jsonl = new JsonlAPI.Jsonl(this._client);
+  jsonl: JSONLAPI.JSONL = new JSONLAPI.JSONL(this._client);
   csv: CsvAPI.Csv = new CsvAPI.Csv(this._client);
 
   /**
@@ -484,7 +484,7 @@ export interface DatasetListParams {
 }
 
 Datasets.Data = Data;
-Datasets.Jsonl = Jsonl;
+Datasets.JSONL = JSONL;
 Datasets.Csv = Csv;
 
 export declare namespace Datasets {
@@ -500,7 +500,7 @@ export declare namespace Datasets {
 
   export { Data as Data, type ListDatasetDataResponse as ListDatasetDataResponse };
 
-  export { Jsonl as Jsonl, type JsonlRetrieveResponse as JsonlRetrieveResponse };
+  export { JSONL as JSONL, type JSONLRetrieveResponse as JSONLRetrieveResponse };
 
   export { Csv as Csv, type CsvRetrieveResponse as CsvRetrieveResponse };
 }

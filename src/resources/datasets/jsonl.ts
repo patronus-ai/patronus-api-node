@@ -3,7 +3,7 @@
 import { APIResource } from '../../resource';
 import * as Core from '../../core';
 
-export class Jsonl extends APIResource {
+export class JSONL extends APIResource {
   /**
    * Download Dataset Jsonl
    */
@@ -12,8 +12,8 @@ export class Jsonl extends APIResource {
   }
 }
 
-export type JsonlRetrieveResponse = unknown;
+export type JSONLRetrieveResponse = unknown;
 
-export declare namespace Jsonl {
-  export { type JsonlRetrieveResponse as JsonlRetrieveResponse };
+export declare namespace JSONL {
+  export { type JSONLRetrieveResponse as JSONLRetrieveResponse };
 }
