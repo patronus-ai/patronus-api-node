@@ -25,11 +25,11 @@ Methods:
 
 - <code title="get /v1/datasets/{id}/data">client.datasets.data.<a href="./src/resources/datasets/data.ts">retrieve</a>(id) -> ListDatasetDataResponse</code>
 
-## Jsonl
+## JSONL
 
 Types:
 
-- <code><a href="./src/resources/datasets/jsonl.ts">JsonlRetrieveResponse</a></code>
+- <code><a href="./src/resources/datasets/jsonl.ts">JSONLRetrieveResponse</a></code>
 
 Methods:
 

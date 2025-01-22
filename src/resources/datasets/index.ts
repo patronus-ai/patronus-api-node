@@ -12,4 +12,4 @@ export {
   type DatasetUpdateParams,
   type DatasetListParams,
 } from './datasets';
-export { Jsonl, type JsonlRetrieveResponse } from './jsonl';
+export { JSONL, type JSONLRetrieveResponse } from './jsonl';
