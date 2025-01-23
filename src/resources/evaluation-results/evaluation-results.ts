@@ -418,7 +418,7 @@ export namespace EvaluationResultBatchCreateParams {
     pass?: boolean | null;
 
     /**
-     * @deprecated: profile_name is deprecated. Please use 'criteria' field instead.
+     * @deprecated profile_name is deprecated. Please use 'criteria' field instead.
      */
     profile_name?: string | null;
 

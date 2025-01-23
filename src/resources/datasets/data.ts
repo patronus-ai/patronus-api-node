@@ -31,7 +31,7 @@ export namespace ListDatasetDataResponse {
     evaluated_model_system_prompt: string | null;
 
     /**
-     * @deprecated: The field is deprecated. Please use evaluated_model_gold_answer
+     * @deprecated The field is deprecated. Please use evaluated_model_gold_answer
      * instead.
      */
     label: string | null;
@@ -47,7 +47,7 @@ export namespace ListDatasetDataResponse {
     sid: number;
 
     /**
-     * @deprecated: The field is deprecated. Please use evaluated_model_input instead.
+     * @deprecated The field is deprecated. Please use evaluated_model_input instead.
      */
     text: string | null;
   }
