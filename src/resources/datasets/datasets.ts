@@ -143,7 +143,7 @@ export namespace CreateDatasetResponse {
     created_at: string;
 
     /**
-     * @deprecated: The date when the dataset was created. This field is deprecated.
+     * @deprecated The date when the dataset was created. This field is deprecated.
      * Please use 'created_at' instead.
      */
     creation_date: string;
@@ -224,7 +224,7 @@ export namespace GetDatasetsResponse {
     created_at: string;
 
     /**
-     * @deprecated: The date when the dataset was created. This field is deprecated.
+     * @deprecated The date when the dataset was created. This field is deprecated.
      * Please use 'created_at' instead.
      */
     creation_date: string;
@@ -305,7 +305,7 @@ export namespace ListDatasetsResponse {
     created_at: string;
 
     /**
-     * @deprecated: The date when the dataset was created. This field is deprecated.
+     * @deprecated The date when the dataset was created. This field is deprecated.
      * Please use 'created_at' instead.
      */
     creation_date: string;
@@ -396,7 +396,7 @@ export namespace UpdateDatasetResponse {
     created_at: string;
 
     /**
-     * @deprecated: The date when the dataset was created. This field is deprecated.
+     * @deprecated The date when the dataset was created. This field is deprecated.
      * Please use 'created_at' instead.
      */
     creation_date: string;
