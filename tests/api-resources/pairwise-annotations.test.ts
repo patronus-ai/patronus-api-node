@@ -60,7 +60,7 @@ describe('resource pairwiseAnnotations', () => {
       client.pairwiseAnnotations.list(
         {
           experiment_id: [0],
-          limit: 0,
+          limit: 1000,
           log_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           name: 'name',
           offset: 0,
