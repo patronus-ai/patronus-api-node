@@ -33,8 +33,6 @@ import {
 } from './resources/annotation-criteria';
 import {
   Dataset,
-  DatasetDownloadCsvResponse,
-  DatasetDownloadJSONLResponse,
   DatasetHasValues,
   DatasetListDataResponse,
   DatasetListParams,
@@ -348,8 +346,6 @@ export declare namespace PatronusAPI {
     type DatasetRetrieveResponse as DatasetRetrieveResponse,
     type DatasetUpdateResponse as DatasetUpdateResponse,
     type DatasetListResponse as DatasetListResponse,
-    type DatasetDownloadCsvResponse as DatasetDownloadCsvResponse,
-    type DatasetDownloadJSONLResponse as DatasetDownloadJSONLResponse,
     type DatasetListDataResponse as DatasetListDataResponse,
     type DatasetUploadResponse as DatasetUploadResponse,
     type DatasetUpdateParams as DatasetUpdateParams,

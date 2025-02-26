@@ -36,7 +36,7 @@ export namespace AnnotateResponse {
 
     annotation_criteria_id?: string | null;
 
-    criteria_config?: unknown | null;
+    criteria_config?: Record<string, unknown> | null;
 
     criteria_revision?: number | null;
 
@@ -44,7 +44,7 @@ export namespace AnnotateResponse {
 
     evaluation_type?: string | null;
 
-    metadata?: unknown | null;
+    metadata?: Record<string, unknown> | null;
 
     metric_description?: string | null;
 
@@ -52,7 +52,7 @@ export namespace AnnotateResponse {
 
     pass?: boolean | null;
 
-    usage?: unknown | null;
+    usage?: Record<string, unknown> | null;
   }
 }
 
@@ -97,7 +97,7 @@ export namespace ListEvaluatorFamiliesResponse {
 
     optional_input_fields: Array<string>;
 
-    profile_config_schema: unknown | null;
+    profile_config_schema: Record<string, unknown> | null;
 
     required_input_fields: Array<string>;
   }
@@ -334,7 +334,7 @@ export interface EvaluateParams {
   /**
    * Tags are key-value pairs used to label resources
    */
-  tags?: unknown;
+  tags?: Record<string, string>;
 
   trace_id?: string | null;
 }

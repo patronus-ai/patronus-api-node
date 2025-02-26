@@ -29,7 +29,7 @@ describe('resource experiments', () => {
     const response = await client.experiments.create({
       name: 'x',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      tags: {},
+      tags: { foo: '._' },
     });
   });
 
