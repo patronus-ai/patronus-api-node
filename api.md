@@ -85,20 +85,6 @@ Methods:
 
 # EvaluatorProfiles
 
-Types:
-
-- <code><a href="./src/resources/evaluator-profiles.ts">AddEvaluatorProfileRevision</a></code>
-- <code><a href="./src/resources/evaluator-profiles.ts">ArchiveEvaluatorProfileResponse</a></code>
-- <code><a href="./src/resources/evaluator-profiles.ts">CreateEvaluatorProfileResponse</a></code>
-- <code><a href="./src/resources/evaluator-profiles.ts">ListEvaluatorProfilesResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/evaluator-profiles">client.evaluatorProfiles.<a href="./src/resources/evaluator-profiles.ts">create</a>({ ...params }) -> CreateEvaluatorProfileResponse</code>
-- <code title="get /v1/evaluator-profiles">client.evaluatorProfiles.<a href="./src/resources/evaluator-profiles.ts">list</a>({ ...params }) -> ListEvaluatorProfilesResponse</code>
-- <code title="patch /v1/evaluator-profiles/{public_id}/archive">client.evaluatorProfiles.<a href="./src/resources/evaluator-profiles.ts">archive</a>(publicId) -> ArchiveEvaluatorProfileResponse</code>
-- <code title="post /v1/evaluator-profiles/{public_id}/revision">client.evaluatorProfiles.<a href="./src/resources/evaluator-profiles.ts">revision</a>(publicId, { ...params }) -> AddEvaluatorProfileRevision</code>
-
 # EvaluatorCriteria
 
 Types:
@@ -139,17 +125,6 @@ Methods:
 - <code title="delete /v1/experiments/{id}">client.experiments.<a href="./src/resources/experiments.ts">delete</a>(id) -> void</code>
 
 # Feedback
-
-Types:
-
-- <code><a href="./src/resources/feedback.ts">CreateFeedbackResponse</a></code>
-- <code><a href="./src/resources/feedback.ts">ListFeedbackResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/feedback">client.feedback.<a href="./src/resources/feedback.ts">retrieve</a>({ ...params }) -> ListFeedbackResponse</code>
-- <code title="delete /v1/feedback/{id}">client.feedback.<a href="./src/resources/feedback.ts">delete</a>(id) -> void</code>
-- <code title="post /v1/feedback">client.feedback.<a href="./src/resources/feedback.ts">give</a>({ ...params }) -> CreateFeedbackResponse</code>
 
 # Projects
 

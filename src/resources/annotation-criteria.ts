@@ -63,169 +63,41 @@ export class AnnotationCriteria extends APIResource {
 }
 
 export interface CreateAnnotationCriteriaResponse {
-  annotation_criteria: CreateAnnotationCriteriaResponse.AnnotationCriteria;
-}
-
-export namespace CreateAnnotationCriteriaResponse {
-  export interface AnnotationCriteria {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriteria.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriteria {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
+  annotation_criteria: unknown;
 }
 
 export interface GetAnnotationCriteriaResponse {
-  annotation_criteria: GetAnnotationCriteriaResponse.AnnotationCriteria;
-}
-
-export namespace GetAnnotationCriteriaResponse {
-  export interface AnnotationCriteria {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriteria.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriteria {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
+  annotation_criteria: unknown;
 }
 
 export interface ListAnnotationCriteriaResponse {
-  annotation_criteria: Array<ListAnnotationCriteriaResponse.AnnotationCriterion>;
-}
-
-export namespace ListAnnotationCriteriaResponse {
-  export interface AnnotationCriterion {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriterion.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriterion {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
+  annotation_criteria: Array<unknown>;
 }
 
 export interface UpdateAnnotationCriteriaResponse {
-  annotation_criteria: UpdateAnnotationCriteriaResponse.AnnotationCriteria;
-}
-
-export namespace UpdateAnnotationCriteriaResponse {
-  export interface AnnotationCriteria {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriteria.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriteria {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
+  annotation_criteria: unknown;
 }
 
 export interface AnnotationCriterionCreateParams {
-  annotation_type: 'binary' | 'continuous' | 'discrete' | 'categorical' | 'text_annotation';
+  annotation_type: unknown;
 
   name: string;
 
   project_id: string;
 
-  categories?: Array<AnnotationCriterionCreateParams.Category> | null;
+  categories?: Array<unknown> | null;
 
   description?: string | null;
-}
-
-export namespace AnnotationCriterionCreateParams {
-  export interface Category {
-    label?: string | null;
-
-    score?: number | null;
-  }
 }
 
 export interface AnnotationCriterionUpdateParams {
-  annotation_type: 'binary' | 'continuous' | 'discrete' | 'categorical' | 'text_annotation';
+  annotation_type: unknown;
 
   name: string;
 
-  categories?: Array<AnnotationCriterionUpdateParams.Category> | null;
+  categories?: Array<unknown> | null;
 
   description?: string | null;
-}
-
-export namespace AnnotationCriterionUpdateParams {
-  export interface Category {
-    label?: string | null;
-
-    score?: number | null;
-  }
 }
 
 export interface AnnotationCriterionListParams {

@@ -11,7 +11,7 @@ const client = new PatronusAPI({
 describe('resource annotationCriteria', () => {
   test('create: only required params', async () => {
     const responsePromise = client.annotationCriteria.create({
-      annotation_type: 'binary',
+      annotation_type: {},
       name: 'x',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
     });
@@ -26,10 +26,10 @@ describe('resource annotationCriteria', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.annotationCriteria.create({
-      annotation_type: 'binary',
+      annotation_type: {},
       name: 'x',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
-      categories: [{ label: 'x', score: 0 }],
+      categories: [{}],
       description: 'description',
     });
   });
@@ -56,7 +56,7 @@ describe('resource annotationCriteria', () => {
 
   test('update: only required params', async () => {
     const responsePromise = client.annotationCriteria.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      annotation_type: 'binary',
+      annotation_type: {},
       name: 'x',
     });
     const rawResponse = await responsePromise.asResponse();
@@ -70,9 +70,9 @@ describe('resource annotationCriteria', () => {
 
   test('update: required and optional params', async () => {
     const response = await client.annotationCriteria.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      annotation_type: 'binary',
+      annotation_type: {},
       name: 'x',
-      categories: [{ label: 'x', score: 0 }],
+      categories: [{}],
       description: 'description',
     });
   });

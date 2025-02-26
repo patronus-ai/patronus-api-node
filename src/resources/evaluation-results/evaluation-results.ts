@@ -85,362 +85,19 @@ export class EvaluationResults extends APIResource {
 }
 
 export interface CreateEvaluationResultsBatchResponse {
-  evaluation_results: Array<CreateEvaluationResultsBatchResponse.EvaluationResult>;
-}
-
-export namespace CreateEvaluationResultsBatchResponse {
-  export interface EvaluationResult {
-    id: string | null;
-
-    app: string | null;
-
-    created_at: string | null;
-
-    evaluator_id: string;
-  }
+  evaluation_results: Array<unknown>;
 }
 
 export interface EvaluateResultSearchResponse {
-  results: Array<EvaluateResultSearchResponse.Result>;
-}
-
-export namespace EvaluateResultSearchResponse {
-  export interface Result {
-    id: string | null;
-
-    additional_info: Result.AdditionalInfo;
-
-    app: string | null;
-
-    created_at: string | null;
-
-    criteria: string | null;
-
-    dataset_id: string | null;
-
-    dataset_sample_id: number | null;
-
-    evaluated_model_gold_answer: string | null;
-
-    evaluated_model_id: string | null;
-
-    evaluated_model_input: string | null;
-
-    evaluated_model_name: string | null;
-
-    evaluated_model_output: string | null;
-
-    evaluated_model_params: unknown | null;
-
-    evaluated_model_provider: string | null;
-
-    evaluated_model_retrieved_context: Array<string> | null;
-
-    evaluated_model_selected_model: string | null;
-
-    evaluated_model_system_prompt: string | null;
-
-    evaluation_duration: string | null;
-
-    evaluation_feedback: boolean | null;
-
-    evaluation_run_id: number | null;
-
-    evaluator_family: string | null;
-
-    evaluator_id: string | null;
-
-    evaluator_profile_public_id: string | null;
-
-    experiment_id: string | null;
-
-    explain_strategy: 'never' | 'on-fail' | 'on-success' | 'always' | null;
-
-    explanation: string | null;
-
-    explanation_duration: string | null;
-
-    external: boolean;
-
-    favorite: boolean | null;
-
-    log_id: string | null;
-
-    profile_name: string | null;
-
-    project_id: string | null;
-
-    tags: Record<string, string> | null;
-
-    annotation_criteria_id?: string | null;
-
-    evaluated_model_attachments?: Array<Result.EvaluatedModelAttachment> | null;
-
-    evaluation_metadata?: unknown | null;
-
-    evaluation_type?: string | null;
-
-    metric_description?: string | null;
-
-    metric_name?: string | null;
-
-    pass?: boolean | null;
-
-    score_raw?: number | null;
-
-    text_output?: string | null;
-
-    usage_tokens?: number | null;
-  }
-
-  export namespace Result {
-    export interface AdditionalInfo {
-      confidence_interval: AdditionalInfo.ConfidenceInterval | null;
-
-      extra: unknown | null;
-
-      positions?: Array<unknown> | null;
-    }
-
-    export namespace AdditionalInfo {
-      export interface ConfidenceInterval {
-        alpha: number;
-
-        lower: number | null;
-
-        median: number | null;
-
-        strategy: string;
-
-        upper: number | null;
-      }
-    }
-
-    export interface EvaluatedModelAttachment {
-      media_type: string;
-
-      url: string;
-
-      usage_type: string;
-    }
-  }
+  results: Array<unknown>;
 }
 
 export interface GetEvaluationResult {
-  evaluation_result: GetEvaluationResult.EvaluationResult;
-}
-
-export namespace GetEvaluationResult {
-  export interface EvaluationResult {
-    id: string | null;
-
-    additional_info: EvaluationResult.AdditionalInfo;
-
-    app: string | null;
-
-    created_at: string | null;
-
-    criteria: string | null;
-
-    dataset_id: string | null;
-
-    dataset_sample_id: number | null;
-
-    evaluated_model_gold_answer: string | null;
-
-    evaluated_model_id: string | null;
-
-    evaluated_model_input: string | null;
-
-    evaluated_model_name: string | null;
-
-    evaluated_model_output: string | null;
-
-    evaluated_model_params: unknown | null;
-
-    evaluated_model_provider: string | null;
-
-    evaluated_model_retrieved_context: Array<string> | null;
-
-    evaluated_model_selected_model: string | null;
-
-    evaluated_model_system_prompt: string | null;
-
-    evaluation_duration: string | null;
-
-    evaluation_feedback: boolean | null;
-
-    evaluation_run_id: number | null;
-
-    evaluator_family: string | null;
-
-    evaluator_id: string | null;
-
-    evaluator_profile_public_id: string | null;
-
-    experiment_id: string | null;
-
-    explain_strategy: 'never' | 'on-fail' | 'on-success' | 'always' | null;
-
-    explanation: string | null;
-
-    explanation_duration: string | null;
-
-    external: boolean;
-
-    favorite: boolean | null;
-
-    log_id: string | null;
-
-    profile_name: string | null;
-
-    project_id: string | null;
-
-    tags: Record<string, string> | null;
-
-    annotation_criteria_id?: string | null;
-
-    evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
-
-    evaluation_metadata?: unknown | null;
-
-    evaluation_type?: string | null;
-
-    metric_description?: string | null;
-
-    metric_name?: string | null;
-
-    pass?: boolean | null;
-
-    score_raw?: number | null;
-
-    text_output?: string | null;
-
-    usage_tokens?: number | null;
-  }
-
-  export namespace EvaluationResult {
-    export interface AdditionalInfo {
-      confidence_interval: AdditionalInfo.ConfidenceInterval | null;
-
-      extra: unknown | null;
-
-      positions?: Array<unknown> | null;
-    }
-
-    export namespace AdditionalInfo {
-      export interface ConfidenceInterval {
-        alpha: number;
-
-        lower: number | null;
-
-        median: number | null;
-
-        strategy: string;
-
-        upper: number | null;
-      }
-    }
-
-    export interface EvaluatedModelAttachment {
-      media_type: string;
-
-      url: string;
-
-      usage_type: string;
-    }
-  }
+  evaluation_result: unknown;
 }
 
 export interface EvaluationResultBatchCreateParams {
-  evaluation_results: Array<EvaluationResultBatchCreateParams.EvaluationResult>;
-}
-
-export namespace EvaluationResultBatchCreateParams {
-  export interface EvaluationResult {
-    /**
-     * External evaluator identifier. 'external:' is prepended on the output.
-     */
-    evaluator_id: string;
-
-    /**
-     * Defaults to 'default' if `app` or `experiment_id` is not provided. Cannot be
-     * provided together with `experiment_id`.`
-     */
-    app?: string | null;
-
-    criteria?: string | null;
-
-    dataset_id?: string | null;
-
-    dataset_sample_id?: number | null;
-
-    evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
-
-    evaluated_model_gold_answer?: string | null;
-
-    evaluated_model_input?: string | null;
-
-    /**
-     * Name of the evaluated model. E.g. 'gpt-4o', 'my-assistant'.
-     */
-    evaluated_model_name?: string | null;
-
-    evaluated_model_output?: string | null;
-
-    evaluated_model_params?: Record<string, number | string | null> | null;
-
-    /**
-     * Provider of the evaluated model. E.g. 'OpenAI', 'PatronusAI' etc.
-     */
-    evaluated_model_provider?: string | null;
-
-    evaluated_model_retrieved_context?: Array<string> | null;
-
-    /**
-     * ID/name of the base-model used by evaluated model/assistant. E.g. 'gpt-4o',
-     * 'llama3' etc.
-     */
-    evaluated_model_selected_model?: string | null;
-
-    evaluated_model_system_prompt?: string | null;
-
-    evaluation_duration?: string | null;
-
-    evaluation_metadata?: unknown | null;
-
-    experiment_id?: string | null;
-
-    explanation?: string | null;
-
-    explanation_duration?: string | null;
-
-    pass?: boolean | null;
-
-    /**
-     * @deprecated profile_name is deprecated. Please use 'criteria' field instead.
-     */
-    profile_name?: string | null;
-
-    score_raw?: number | null;
-
-    /**
-     * Tags are key-value pairs used to label resources
-     */
-    tags?: unknown;
-
-    text_output?: string | null;
-  }
-
-  export namespace EvaluationResult {
-    export interface EvaluatedModelAttachment {
-      media_type: string;
-
-      url: string;
-
-      usage_type: string;
-    }
-  }
+  evaluation_results: Array<unknown>;
 }
 
 export interface EvaluationResultEvaluationFeedbackParams {
@@ -491,6 +148,8 @@ export interface EvaluationResultSearchParams {
    */
   evaluation_run_id?: string | null;
 
+  evaluation_type?: 'patronus_evaluation' | 'client_evaluation' | 'annotation' | null;
+
   /**
    * Filter by the evaluator family associated with the evaluation results.
    */
@@ -519,7 +178,7 @@ export interface EvaluationResultSearchParams {
   /**
    * Filter results by explain strategy.
    */
-  explain_strategy?: 'never' | 'on-fail' | 'on-success' | 'always' | null;
+  explain_strategy?: unknown;
 
   favorite?: boolean | null;
 
@@ -531,7 +190,7 @@ export interface EvaluationResultSearchParams {
   /**
    * Ordering option for the search results.
    */
-  order?: 'created_at' | '-created_at' | 'dataset_sample_id' | '-dataset_sample_id';
+  order?: unknown;
 
   /**
    * Filter results by those which pass or failed the evaluation.

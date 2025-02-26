@@ -20,16 +20,7 @@ import { AnnotateResponse, AnnotationAnnotateParams, Annotations } from './resou
 import { AppListParams, AppResponse, Apps } from './resources/apps';
 import { EvaluateResponse, EvaluationEvaluateParams, Evaluations } from './resources/evaluations';
 import { EvaluatorFamilies, ListEvaluatorFamilyResponse } from './resources/evaluator-families';
-import {
-  AddEvaluatorProfileRevision,
-  ArchiveEvaluatorProfileResponse,
-  CreateEvaluatorProfileResponse,
-  EvaluatorProfileCreateParams,
-  EvaluatorProfileListParams,
-  EvaluatorProfileRevisionParams,
-  EvaluatorProfiles,
-  ListEvaluatorProfilesResponse,
-} from './resources/evaluator-profiles';
+import { EvaluatorProfiles } from './resources/evaluator-profiles';
 import { Evaluators, ListEvaluatorsResponse } from './resources/evaluators';
 import {
   CreateExperimentResponse,
@@ -39,13 +30,7 @@ import {
   GetExperimentResponse,
   ListExperimentResponse,
 } from './resources/experiments';
-import {
-  CreateFeedbackResponse,
-  Feedback,
-  FeedbackGiveParams,
-  FeedbackRetrieveParams,
-  ListFeedbackResponse,
-} from './resources/feedback';
+import { Feedback } from './resources/feedback';
 import { Misc, WhoAmIResponse } from './resources/misc';
 import {
   CreatePairwiseAnnotationResponse,
@@ -307,16 +292,7 @@ export declare namespace PatronusAPI {
     type EvaluationResultSearchParams as EvaluationResultSearchParams,
   };
 
-  export {
-    EvaluatorProfiles as EvaluatorProfiles,
-    type AddEvaluatorProfileRevision as AddEvaluatorProfileRevision,
-    type ArchiveEvaluatorProfileResponse as ArchiveEvaluatorProfileResponse,
-    type CreateEvaluatorProfileResponse as CreateEvaluatorProfileResponse,
-    type ListEvaluatorProfilesResponse as ListEvaluatorProfilesResponse,
-    type EvaluatorProfileCreateParams as EvaluatorProfileCreateParams,
-    type EvaluatorProfileListParams as EvaluatorProfileListParams,
-    type EvaluatorProfileRevisionParams as EvaluatorProfileRevisionParams,
-  };
+  export { EvaluatorProfiles as EvaluatorProfiles };
 
   export {
     EvaluatorCriteria as EvaluatorCriteria,
@@ -336,13 +312,7 @@ export declare namespace PatronusAPI {
     type ExperimentListParams as ExperimentListParams,
   };
 
-  export {
-    Feedback as Feedback,
-    type CreateFeedbackResponse as CreateFeedbackResponse,
-    type ListFeedbackResponse as ListFeedbackResponse,
-    type FeedbackRetrieveParams as FeedbackRetrieveParams,
-    type FeedbackGiveParams as FeedbackGiveParams,
-  };
+  export { Feedback as Feedback };
 
   export {
     Projects as Projects,

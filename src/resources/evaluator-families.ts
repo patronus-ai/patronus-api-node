@@ -13,19 +13,7 @@ export class EvaluatorFamilies extends APIResource {
 }
 
 export interface ListEvaluatorFamilyResponse {
-  evaluator_families: Array<ListEvaluatorFamilyResponse.EvaluatorFamily>;
-}
-
-export namespace ListEvaluatorFamilyResponse {
-  export interface EvaluatorFamily {
-    family_name: string;
-
-    optional_input_fields: Array<string>;
-
-    profile_config_schema: unknown | null;
-
-    required_input_fields: Array<string>;
-  }
+  evaluator_families: Array<unknown>;
 }
 
 export declare namespace EvaluatorFamilies {
