@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { Csv, type CsvRetrieveResponse } from './csv';
+export { Csv } from './csv';
 export { Data, type ListDatasetDataResponse } from './data';
 export {
   Datasets,
@@ -12,4 +12,4 @@ export {
   type DatasetUpdateParams,
   type DatasetListParams,
 } from './datasets';
-export { JSONL, type JSONLRetrieveResponse } from './jsonl';
+export { JSONL } from './jsonl';

@@ -7,13 +7,10 @@ export class Csv extends APIResource {
   /**
    * Download Dataset Csv
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
-    return this._client.get(`/v1/datasets/${id}/csv`, options);
+  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.get(`/v1/datasets/${id}/csv`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
   }
-}
-
-export type CsvRetrieveResponse = unknown;
-
-export declare namespace Csv {
-  export { type CsvRetrieveResponse as CsvRetrieveResponse };
 }

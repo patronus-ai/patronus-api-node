@@ -4,11 +4,11 @@ import { APIResource } from '../../resource';
 import { isRequestOptions } from '../../core';
 import * as Core from '../../core';
 import * as CsvAPI from './csv';
-import { Csv, CsvRetrieveResponse } from './csv';
+import { Csv } from './csv';
 import * as DataAPI from './data';
 import { Data, ListDatasetDataResponse } from './data';
 import * as JSONLAPI from './jsonl';
-import { JSONL, JSONLRetrieveResponse } from './jsonl';
+import { JSONL } from './jsonl';
 
 export class Datasets extends APIResource {
   data: DataAPI.Data = new DataAPI.Data(this._client);
@@ -500,7 +500,7 @@ export declare namespace Datasets {
 
   export { Data as Data, type ListDatasetDataResponse as ListDatasetDataResponse };
 
-  export { JSONL as JSONL, type JSONLRetrieveResponse as JSONLRetrieveResponse };
+  export { JSONL as JSONL };
 
-  export { Csv as Csv, type CsvRetrieveResponse as CsvRetrieveResponse };
+  export { Csv as Csv };
 }
