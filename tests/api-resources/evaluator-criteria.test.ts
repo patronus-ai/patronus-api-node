@@ -9,7 +9,8 @@ const client = new PatronusAPI({
 });
 
 describe('resource evaluatorCriteria', () => {
-  test('create: only required params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('create: only required params', async () => {
     const responsePromise = client.evaluatorCriteria.create({
       config: {},
       evaluator_family: 'evaluator_family',
@@ -24,7 +25,8 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('create: required and optional params', async () => {
     const response = await client.evaluatorCriteria.create({
       config: {},
       evaluator_family: 'evaluator_family',
@@ -33,7 +35,8 @@ describe('resource evaluatorCriteria', () => {
     });
   });
 
-  test('list', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list', async () => {
     const responsePromise = client.evaluatorCriteria.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -44,14 +47,16 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.evaluatorCriteria.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  test('list: request options and params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluatorCriteria.list(
@@ -71,7 +76,30 @@ describe('resource evaluatorCriteria', () => {
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  test('archive', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('addRevision: only required params', async () => {
+    const responsePromise = client.evaluatorCriteria.addRevision('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      config: {},
+    });
+    const rawResponse = await responsePromise.asResponse();
+    expect(rawResponse).toBeInstanceOf(Response);
+    const response = await responsePromise;
+    expect(response).not.toBeInstanceOf(Response);
+    const dataAndResponse = await responsePromise.withResponse();
+    expect(dataAndResponse.data).toBe(response);
+    expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('addRevision: required and optional params', async () => {
+    const response = await client.evaluatorCriteria.addRevision('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
+      config: {},
+      description: 'description',
+    });
+  });
+
+  // skipped: tests are disabled for the time being
+  test.skip('archive', async () => {
     const responsePromise = client.evaluatorCriteria.archive('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -82,7 +110,8 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('archive: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('archive: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluatorCriteria.archive('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {

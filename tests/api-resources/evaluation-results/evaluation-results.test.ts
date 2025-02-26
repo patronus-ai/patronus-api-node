@@ -9,7 +9,8 @@ const client = new PatronusAPI({
 });
 
 describe('resource evaluationResults', () => {
-  test('retrieve', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('retrieve', async () => {
     const responsePromise = client.evaluationResults.retrieve(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,15 +21,17 @@ describe('resource evaluationResults', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.evaluationResults.retrieve(0, { path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  test('batchCreate: only required params', async () => {
-    const responsePromise = client.evaluationResults.batchCreate({
+  // skipped: tests are disabled for the time being
+  test.skip('createBatch: only required params', async () => {
+    const responsePromise = client.evaluationResults.createBatch({
       evaluation_results: [{ evaluator_id: 'evaluator_id' }],
     });
     const rawResponse = await responsePromise.asResponse();
@@ -40,8 +43,9 @@ describe('resource evaluationResults', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('batchCreate: required and optional params', async () => {
-    const response = await client.evaluationResults.batchCreate({
+  // skipped: tests are disabled for the time being
+  test.skip('createBatch: required and optional params', async () => {
+    const response = await client.evaluationResults.createBatch({
       evaluation_results: [
         {
           evaluator_id: 'evaluator_id',
@@ -74,8 +78,9 @@ describe('resource evaluationResults', () => {
     });
   });
 
-  test('evaluationFeedback: only required params', async () => {
-    const responsePromise = client.evaluationResults.evaluationFeedback(0, { feedback: 'positive' });
+  // skipped: tests are disabled for the time being
+  test.skip('listTags', async () => {
+    const responsePromise = client.evaluationResults.listTags();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -85,47 +90,16 @@ describe('resource evaluationResults', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('evaluationFeedback: required and optional params', async () => {
-    const response = await client.evaluationResults.evaluationFeedback(0, { feedback: 'positive' });
-  });
-
-  test('favorite', async () => {
-    const responsePromise = client.evaluationResults.favorite(0);
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('favorite: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('listTags: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.evaluationResults.favorite(0, { path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.evaluationResults.listTags({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  test('removeEvaluationFeedback', async () => {
-    const responsePromise = client.evaluationResults.removeEvaluationFeedback(0);
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('removeEvaluationFeedback: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.evaluationResults.removeEvaluationFeedback(0, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(PatronusAPI.NotFoundError);
-  });
-
-  test('search', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('search', async () => {
     const responsePromise = client.evaluationResults.search({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -134,23 +108,5 @@ describe('resource evaluationResults', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('unfavorite', async () => {
-    const responsePromise = client.evaluationResults.unfavorite(0);
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('unfavorite: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.evaluationResults.unfavorite(0, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 });

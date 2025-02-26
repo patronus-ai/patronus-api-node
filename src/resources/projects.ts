@@ -15,19 +15,19 @@ export class Projects extends APIResource {
   /**
    * Get Project
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<GetProjectResponse> {
+  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<ProjectRetrieveResponse> {
     return this._client.get(`/v1/projects/${id}`, options);
   }
 
   /**
    * List Projects
    */
-  list(query?: ProjectListParams, options?: Core.RequestOptions): Core.APIPromise<ListProjectsResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ListProjectsResponse>;
+  list(query?: ProjectListParams, options?: Core.RequestOptions): Core.APIPromise<ProjectListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<ProjectListResponse>;
   list(
     query: ProjectListParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<ListProjectsResponse> {
+  ): Core.APIPromise<ProjectListResponse> {
     if (isRequestOptions(query)) {
       return this.list({}, query);
     }
@@ -45,14 +45,6 @@ export class Projects extends APIResource {
   }
 }
 
-export interface GetProjectResponse {
-  project: Project;
-}
-
-export interface ListProjectsResponse {
-  projects: Array<Project>;
-}
-
 export interface Project {
   id: string;
 
@@ -64,6 +56,14 @@ export interface Project {
   created_by: string | null;
 
   name: string;
+}
+
+export interface ProjectRetrieveResponse {
+  project: Project;
+}
+
+export interface ProjectListResponse {
+  projects: Array<Project>;
 }
 
 export interface ProjectCreateParams {
@@ -78,9 +78,9 @@ export interface ProjectListParams {
 
 export declare namespace Projects {
   export {
-    type GetProjectResponse as GetProjectResponse,
-    type ListProjectsResponse as ListProjectsResponse,
     type Project as Project,
+    type ProjectRetrieveResponse as ProjectRetrieveResponse,
+    type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
   };

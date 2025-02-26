@@ -2,16 +2,21 @@
 
 import { APIResource } from '../../resource';
 import * as Core from '../../core';
-import * as TagsAPI from './tags';
-import { ListTagsResponse, Tags } from './tags';
+import * as EvaluationFeedbackAPI from './evaluation-feedback';
+import { EvaluationFeedback, EvaluationFeedbackSubmitParams } from './evaluation-feedback';
+import * as FavoriteAPI from './favorite';
+import { Favorite } from './favorite';
 
 export class EvaluationResults extends APIResource {
-  tags: TagsAPI.Tags = new TagsAPI.Tags(this._client);
+  favorite: FavoriteAPI.Favorite = new FavoriteAPI.Favorite(this._client);
+  evaluationFeedback: EvaluationFeedbackAPI.EvaluationFeedback = new EvaluationFeedbackAPI.EvaluationFeedback(
+    this._client,
+  );
 
   /**
    * Get Evaluation Result
    */
-  retrieve(id: number, options?: Core.RequestOptions): Core.APIPromise<GetEvaluationResult> {
+  retrieve(id: number, options?: Core.RequestOptions): Core.APIPromise<EvaluationResultRetrieveResponse> {
     return this._client.get(`/v1/evaluation-results/${id}`, options);
   }
 
@@ -21,46 +26,18 @@ export class EvaluationResults extends APIResource {
    *
    * The order of input evaluations is preserved in the output.
    */
-  batchCreate(
-    body: EvaluationResultBatchCreateParams,
+  createBatch(
+    body: EvaluationResultCreateBatchParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<CreateEvaluationResultsBatchResponse> {
+  ): Core.APIPromise<EvaluationResultCreateBatchResponse> {
     return this._client.post('/v1/evaluation-results/batch', { body, ...options });
   }
 
   /**
-   * Give Evaluation Feedback
+   * List Tags
    */
-  evaluationFeedback(
-    id: number,
-    body: EvaluationResultEvaluationFeedbackParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<void> {
-    return this._client.post(`/v1/evaluation-results/${id}/evaluation-feedback`, {
-      body,
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
-  }
-
-  /**
-   * Mark Favorite Evaluation Result
-   */
-  favorite(id: number, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.post(`/v1/evaluation-results/${id}/favorite`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
-  }
-
-  /**
-   * Delete Evaluation Feedback
-   */
-  removeEvaluationFeedback(id: number, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/v1/evaluation-results/${id}/evaluation-feedback`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
+  listTags(options?: Core.RequestOptions): Core.APIPromise<EvaluationResultListTagsResponse> {
+    return this._client.get('/v1/evaluation-results/tags', options);
   }
 
   /**
@@ -69,26 +46,144 @@ export class EvaluationResults extends APIResource {
   search(
     body: EvaluationResultSearchParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<EvaluateResultSearchResponse> {
+  ): Core.APIPromise<EvaluationResultSearchResponse> {
     return this._client.post('/v1/evaluation-results/search', { body, ...options });
   }
+}
 
-  /**
-   * Unmark Favorite Evaluation Result
-   */
-  unfavorite(id: number, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.delete(`/v1/evaluation-results/${id}/favorite`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
+export type EvaluationExplainStrategies = 'never' | 'on-fail' | 'on-success' | 'always';
+
+export interface EvaluationResult {
+  id: string | null;
+
+  additional_info: EvaluationResult.AdditionalInfo;
+
+  app: string | null;
+
+  created_at: string | null;
+
+  criteria: string | null;
+
+  criteria_revision: number | null;
+
+  dataset_id: string | null;
+
+  dataset_sample_id: number | null;
+
+  evaluated_model_gold_answer: string | null;
+
+  evaluated_model_id: string | null;
+
+  evaluated_model_input: string | null;
+
+  evaluated_model_name: string | null;
+
+  evaluated_model_output: string | null;
+
+  evaluated_model_params: unknown | null;
+
+  evaluated_model_provider: string | null;
+
+  evaluated_model_retrieved_context: Array<string> | null;
+
+  evaluated_model_selected_model: string | null;
+
+  evaluated_model_system_prompt: string | null;
+
+  evaluation_duration: string | null;
+
+  evaluation_feedback: boolean | null;
+
+  evaluation_run_id: number | null;
+
+  evaluator_family: string | null;
+
+  evaluator_id: string | null;
+
+  evaluator_profile_public_id: string | null;
+
+  experiment_id: string | null;
+
+  explain_strategy: EvaluationExplainStrategies | null;
+
+  explanation: string | null;
+
+  explanation_duration: string | null;
+
+  external: boolean;
+
+  favorite: boolean | null;
+
+  log_id: string | null;
+
+  profile_name: string | null;
+
+  project_id: string | null;
+
+  tags: Record<string, string> | null;
+
+  annotation_criteria_id?: string | null;
+
+  evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
+
+  evaluation_metadata?: unknown | null;
+
+  evaluation_type?: string | null;
+
+  metric_description?: string | null;
+
+  metric_name?: string | null;
+
+  pass?: boolean | null;
+
+  score_raw?: number | null;
+
+  text_output?: string | null;
+
+  usage_tokens?: number | null;
+}
+
+export namespace EvaluationResult {
+  export interface AdditionalInfo {
+    confidence_interval: AdditionalInfo.ConfidenceInterval | null;
+
+    extra: unknown | null;
+
+    positions?: Array<unknown> | null;
+  }
+
+  export namespace AdditionalInfo {
+    export interface ConfidenceInterval {
+      alpha: number;
+
+      lower: number | null;
+
+      median: number | null;
+
+      strategy: string;
+
+      upper: number | null;
+    }
+  }
+
+  export interface EvaluatedModelAttachment {
+    media_type: string;
+
+    url: string;
+
+    usage_type: string;
   }
 }
 
-export interface CreateEvaluationResultsBatchResponse {
-  evaluation_results: Array<CreateEvaluationResultsBatchResponse.EvaluationResult>;
+export interface EvaluationResultRetrieveResponse {
+  evaluation_result: EvaluationResult;
 }
 
-export namespace CreateEvaluationResultsBatchResponse {
+export interface EvaluationResultCreateBatchResponse {
+  evaluation_results: Array<EvaluationResultCreateBatchResponse.EvaluationResult>;
+}
+
+export namespace EvaluationResultCreateBatchResponse {
   export interface EvaluationResult {
     id: string | null;
 
@@ -100,267 +195,31 @@ export namespace CreateEvaluationResultsBatchResponse {
   }
 }
 
-export interface EvaluateResultSearchResponse {
-  results: Array<EvaluateResultSearchResponse.Result>;
+export interface EvaluationResultListTagsResponse {
+  tags: Array<EvaluationResultListTagsResponse.Tag>;
 }
 
-export namespace EvaluateResultSearchResponse {
-  export interface Result {
-    id: string | null;
+export namespace EvaluationResultListTagsResponse {
+  export interface Tag {
+    created_at: string;
 
-    additional_info: Result.AdditionalInfo;
+    key: string;
 
-    app: string | null;
+    last_used: string;
 
-    created_at: string | null;
-
-    criteria: string | null;
-
-    criteria_revision: number | null;
-
-    dataset_id: string | null;
-
-    dataset_sample_id: number | null;
-
-    evaluated_model_gold_answer: string | null;
-
-    evaluated_model_id: string | null;
-
-    evaluated_model_input: string | null;
-
-    evaluated_model_name: string | null;
-
-    evaluated_model_output: string | null;
-
-    evaluated_model_params: unknown | null;
-
-    evaluated_model_provider: string | null;
-
-    evaluated_model_retrieved_context: Array<string> | null;
-
-    evaluated_model_selected_model: string | null;
-
-    evaluated_model_system_prompt: string | null;
-
-    evaluation_duration: string | null;
-
-    evaluation_feedback: boolean | null;
-
-    evaluation_run_id: number | null;
-
-    evaluator_family: string | null;
-
-    evaluator_id: string | null;
-
-    evaluator_profile_public_id: string | null;
-
-    experiment_id: string | null;
-
-    explain_strategy: 'never' | 'on-fail' | 'on-success' | 'always' | null;
-
-    explanation: string | null;
-
-    explanation_duration: string | null;
-
-    external: boolean;
-
-    favorite: boolean | null;
-
-    log_id: string | null;
-
-    profile_name: string | null;
-
-    project_id: string | null;
-
-    tags: Record<string, string> | null;
-
-    annotation_criteria_id?: string | null;
-
-    evaluated_model_attachments?: Array<Result.EvaluatedModelAttachment> | null;
-
-    evaluation_metadata?: unknown | null;
-
-    evaluation_type?: string | null;
-
-    metric_description?: string | null;
-
-    metric_name?: string | null;
-
-    pass?: boolean | null;
-
-    score_raw?: number | null;
-
-    text_output?: string | null;
-
-    usage_tokens?: number | null;
-  }
-
-  export namespace Result {
-    export interface AdditionalInfo {
-      confidence_interval: AdditionalInfo.ConfidenceInterval | null;
-
-      extra: unknown | null;
-
-      positions?: Array<unknown> | null;
-    }
-
-    export namespace AdditionalInfo {
-      export interface ConfidenceInterval {
-        alpha: number;
-
-        lower: number | null;
-
-        median: number | null;
-
-        strategy: string;
-
-        upper: number | null;
-      }
-    }
-
-    export interface EvaluatedModelAttachment {
-      media_type: string;
-
-      url: string;
-
-      usage_type: string;
-    }
+    value: string;
   }
 }
 
-export interface GetEvaluationResult {
-  evaluation_result: GetEvaluationResult.EvaluationResult;
+export interface EvaluationResultSearchResponse {
+  results: Array<EvaluationResult>;
 }
 
-export namespace GetEvaluationResult {
-  export interface EvaluationResult {
-    id: string | null;
-
-    additional_info: EvaluationResult.AdditionalInfo;
-
-    app: string | null;
-
-    created_at: string | null;
-
-    criteria: string | null;
-
-    criteria_revision: number | null;
-
-    dataset_id: string | null;
-
-    dataset_sample_id: number | null;
-
-    evaluated_model_gold_answer: string | null;
-
-    evaluated_model_id: string | null;
-
-    evaluated_model_input: string | null;
-
-    evaluated_model_name: string | null;
-
-    evaluated_model_output: string | null;
-
-    evaluated_model_params: unknown | null;
-
-    evaluated_model_provider: string | null;
-
-    evaluated_model_retrieved_context: Array<string> | null;
-
-    evaluated_model_selected_model: string | null;
-
-    evaluated_model_system_prompt: string | null;
-
-    evaluation_duration: string | null;
-
-    evaluation_feedback: boolean | null;
-
-    evaluation_run_id: number | null;
-
-    evaluator_family: string | null;
-
-    evaluator_id: string | null;
-
-    evaluator_profile_public_id: string | null;
-
-    experiment_id: string | null;
-
-    explain_strategy: 'never' | 'on-fail' | 'on-success' | 'always' | null;
-
-    explanation: string | null;
-
-    explanation_duration: string | null;
-
-    external: boolean;
-
-    favorite: boolean | null;
-
-    log_id: string | null;
-
-    profile_name: string | null;
-
-    project_id: string | null;
-
-    tags: Record<string, string> | null;
-
-    annotation_criteria_id?: string | null;
-
-    evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
-
-    evaluation_metadata?: unknown | null;
-
-    evaluation_type?: string | null;
-
-    metric_description?: string | null;
-
-    metric_name?: string | null;
-
-    pass?: boolean | null;
-
-    score_raw?: number | null;
-
-    text_output?: string | null;
-
-    usage_tokens?: number | null;
-  }
-
-  export namespace EvaluationResult {
-    export interface AdditionalInfo {
-      confidence_interval: AdditionalInfo.ConfidenceInterval | null;
-
-      extra: unknown | null;
-
-      positions?: Array<unknown> | null;
-    }
-
-    export namespace AdditionalInfo {
-      export interface ConfidenceInterval {
-        alpha: number;
-
-        lower: number | null;
-
-        median: number | null;
-
-        strategy: string;
-
-        upper: number | null;
-      }
-    }
-
-    export interface EvaluatedModelAttachment {
-      media_type: string;
-
-      url: string;
-
-      usage_type: string;
-    }
-  }
+export interface EvaluationResultCreateBatchParams {
+  evaluation_results: Array<EvaluationResultCreateBatchParams.EvaluationResult>;
 }
 
-export interface EvaluationResultBatchCreateParams {
-  evaluation_results: Array<EvaluationResultBatchCreateParams.EvaluationResult>;
-}
-
-export namespace EvaluationResultBatchCreateParams {
+export namespace EvaluationResultCreateBatchParams {
   export interface EvaluationResult {
     /**
      * External evaluator identifier.
@@ -447,10 +306,6 @@ export namespace EvaluationResultBatchCreateParams {
   }
 }
 
-export interface EvaluationResultEvaluationFeedbackParams {
-  feedback: 'positive' | 'negative';
-}
-
 export interface EvaluationResultSearchParams {
   /**
    * Filter results to those recorded after this date and time.
@@ -525,7 +380,7 @@ export interface EvaluationResultSearchParams {
   /**
    * Filter results by explain strategy.
    */
-  explain_strategy?: 'never' | 'on-fail' | 'on-success' | 'always' | null;
+  explain_strategy?: EvaluationExplainStrategies | null;
 
   favorite?: boolean | null;
 
@@ -568,17 +423,25 @@ export interface EvaluationResultSearchParams {
   tags?: Record<string, string> | null;
 }
 
-EvaluationResults.Tags = Tags;
+EvaluationResults.Favorite = Favorite;
+EvaluationResults.EvaluationFeedback = EvaluationFeedback;
 
 export declare namespace EvaluationResults {
   export {
-    type CreateEvaluationResultsBatchResponse as CreateEvaluationResultsBatchResponse,
-    type EvaluateResultSearchResponse as EvaluateResultSearchResponse,
-    type GetEvaluationResult as GetEvaluationResult,
-    type EvaluationResultBatchCreateParams as EvaluationResultBatchCreateParams,
-    type EvaluationResultEvaluationFeedbackParams as EvaluationResultEvaluationFeedbackParams,
+    type EvaluationExplainStrategies as EvaluationExplainStrategies,
+    type EvaluationResult as EvaluationResult,
+    type EvaluationResultRetrieveResponse as EvaluationResultRetrieveResponse,
+    type EvaluationResultCreateBatchResponse as EvaluationResultCreateBatchResponse,
+    type EvaluationResultListTagsResponse as EvaluationResultListTagsResponse,
+    type EvaluationResultSearchResponse as EvaluationResultSearchResponse,
+    type EvaluationResultCreateBatchParams as EvaluationResultCreateBatchParams,
     type EvaluationResultSearchParams as EvaluationResultSearchParams,
   };
 
-  export { Tags as Tags, type ListTagsResponse as ListTagsResponse };
+  export { Favorite as Favorite };
+
+  export {
+    EvaluationFeedback as EvaluationFeedback,
+    type EvaluationFeedbackSubmitParams as EvaluationFeedbackSubmitParams,
+  };
 }

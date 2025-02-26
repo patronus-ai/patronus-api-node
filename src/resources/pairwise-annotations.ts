@@ -11,7 +11,7 @@ export class PairwiseAnnotations extends APIResource {
   create(
     body: PairwiseAnnotationCreateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<CreatePairwiseAnnotationResponse> {
+  ): Core.APIPromise<PairwiseAnnotationCreateResponse> {
     return this._client.post('/v1/pairwise-annotations', { body, ...options });
   }
 
@@ -21,12 +21,12 @@ export class PairwiseAnnotations extends APIResource {
   list(
     query?: PairwiseAnnotationListParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<ListPairwiseAnnotationsResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ListPairwiseAnnotationsResponse>;
+  ): Core.APIPromise<PairwiseAnnotationListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<PairwiseAnnotationListResponse>;
   list(
     query: PairwiseAnnotationListParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<ListPairwiseAnnotationsResponse> {
+  ): Core.APIPromise<PairwiseAnnotationListResponse> {
     if (isRequestOptions(query)) {
       return this.list({}, query);
     }
@@ -51,69 +51,35 @@ export class PairwiseAnnotations extends APIResource {
   getBatch(
     body: PairwiseAnnotationGetBatchParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<GetBatchPairwiseAnnotationsResponse> {
+  ): Core.APIPromise<PairwiseAnnotationGetBatchResponse> {
     return this._client.post('/v1/pairwise-annotations/get-batch', { body, ...options });
   }
 }
 
-export interface CreatePairwiseAnnotationResponse {
-  pairwise_annotation: CreatePairwiseAnnotationResponse.PairwiseAnnotation;
+export interface PairwiseAnnotation {
+  created_at: string;
+
+  log_a_id: string;
+
+  log_a_score: number;
+
+  log_b_id: string;
+
+  log_b_score: number;
+
+  name: string;
 }
 
-export namespace CreatePairwiseAnnotationResponse {
-  export interface PairwiseAnnotation {
-    created_at: string;
-
-    log_a_id: string;
-
-    log_a_score: number;
-
-    log_b_id: string;
-
-    log_b_score: number;
-
-    name: string;
-  }
+export interface PairwiseAnnotationCreateResponse {
+  pairwise_annotation: PairwiseAnnotation;
 }
 
-export interface GetBatchPairwiseAnnotationsResponse {
-  pairwise_annotations: Array<GetBatchPairwiseAnnotationsResponse.PairwiseAnnotation | null>;
+export interface PairwiseAnnotationListResponse {
+  pairwise_annotations: Array<PairwiseAnnotation>;
 }
 
-export namespace GetBatchPairwiseAnnotationsResponse {
-  export interface PairwiseAnnotation {
-    created_at: string;
-
-    log_a_id: string;
-
-    log_a_score: number;
-
-    log_b_id: string;
-
-    log_b_score: number;
-
-    name: string;
-  }
-}
-
-export interface ListPairwiseAnnotationsResponse {
-  pairwise_annotations: Array<ListPairwiseAnnotationsResponse.PairwiseAnnotation>;
-}
-
-export namespace ListPairwiseAnnotationsResponse {
-  export interface PairwiseAnnotation {
-    created_at: string;
-
-    log_a_id: string;
-
-    log_a_score: number;
-
-    log_b_id: string;
-
-    log_b_score: number;
-
-    name: string;
-  }
+export interface PairwiseAnnotationGetBatchResponse {
+  pairwise_annotations: Array<PairwiseAnnotation | null>;
 }
 
 export interface PairwiseAnnotationCreateParams {
@@ -166,9 +132,10 @@ export namespace PairwiseAnnotationGetBatchParams {
 
 export declare namespace PairwiseAnnotations {
   export {
-    type CreatePairwiseAnnotationResponse as CreatePairwiseAnnotationResponse,
-    type GetBatchPairwiseAnnotationsResponse as GetBatchPairwiseAnnotationsResponse,
-    type ListPairwiseAnnotationsResponse as ListPairwiseAnnotationsResponse,
+    type PairwiseAnnotation as PairwiseAnnotation,
+    type PairwiseAnnotationCreateResponse as PairwiseAnnotationCreateResponse,
+    type PairwiseAnnotationListResponse as PairwiseAnnotationListResponse,
+    type PairwiseAnnotationGetBatchResponse as PairwiseAnnotationGetBatchResponse,
     type PairwiseAnnotationCreateParams as PairwiseAnnotationCreateParams,
     type PairwiseAnnotationListParams as PairwiseAnnotationListParams,
     type PairwiseAnnotationDeleteParams as PairwiseAnnotationDeleteParams,

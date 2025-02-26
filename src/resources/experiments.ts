@@ -11,26 +11,26 @@ export class Experiments extends APIResource {
   create(
     body: ExperimentCreateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<CreateExperimentResponse> {
+  ): Core.APIPromise<ExperimentCreateResponse> {
     return this._client.post('/v1/experiments', { body, ...options });
   }
 
   /**
    * Get Experiment
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<GetExperimentResponse> {
+  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<ExperimentRetrieveResponse> {
     return this._client.get(`/v1/experiments/${id}`, options);
   }
 
   /**
    * List Experiments
    */
-  list(query?: ExperimentListParams, options?: Core.RequestOptions): Core.APIPromise<ListExperimentResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ListExperimentResponse>;
+  list(query?: ExperimentListParams, options?: Core.RequestOptions): Core.APIPromise<ExperimentListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<ExperimentListResponse>;
   list(
     query: ExperimentListParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<ListExperimentResponse> {
+  ): Core.APIPromise<ExperimentListResponse> {
     if (isRequestOptions(query)) {
       return this.list({}, query);
     }
@@ -48,67 +48,31 @@ export class Experiments extends APIResource {
   }
 }
 
-export interface CreateExperimentResponse {
-  experiment: CreateExperimentResponse.Experiment;
+export interface Experiment {
+  id: string;
+
+  created_at: string;
+
+  name: string;
+
+  project_id: string;
+
+  /**
+   * Tags are key-value pairs used to label resources
+   */
+  tags?: unknown;
 }
 
-export namespace CreateExperimentResponse {
-  export interface Experiment {
-    id: string;
-
-    created_at: string;
-
-    name: string;
-
-    project_id: string;
-
-    /**
-     * Tags are key-value pairs used to label resources
-     */
-    tags?: unknown;
-  }
+export interface ExperimentCreateResponse {
+  experiment: Experiment;
 }
 
-export interface GetExperimentResponse {
-  experiment: GetExperimentResponse.Experiment;
+export interface ExperimentRetrieveResponse {
+  experiment: Experiment;
 }
 
-export namespace GetExperimentResponse {
-  export interface Experiment {
-    id: string;
-
-    created_at: string;
-
-    name: string;
-
-    project_id: string;
-
-    /**
-     * Tags are key-value pairs used to label resources
-     */
-    tags?: unknown;
-  }
-}
-
-export interface ListExperimentResponse {
-  experiments: Array<ListExperimentResponse.Experiment>;
-}
-
-export namespace ListExperimentResponse {
-  export interface Experiment {
-    id: string;
-
-    created_at: string;
-
-    name: string;
-
-    project_id: string;
-
-    /**
-     * Tags are key-value pairs used to label resources
-     */
-    tags?: unknown;
-  }
+export interface ExperimentListResponse {
+  experiments: Array<Experiment>;
 }
 
 export interface ExperimentCreateParams {
@@ -132,9 +96,10 @@ export interface ExperimentListParams {
 
 export declare namespace Experiments {
   export {
-    type CreateExperimentResponse as CreateExperimentResponse,
-    type GetExperimentResponse as GetExperimentResponse,
-    type ListExperimentResponse as ListExperimentResponse,
+    type Experiment as Experiment,
+    type ExperimentCreateResponse as ExperimentCreateResponse,
+    type ExperimentRetrieveResponse as ExperimentRetrieveResponse,
+    type ExperimentListResponse as ExperimentListResponse,
     type ExperimentCreateParams as ExperimentCreateParams,
     type ExperimentListParams as ExperimentListParams,
   };
