@@ -28,8 +28,6 @@ Types:
 - <code><a href="./src/resources/datasets.ts">DatasetRetrieveResponse</a></code>
 - <code><a href="./src/resources/datasets.ts">DatasetUpdateResponse</a></code>
 - <code><a href="./src/resources/datasets.ts">DatasetListResponse</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetDownloadCsvResponse</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetDownloadJSONLResponse</a></code>
 - <code><a href="./src/resources/datasets.ts">DatasetListDataResponse</a></code>
 - <code><a href="./src/resources/datasets.ts">DatasetUploadResponse</a></code>
 
@@ -39,8 +37,8 @@ Methods:
 - <code title="patch /v1/datasets/{dataset_id}">client.datasets.<a href="./src/resources/datasets.ts">update</a>(datasetId, { ...params }) -> DatasetUpdateResponse</code>
 - <code title="get /v1/datasets">client.datasets.<a href="./src/resources/datasets.ts">list</a>({ ...params }) -> DatasetListResponse</code>
 - <code title="delete /v1/datasets/{id}">client.datasets.<a href="./src/resources/datasets.ts">delete</a>(id) -> void</code>
-- <code title="get /v1/datasets/{id}/csv">client.datasets.<a href="./src/resources/datasets.ts">downloadCsv</a>(id) -> unknown</code>
-- <code title="get /v1/datasets/{id}/jsonl">client.datasets.<a href="./src/resources/datasets.ts">downloadJSONL</a>(id) -> unknown</code>
+- <code title="get /v1/datasets/{id}/csv">client.datasets.<a href="./src/resources/datasets.ts">downloadCsv</a>(id) -> void</code>
+- <code title="get /v1/datasets/{id}/jsonl">client.datasets.<a href="./src/resources/datasets.ts">downloadJSONL</a>(id) -> void</code>
 - <code title="get /v1/datasets/{id}/data">client.datasets.<a href="./src/resources/datasets.ts">listData</a>(id) -> DatasetListDataResponse</code>
 - <code title="post /v1/datasets">client.datasets.<a href="./src/resources/datasets.ts">upload</a>({ ...params }) -> DatasetUploadResponse</code>
 

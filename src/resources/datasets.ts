@@ -51,15 +51,21 @@ export class Datasets extends APIResource {
   /**
    * Download Dataset Csv
    */
-  downloadCsv(id: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
-    return this._client.get(`/v1/datasets/${id}/csv`, options);
+  downloadCsv(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.get(`/v1/datasets/${id}/csv`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
   }
 
   /**
    * Download Dataset Jsonl
    */
-  downloadJSONL(id: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
-    return this._client.get(`/v1/datasets/${id}/jsonl`, options);
+  downloadJSONL(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.get(`/v1/datasets/${id}/jsonl`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
   }
 
   /**
@@ -233,10 +239,6 @@ export interface DatasetListResponse {
   datasets: Array<Dataset>;
 }
 
-export type DatasetDownloadCsvResponse = unknown;
-
-export type DatasetDownloadJSONLResponse = unknown;
-
 export interface DatasetListDataResponse {
   data: Array<DatasetListDataResponse.Data>;
 }
@@ -263,7 +265,7 @@ export namespace DatasetListDataResponse {
 
     meta_evaluated_model_name: string | null;
 
-    meta_evaluated_model_params: unknown | null;
+    meta_evaluated_model_params: Record<string, unknown> | null;
 
     meta_evaluated_model_provider: string | null;
 
@@ -318,8 +320,6 @@ export declare namespace Datasets {
     type DatasetRetrieveResponse as DatasetRetrieveResponse,
     type DatasetUpdateResponse as DatasetUpdateResponse,
     type DatasetListResponse as DatasetListResponse,
-    type DatasetDownloadCsvResponse as DatasetDownloadCsvResponse,
-    type DatasetDownloadJSONLResponse as DatasetDownloadJSONLResponse,
     type DatasetListDataResponse as DatasetListDataResponse,
     type DatasetUploadResponse as DatasetUploadResponse,
     type DatasetUpdateParams as DatasetUpdateParams,

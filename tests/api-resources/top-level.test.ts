@@ -70,7 +70,7 @@ describe('top level methods', () => {
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_name: 'project_name',
       span_id: 'span_id',
-      tags: {},
+      tags: { foo: '._' },
       trace_id: 'trace_id',
     });
   });

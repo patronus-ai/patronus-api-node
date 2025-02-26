@@ -60,7 +60,7 @@ export interface Experiment {
   /**
    * Tags are key-value pairs used to label resources
    */
-  tags?: unknown;
+  tags?: Record<string, string>;
 }
 
 export interface ExperimentCreateResponse {
@@ -83,7 +83,7 @@ export interface ExperimentCreateParams {
   /**
    * Tags are key-value pairs used to label resources
    */
-  tags?: unknown;
+  tags?: Record<string, string>;
 }
 
 export interface ExperimentListParams {

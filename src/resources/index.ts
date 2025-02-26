@@ -20,8 +20,6 @@ export {
   type DatasetRetrieveResponse,
   type DatasetUpdateResponse,
   type DatasetListResponse,
-  type DatasetDownloadCsvResponse,
-  type DatasetDownloadJSONLResponse,
   type DatasetListDataResponse,
   type DatasetUploadResponse,
   type DatasetUpdateParams,
