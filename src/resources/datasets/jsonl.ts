@@ -7,13 +7,10 @@ export class JSONL extends APIResource {
   /**
    * Download Dataset Jsonl
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<unknown> {
-    return this._client.get(`/v1/datasets/${id}/jsonl`, options);
+  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+    return this._client.get(`/v1/datasets/${id}/jsonl`, {
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
   }
-}
-
-export type JSONLRetrieveResponse = unknown;
-
-export declare namespace JSONL {
-  export { type JSONLRetrieveResponse as JSONLRetrieveResponse };
 }

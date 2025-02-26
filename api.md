@@ -27,23 +27,15 @@ Methods:
 
 ## JSONL
 
-Types:
-
-- <code><a href="./src/resources/datasets/jsonl.ts">JSONLRetrieveResponse</a></code>
-
 Methods:
 
-- <code title="get /v1/datasets/{id}/jsonl">client.datasets.jsonl.<a href="./src/resources/datasets/jsonl.ts">retrieve</a>(id) -> unknown</code>
+- <code title="get /v1/datasets/{id}/jsonl">client.datasets.jsonl.<a href="./src/resources/datasets/jsonl.ts">retrieve</a>(id) -> void</code>
 
 ## Csv
 
-Types:
-
-- <code><a href="./src/resources/datasets/csv.ts">CsvRetrieveResponse</a></code>
-
 Methods:
 
-- <code title="get /v1/datasets/{id}/csv">client.datasets.csv.<a href="./src/resources/datasets/csv.ts">retrieve</a>(id) -> unknown</code>
+- <code title="get /v1/datasets/{id}/csv">client.datasets.csv.<a href="./src/resources/datasets/csv.ts">retrieve</a>(id) -> void</code>
 
 # Evaluations
 
