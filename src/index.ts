@@ -20,7 +20,13 @@ import { AnnotateResponse, AnnotationAnnotateParams, Annotations } from './resou
 import { AppListParams, AppResponse, Apps } from './resources/apps';
 import { EvaluateResponse, EvaluationEvaluateParams, Evaluations } from './resources/evaluations';
 import { EvaluatorFamilies, ListEvaluatorFamilyResponse } from './resources/evaluator-families';
-import { EvaluatorProfiles } from './resources/evaluator-profiles';
+import {
+  AddEvaluatorProfileRevision,
+  ArchiveEvaluatorProfileResponse,
+  CreateEvaluatorProfileResponse,
+  EvaluatorProfiles,
+  ListEvaluatorProfilesResponse,
+} from './resources/evaluator-profiles';
 import { Evaluators, ListEvaluatorsResponse } from './resources/evaluators';
 import {
   CreateExperimentResponse,
@@ -30,7 +36,7 @@ import {
   GetExperimentResponse,
   ListExperimentResponse,
 } from './resources/experiments';
-import { Feedback } from './resources/feedback';
+import { CreateFeedbackResponse, Feedback, ListFeedbackResponse } from './resources/feedback';
 import { Misc, WhoAmIResponse } from './resources/misc';
 import {
   CreatePairwiseAnnotationResponse,
@@ -292,7 +298,13 @@ export declare namespace PatronusAPI {
     type EvaluationResultSearchParams as EvaluationResultSearchParams,
   };
 
-  export { EvaluatorProfiles as EvaluatorProfiles };
+  export {
+    EvaluatorProfiles as EvaluatorProfiles,
+    type AddEvaluatorProfileRevision as AddEvaluatorProfileRevision,
+    type ArchiveEvaluatorProfileResponse as ArchiveEvaluatorProfileResponse,
+    type CreateEvaluatorProfileResponse as CreateEvaluatorProfileResponse,
+    type ListEvaluatorProfilesResponse as ListEvaluatorProfilesResponse,
+  };
 
   export {
     EvaluatorCriteria as EvaluatorCriteria,
@@ -312,7 +324,11 @@ export declare namespace PatronusAPI {
     type ExperimentListParams as ExperimentListParams,
   };
 
-  export { Feedback as Feedback };
+  export {
+    Feedback as Feedback,
+    type CreateFeedbackResponse as CreateFeedbackResponse,
+    type ListFeedbackResponse as ListFeedbackResponse,
+  };
 
   export {
     Projects as Projects,

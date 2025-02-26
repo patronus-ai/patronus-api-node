@@ -13,7 +13,39 @@ export class Evaluators extends APIResource {
 }
 
 export interface ListEvaluatorsResponse {
-  evaluators: Array<unknown>;
+  evaluators: Array<ListEvaluatorsResponse.Evaluator>;
+}
+
+export namespace ListEvaluatorsResponse {
+  export interface Evaluator {
+    id: string;
+
+    aliases: Array<string>;
+
+    description: string | null;
+
+    /**
+     * Whether the evaluator is available for LLM Monitoring.
+     */
+    evaluation_enabled: boolean;
+
+    /**
+     * Whether the evaluator is available for Evaluation Runs.
+     */
+    evaluation_run_enabled: boolean;
+
+    evaluator_family: string | null;
+
+    image_url: string | null;
+
+    name: string | null;
+
+    /**
+     * Whether a profile is required by the evaluator. Learn more about profiles
+     * [here](https://docs.patronus.ai/docs/profiles).
+     */
+    profile_required: boolean;
+  }
 }
 
 export declare namespace Evaluators {

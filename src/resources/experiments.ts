@@ -49,15 +49,66 @@ export class Experiments extends APIResource {
 }
 
 export interface CreateExperimentResponse {
-  experiment: unknown;
+  experiment: CreateExperimentResponse.Experiment;
+}
+
+export namespace CreateExperimentResponse {
+  export interface Experiment {
+    id: string;
+
+    created_at: string;
+
+    name: string;
+
+    project_id: string;
+
+    /**
+     * Tags are key-value pairs used to label resources
+     */
+    tags?: unknown;
+  }
 }
 
 export interface GetExperimentResponse {
-  experiment: unknown;
+  experiment: GetExperimentResponse.Experiment;
+}
+
+export namespace GetExperimentResponse {
+  export interface Experiment {
+    id: string;
+
+    created_at: string;
+
+    name: string;
+
+    project_id: string;
+
+    /**
+     * Tags are key-value pairs used to label resources
+     */
+    tags?: unknown;
+  }
 }
 
 export interface ListExperimentResponse {
-  experiments: Array<unknown>;
+  experiments: Array<ListExperimentResponse.Experiment>;
+}
+
+export namespace ListExperimentResponse {
+  export interface Experiment {
+    id: string;
+
+    created_at: string;
+
+    name: string;
+
+    project_id: string;
+
+    /**
+     * Tags are key-value pairs used to label resources
+     */
+    tags?: unknown;
+  }
 }
 
 export interface ExperimentCreateParams {

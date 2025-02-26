@@ -122,7 +122,7 @@ export class Datasets extends APIResource {
 }
 
 export interface CreateDatasetResponse {
-  dataset: unknown;
+  dataset: CreateDatasetResponse.Dataset;
 
   /**
    * @deprecated
@@ -130,12 +130,243 @@ export interface CreateDatasetResponse {
   dataset_id: string;
 }
 
+export namespace CreateDatasetResponse {
+  export interface Dataset {
+    /**
+     * Unique identifier for the dataset.
+     */
+    id: string;
+
+    /**
+     * The date and time when the dataset was created.
+     */
+    created_at: string;
+
+    /**
+     * @deprecated The date when the dataset was created. This field is deprecated.
+     * Please use 'created_at' instead.
+     */
+    creation_date: string;
+
+    /**
+     * @deprecated
+     */
+    criteria: Array<string> | null;
+
+    /**
+     * A brief overview or summary of the dataset's contents or purpose.
+     */
+    description: string | null;
+
+    /**
+     * Indicated Whether the dataset has evaluated model gold answers.
+     */
+    has_evaluated_model_gold_answers: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model inputs.
+     */
+    has_evaluated_model_inputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model outputs.
+     */
+    has_evaluated_model_outputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model retrieved context.
+     */
+    has_evaluated_model_retrieved_contexts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model prompts.
+     */
+    has_evaluated_model_system_prompts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset contains labeled samples.
+     */
+    labeled: boolean;
+
+    /**
+     * The name of the dataset.
+     */
+    name: string;
+
+    /**
+     * The number of samples present in the dataset.
+     */
+    samples: number;
+
+    type: 'Patronus Managed' | 'User Managed';
+
+    /**
+     * @deprecated
+     */
+    use_case: string | null;
+  }
+}
+
 export interface GetDatasetsResponse {
-  dataset: unknown;
+  dataset: GetDatasetsResponse.Dataset;
+}
+
+export namespace GetDatasetsResponse {
+  export interface Dataset {
+    /**
+     * Unique identifier for the dataset.
+     */
+    id: string;
+
+    /**
+     * The date and time when the dataset was created.
+     */
+    created_at: string;
+
+    /**
+     * @deprecated The date when the dataset was created. This field is deprecated.
+     * Please use 'created_at' instead.
+     */
+    creation_date: string;
+
+    /**
+     * @deprecated
+     */
+    criteria: Array<string> | null;
+
+    /**
+     * A brief overview or summary of the dataset's contents or purpose.
+     */
+    description: string | null;
+
+    /**
+     * Indicated Whether the dataset has evaluated model gold answers.
+     */
+    has_evaluated_model_gold_answers: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model inputs.
+     */
+    has_evaluated_model_inputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model outputs.
+     */
+    has_evaluated_model_outputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model retrieved context.
+     */
+    has_evaluated_model_retrieved_contexts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model prompts.
+     */
+    has_evaluated_model_system_prompts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset contains labeled samples.
+     */
+    labeled: boolean;
+
+    /**
+     * The name of the dataset.
+     */
+    name: string;
+
+    /**
+     * The number of samples present in the dataset.
+     */
+    samples: number;
+
+    type: 'Patronus Managed' | 'User Managed';
+
+    /**
+     * @deprecated
+     */
+    use_case: string | null;
+  }
 }
 
 export interface ListDatasetsResponse {
-  datasets: Array<unknown>;
+  datasets: Array<ListDatasetsResponse.Dataset>;
+}
+
+export namespace ListDatasetsResponse {
+  export interface Dataset {
+    /**
+     * Unique identifier for the dataset.
+     */
+    id: string;
+
+    /**
+     * The date and time when the dataset was created.
+     */
+    created_at: string;
+
+    /**
+     * @deprecated The date when the dataset was created. This field is deprecated.
+     * Please use 'created_at' instead.
+     */
+    creation_date: string;
+
+    /**
+     * @deprecated
+     */
+    criteria: Array<string> | null;
+
+    /**
+     * A brief overview or summary of the dataset's contents or purpose.
+     */
+    description: string | null;
+
+    /**
+     * Indicated Whether the dataset has evaluated model gold answers.
+     */
+    has_evaluated_model_gold_answers: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model inputs.
+     */
+    has_evaluated_model_inputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model outputs.
+     */
+    has_evaluated_model_outputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model retrieved context.
+     */
+    has_evaluated_model_retrieved_contexts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model prompts.
+     */
+    has_evaluated_model_system_prompts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset contains labeled samples.
+     */
+    labeled: boolean;
+
+    /**
+     * The name of the dataset.
+     */
+    name: string;
+
+    /**
+     * The number of samples present in the dataset.
+     */
+    samples: number;
+
+    type: 'Patronus Managed' | 'User Managed';
+
+    /**
+     * @deprecated
+     */
+    use_case: string | null;
+  }
 }
 
 export interface UpdateDatasetResponse {
@@ -144,12 +375,89 @@ export interface UpdateDatasetResponse {
    */
   id: string;
 
-  dataset: unknown;
+  dataset: UpdateDatasetResponse.Dataset;
 
   /**
    * @deprecated
    */
   name: string;
+}
+
+export namespace UpdateDatasetResponse {
+  export interface Dataset {
+    /**
+     * Unique identifier for the dataset.
+     */
+    id: string;
+
+    /**
+     * The date and time when the dataset was created.
+     */
+    created_at: string;
+
+    /**
+     * @deprecated The date when the dataset was created. This field is deprecated.
+     * Please use 'created_at' instead.
+     */
+    creation_date: string;
+
+    /**
+     * @deprecated
+     */
+    criteria: Array<string> | null;
+
+    /**
+     * A brief overview or summary of the dataset's contents or purpose.
+     */
+    description: string | null;
+
+    /**
+     * Indicated Whether the dataset has evaluated model gold answers.
+     */
+    has_evaluated_model_gold_answers: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model inputs.
+     */
+    has_evaluated_model_inputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model outputs.
+     */
+    has_evaluated_model_outputs: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model retrieved context.
+     */
+    has_evaluated_model_retrieved_contexts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset has evaluated model prompts.
+     */
+    has_evaluated_model_system_prompts: 'none' | 'some' | 'all';
+
+    /**
+     * Indicates whether the dataset contains labeled samples.
+     */
+    labeled: boolean;
+
+    /**
+     * The name of the dataset.
+     */
+    name: string;
+
+    /**
+     * The number of samples present in the dataset.
+     */
+    samples: number;
+
+    type: 'Patronus Managed' | 'User Managed';
+
+    /**
+     * @deprecated
+     */
+    use_case: string | null;
+  }
 }
 
 export interface DatasetCreateParams {

@@ -85,6 +85,13 @@ Methods:
 
 # EvaluatorProfiles
 
+Types:
+
+- <code><a href="./src/resources/evaluator-profiles.ts">AddEvaluatorProfileRevision</a></code>
+- <code><a href="./src/resources/evaluator-profiles.ts">ArchiveEvaluatorProfileResponse</a></code>
+- <code><a href="./src/resources/evaluator-profiles.ts">CreateEvaluatorProfileResponse</a></code>
+- <code><a href="./src/resources/evaluator-profiles.ts">ListEvaluatorProfilesResponse</a></code>
+
 # EvaluatorCriteria
 
 Types:
@@ -125,6 +132,11 @@ Methods:
 - <code title="delete /v1/experiments/{id}">client.experiments.<a href="./src/resources/experiments.ts">delete</a>(id) -> void</code>
 
 # Feedback
+
+Types:
+
+- <code><a href="./src/resources/feedback.ts">CreateFeedbackResponse</a></code>
+- <code><a href="./src/resources/feedback.ts">ListFeedbackResponse</a></code>
 
 # Projects
 
