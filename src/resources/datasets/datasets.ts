@@ -172,7 +172,7 @@ export interface DatasetUpdateParams {
 }
 
 export interface DatasetListParams {
-  type?: unknown;
+  type?: 'Patronus Managed' | 'User Managed' | null;
 }
 
 Datasets.Data = Data;
