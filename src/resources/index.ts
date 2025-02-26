@@ -41,7 +41,13 @@ export {
   type EvaluatorCriterionListParams,
 } from './evaluator-criteria/evaluator-criteria';
 export { EvaluatorFamilies, type ListEvaluatorFamilyResponse } from './evaluator-families';
-export { EvaluatorProfiles } from './evaluator-profiles';
+export {
+  EvaluatorProfiles,
+  type AddEvaluatorProfileRevision,
+  type ArchiveEvaluatorProfileResponse,
+  type CreateEvaluatorProfileResponse,
+  type ListEvaluatorProfilesResponse,
+} from './evaluator-profiles';
 export { Evaluators, type ListEvaluatorsResponse } from './evaluators';
 export {
   Experiments,
@@ -51,7 +57,7 @@ export {
   type ExperimentCreateParams,
   type ExperimentListParams,
 } from './experiments';
-export { Feedback } from './feedback';
+export { Feedback, type CreateFeedbackResponse, type ListFeedbackResponse } from './feedback';
 export { Misc, type WhoAmIResponse } from './misc';
 export {
   PairwiseAnnotations,

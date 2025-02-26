@@ -22,7 +22,13 @@ export class Apps extends APIResource {
 }
 
 export interface AppResponse {
-  apps: Array<unknown>;
+  apps: Array<AppResponse.App>;
+}
+
+export namespace AppResponse {
+  export interface App {
+    name: string;
+  }
 }
 
 export interface AppListParams {

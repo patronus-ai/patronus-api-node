@@ -13,7 +13,53 @@ export class Misc extends APIResource {
 }
 
 export interface WhoAmIResponse {
-  caller: unknown;
+  caller: WhoAmIResponse.Caller;
+}
+
+export namespace WhoAmIResponse {
+  export interface Caller {
+    api_key: Caller.APIKey | null;
+
+    user: Caller.User | null;
+  }
+
+  export namespace Caller {
+    export interface APIKey {
+      id: string;
+
+      account: APIKey.Account;
+    }
+
+    export namespace APIKey {
+      export interface Account {
+        id: string;
+
+        name: string;
+      }
+    }
+
+    export interface User {
+      id: string;
+
+      accounts: Array<User.Account>;
+
+      is_staff: boolean;
+
+      sub: string;
+    }
+
+    export namespace User {
+      export interface Account {
+        id: string;
+
+        name: string;
+
+        role: string | null;
+
+        features_enabled?: Array<string>;
+      }
+    }
+  }
 }
 
 export declare namespace Misc {

@@ -13,7 +13,19 @@ export class Tags extends APIResource {
 }
 
 export interface ListTagsResponse {
-  tags: Array<unknown>;
+  tags: Array<ListTagsResponse.Tag>;
+}
+
+export namespace ListTagsResponse {
+  export interface Tag {
+    created_at: string;
+
+    key: string;
+
+    last_used: string;
+
+    value: string;
+  }
 }
 
 export declare namespace Tags {

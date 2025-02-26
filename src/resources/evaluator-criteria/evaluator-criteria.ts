@@ -49,15 +49,75 @@ export class EvaluatorCriteria extends APIResource {
 }
 
 export interface ArchiveEvaluatorCriteriaResponse {
-  evaluator_criteria: Array<unknown>;
+  evaluator_criteria: Array<ArchiveEvaluatorCriteriaResponse.EvaluatorCriterion>;
+}
+
+export namespace ArchiveEvaluatorCriteriaResponse {
+  export interface EvaluatorCriterion {
+    config: unknown | null;
+
+    created_at: string;
+
+    evaluator_family: string | null;
+
+    is_patronus_managed: boolean;
+
+    name: string | null;
+
+    public_id: string;
+
+    revision: number;
+
+    description?: string | null;
+  }
 }
 
 export interface CreateEvaluatorCriteriaResponse {
-  evaluator_criteria: unknown;
+  evaluator_criteria: CreateEvaluatorCriteriaResponse.EvaluatorCriteria | null;
+}
+
+export namespace CreateEvaluatorCriteriaResponse {
+  export interface EvaluatorCriteria {
+    config: unknown | null;
+
+    created_at: string;
+
+    evaluator_family: string | null;
+
+    is_patronus_managed: boolean;
+
+    name: string | null;
+
+    public_id: string;
+
+    revision: number;
+
+    description?: string | null;
+  }
 }
 
 export interface ListEvaluatorCriteriaResponse {
-  evaluator_criteria: Array<unknown>;
+  evaluator_criteria: Array<ListEvaluatorCriteriaResponse.EvaluatorCriterion>;
+}
+
+export namespace ListEvaluatorCriteriaResponse {
+  export interface EvaluatorCriterion {
+    config: unknown | null;
+
+    created_at: string;
+
+    evaluator_family: string | null;
+
+    is_patronus_managed: boolean;
+
+    name: string | null;
+
+    public_id: string;
+
+    revision: number;
+
+    description?: string | null;
+  }
 }
 
 export interface EvaluatorCriterionCreateParams {
