@@ -81,9 +81,9 @@ describe('resource datasets', () => {
 
   test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.datasets.list({ type: 'Patronus Managed' }, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(PatronusAPI.NotFoundError);
+    await expect(client.datasets.list({ type: {} }, { path: '/_stainless_unknown_path' })).rejects.toThrow(
+      PatronusAPI.NotFoundError,
+    );
   });
 
   test('delete', async () => {

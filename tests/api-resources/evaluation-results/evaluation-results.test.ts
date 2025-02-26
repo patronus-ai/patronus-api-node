@@ -28,9 +28,7 @@ describe('resource evaluationResults', () => {
   });
 
   test('batchCreate: only required params', async () => {
-    const responsePromise = client.evaluationResults.batchCreate({
-      evaluation_results: [{ evaluator_id: 'evaluator_id' }],
-    });
+    const responsePromise = client.evaluationResults.batchCreate({ evaluation_results: [{}] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -41,37 +39,7 @@ describe('resource evaluationResults', () => {
   });
 
   test('batchCreate: required and optional params', async () => {
-    const response = await client.evaluationResults.batchCreate({
-      evaluation_results: [
-        {
-          evaluator_id: 'evaluator_id',
-          app: 'app',
-          criteria: 'criteria',
-          dataset_id: 'dataset_id',
-          dataset_sample_id: 0,
-          evaluated_model_attachments: [{ media_type: 'media_type', url: 'url', usage_type: 'usage_type' }],
-          evaluated_model_gold_answer: 'evaluated_model_gold_answer',
-          evaluated_model_input: 'evaluated_model_input',
-          evaluated_model_name: 'x',
-          evaluated_model_output: 'evaluated_model_output',
-          evaluated_model_params: { foo: 0 },
-          evaluated_model_provider: 'x',
-          evaluated_model_retrieved_context: ['string'],
-          evaluated_model_selected_model: 'x',
-          evaluated_model_system_prompt: 'evaluated_model_system_prompt',
-          evaluation_duration: 'evaluation_duration',
-          evaluation_metadata: {},
-          experiment_id: 'experiment_id',
-          explanation: 'explanation',
-          explanation_duration: 'explanation_duration',
-          pass: true,
-          profile_name: 'profile_name',
-          score_raw: 0,
-          tags: {},
-          text_output: 'text_output',
-        },
-      ],
-    });
+    const response = await client.evaluationResults.batchCreate({ evaluation_results: [{}] });
   });
 
   test('evaluationFeedback: only required params', async () => {

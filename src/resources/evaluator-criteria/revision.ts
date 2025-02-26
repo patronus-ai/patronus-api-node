@@ -17,27 +17,7 @@ export class Revision extends APIResource {
 }
 
 export interface AddEvaluatorCriteriaRevision {
-  evaluator_criteria: AddEvaluatorCriteriaRevision.EvaluatorCriteria | null;
-}
-
-export namespace AddEvaluatorCriteriaRevision {
-  export interface EvaluatorCriteria {
-    config: unknown | null;
-
-    created_at: string;
-
-    evaluator_family: string | null;
-
-    is_patronus_managed: boolean;
-
-    name: string | null;
-
-    public_id: string;
-
-    revision: number;
-
-    description?: string | null;
-  }
+  evaluator_criteria: unknown;
 }
 
 export interface RevisionCreateParams {

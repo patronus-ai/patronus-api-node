@@ -57,63 +57,15 @@ export class PairwiseAnnotations extends APIResource {
 }
 
 export interface CreatePairwiseAnnotationResponse {
-  pairwise_annotation: CreatePairwiseAnnotationResponse.PairwiseAnnotation;
-}
-
-export namespace CreatePairwiseAnnotationResponse {
-  export interface PairwiseAnnotation {
-    created_at: string;
-
-    log_a_id: string;
-
-    log_a_score: number;
-
-    log_b_id: string;
-
-    log_b_score: number;
-
-    name: string;
-  }
+  pairwise_annotation: unknown;
 }
 
 export interface GetBatchPairwiseAnnotationsResponse {
-  pairwise_annotations: Array<GetBatchPairwiseAnnotationsResponse.PairwiseAnnotation | null>;
-}
-
-export namespace GetBatchPairwiseAnnotationsResponse {
-  export interface PairwiseAnnotation {
-    created_at: string;
-
-    log_a_id: string;
-
-    log_a_score: number;
-
-    log_b_id: string;
-
-    log_b_score: number;
-
-    name: string;
-  }
+  pairwise_annotations: Array<unknown>;
 }
 
 export interface ListPairwiseAnnotationsResponse {
-  pairwise_annotations: Array<ListPairwiseAnnotationsResponse.PairwiseAnnotation>;
-}
-
-export namespace ListPairwiseAnnotationsResponse {
-  export interface PairwiseAnnotation {
-    created_at: string;
-
-    log_a_id: string;
-
-    log_a_score: number;
-
-    log_b_id: string;
-
-    log_b_score: number;
-
-    name: string;
-  }
+  pairwise_annotations: Array<unknown>;
 }
 
 export interface PairwiseAnnotationCreateParams {
@@ -151,17 +103,7 @@ export interface PairwiseAnnotationDeleteParams {
 }
 
 export interface PairwiseAnnotationGetBatchParams {
-  pairwise_annotations: Array<PairwiseAnnotationGetBatchParams.PairwiseAnnotation>;
-}
-
-export namespace PairwiseAnnotationGetBatchParams {
-  export interface PairwiseAnnotation {
-    log_a_id: string;
-
-    log_b_id: string;
-
-    name: string;
-  }
+  pairwise_annotations: Array<unknown>;
 }
 
 export declare namespace PairwiseAnnotations {
