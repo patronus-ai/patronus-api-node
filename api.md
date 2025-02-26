@@ -83,15 +83,6 @@ Methods:
 
 - <code title="get /v1/evaluation-results/tags">client.evaluationResults.tags.<a href="./src/resources/evaluation-results/tags.ts">list</a>() -> ListTagsResponse</code>
 
-# EvaluatorProfiles
-
-Types:
-
-- <code><a href="./src/resources/evaluator-profiles.ts">AddEvaluatorProfileRevision</a></code>
-- <code><a href="./src/resources/evaluator-profiles.ts">ArchiveEvaluatorProfileResponse</a></code>
-- <code><a href="./src/resources/evaluator-profiles.ts">CreateEvaluatorProfileResponse</a></code>
-- <code><a href="./src/resources/evaluator-profiles.ts">ListEvaluatorProfilesResponse</a></code>
-
 # EvaluatorCriteria
 
 Types:
@@ -130,13 +121,6 @@ Methods:
 - <code title="get /v1/experiments/{id}">client.experiments.<a href="./src/resources/experiments.ts">retrieve</a>(id) -> GetExperimentResponse</code>
 - <code title="get /v1/experiments">client.experiments.<a href="./src/resources/experiments.ts">list</a>({ ...params }) -> ListExperimentResponse</code>
 - <code title="delete /v1/experiments/{id}">client.experiments.<a href="./src/resources/experiments.ts">delete</a>(id) -> void</code>
-
-# Feedback
-
-Types:
-
-- <code><a href="./src/resources/feedback.ts">CreateFeedbackResponse</a></code>
-- <code><a href="./src/resources/feedback.ts">ListFeedbackResponse</a></code>
 
 # Projects
 

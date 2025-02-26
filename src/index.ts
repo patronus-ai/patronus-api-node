@@ -20,13 +20,6 @@ import { AnnotateResponse, AnnotationAnnotateParams, Annotations } from './resou
 import { AppListParams, AppResponse, Apps } from './resources/apps';
 import { EvaluateResponse, EvaluationEvaluateParams, Evaluations } from './resources/evaluations';
 import { EvaluatorFamilies, ListEvaluatorFamilyResponse } from './resources/evaluator-families';
-import {
-  AddEvaluatorProfileRevision,
-  ArchiveEvaluatorProfileResponse,
-  CreateEvaluatorProfileResponse,
-  EvaluatorProfiles,
-  ListEvaluatorProfilesResponse,
-} from './resources/evaluator-profiles';
 import { Evaluators, ListEvaluatorsResponse } from './resources/evaluators';
 import {
   CreateExperimentResponse,
@@ -36,7 +29,6 @@ import {
   GetExperimentResponse,
   ListExperimentResponse,
 } from './resources/experiments';
-import { CreateFeedbackResponse, Feedback, ListFeedbackResponse } from './resources/feedback';
 import { Misc, WhoAmIResponse } from './resources/misc';
 import {
   CreatePairwiseAnnotationResponse,
@@ -200,10 +192,8 @@ export class PatronusAPI extends Core.APIClient {
   datasets: API.Datasets = new API.Datasets(this);
   evaluations: API.Evaluations = new API.Evaluations(this);
   evaluationResults: API.EvaluationResults = new API.EvaluationResults(this);
-  evaluatorProfiles: API.EvaluatorProfiles = new API.EvaluatorProfiles(this);
   evaluatorCriteria: API.EvaluatorCriteria = new API.EvaluatorCriteria(this);
   experiments: API.Experiments = new API.Experiments(this);
-  feedback: API.Feedback = new API.Feedback(this);
   projects: API.Projects = new API.Projects(this);
   evaluators: API.Evaluators = new API.Evaluators(this);
   misc: API.Misc = new API.Misc(this);
@@ -256,10 +246,8 @@ export class PatronusAPI extends Core.APIClient {
 PatronusAPI.Datasets = Datasets;
 PatronusAPI.Evaluations = Evaluations;
 PatronusAPI.EvaluationResults = EvaluationResults;
-PatronusAPI.EvaluatorProfiles = EvaluatorProfiles;
 PatronusAPI.EvaluatorCriteria = EvaluatorCriteria;
 PatronusAPI.Experiments = Experiments;
-PatronusAPI.Feedback = Feedback;
 PatronusAPI.Projects = Projects;
 PatronusAPI.Evaluators = Evaluators;
 PatronusAPI.Misc = Misc;
@@ -299,14 +287,6 @@ export declare namespace PatronusAPI {
   };
 
   export {
-    EvaluatorProfiles as EvaluatorProfiles,
-    type AddEvaluatorProfileRevision as AddEvaluatorProfileRevision,
-    type ArchiveEvaluatorProfileResponse as ArchiveEvaluatorProfileResponse,
-    type CreateEvaluatorProfileResponse as CreateEvaluatorProfileResponse,
-    type ListEvaluatorProfilesResponse as ListEvaluatorProfilesResponse,
-  };
-
-  export {
     EvaluatorCriteria as EvaluatorCriteria,
     type ArchiveEvaluatorCriteriaResponse as ArchiveEvaluatorCriteriaResponse,
     type CreateEvaluatorCriteriaResponse as CreateEvaluatorCriteriaResponse,
@@ -322,12 +302,6 @@ export declare namespace PatronusAPI {
     type ListExperimentResponse as ListExperimentResponse,
     type ExperimentCreateParams as ExperimentCreateParams,
     type ExperimentListParams as ExperimentListParams,
-  };
-
-  export {
-    Feedback as Feedback,
-    type CreateFeedbackResponse as CreateFeedbackResponse,
-    type ListFeedbackResponse as ListFeedbackResponse,
   };
 
   export {
