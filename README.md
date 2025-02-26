@@ -4,7 +4,7 @@
 
 This library provides convenient access to the Patronus API REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [docs.patronus.ai](https://docs.patronus.ai). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.patronus-api.com](https://docs.patronus-api.com). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainlessapi.com/).
 
@@ -26,18 +26,13 @@ The full API of this library can be found in [api.md](api.md).
 import PatronusAPI from 'patronus-api';
 
 const client = new PatronusAPI({
-  apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['PATRONUS_API_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
-  const evaluateResponse = await client.evaluations.evaluate({
-    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
-    evaluated_model_input: 'What is the largest animal in the world?',
-    evaluated_model_output: 'The giant sandworm.',
-    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
-  });
+  const dataset = await client.datasets.list();
 
-  console.log(evaluateResponse.results);
+  console.log(dataset.datasets);
 }
 
 main();
@@ -52,17 +47,11 @@ This library includes TypeScript definitions for all request params and response
 import PatronusAPI from 'patronus-api';
 
 const client = new PatronusAPI({
-  apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
+  apiKey: process.env['PATRONUS_API_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
-  const params: PatronusAPI.EvaluationEvaluateParams = {
-    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
-    evaluated_model_input: 'What is the largest animal in the world?',
-    evaluated_model_output: 'The giant sandworm.',
-    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
-  };
-  const evaluateResponse: PatronusAPI.EvaluateResponse = await client.evaluations.evaluate(params);
+  const dataset: PatronusAPI.DatasetListResponse = await client.datasets.list();
 }
 
 main();
@@ -79,22 +68,15 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const evaluateResponse = await client.evaluations
-    .evaluate({
-      evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
-      evaluated_model_input: 'What is the largest animal in the world?',
-      evaluated_model_output: 'The giant sandworm.',
-      evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
-    })
-    .catch(async (err) => {
-      if (err instanceof PatronusAPI.APIError) {
-        console.log(err.status); // 400
-        console.log(err.name); // BadRequestError
-        console.log(err.headers); // {server: 'nginx', ...}
-      } else {
-        throw err;
-      }
-    });
+  const dataset = await client.datasets.list().catch(async (err) => {
+    if (err instanceof PatronusAPI.APIError) {
+      console.log(err.status); // 400
+      console.log(err.name); // BadRequestError
+      console.log(err.headers); // {server: 'nginx', ...}
+    } else {
+      throw err;
+    }
+  });
 }
 
 main();
@@ -129,7 +111,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.evaluations.evaluate({ evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }], evaluated_model_input: 'What is the largest animal in the world?', evaluated_model_output: 'The giant sandworm.', evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'] }, {
+await client.datasets.list({
   maxRetries: 5,
 });
 ```
@@ -146,7 +128,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.evaluations.evaluate({ evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }], evaluated_model_input: 'What is the largest animal in the world?', evaluated_model_output: 'The giant sandworm.', evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'] }, {
+await client.datasets.list({
   timeout: 5 * 1000,
 });
 ```
@@ -167,27 +149,13 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new PatronusAPI();
 
-const response = await client.evaluations
-  .evaluate({
-    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
-    evaluated_model_input: 'What is the largest animal in the world?',
-    evaluated_model_output: 'The giant sandworm.',
-    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
-  })
-  .asResponse();
+const response = await client.datasets.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: evaluateResponse, response: raw } = await client.evaluations
-  .evaluate({
-    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
-    evaluated_model_input: 'What is the largest animal in the world?',
-    evaluated_model_output: 'The giant sandworm.',
-    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
-  })
-  .withResponse();
+const { data: dataset, response: raw } = await client.datasets.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(evaluateResponse.results);
+console.log(dataset.datasets);
 ```
 
 ### Making custom/undocumented requests
@@ -291,17 +259,9 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.evaluations.evaluate(
-  {
-    evaluators: [{ evaluator: 'lynx-small', criteria: 'patronus:hallucination' }],
-    evaluated_model_input: 'What is the largest animal in the world?',
-    evaluated_model_output: 'The giant sandworm.',
-    evaluated_model_retrieved_context: ['The blue whale is the largest known animal.'],
-  },
-  {
-    httpAgent: new http.Agent({ keepAlive: false }),
-  },
-);
+await client.datasets.list({
+  httpAgent: new http.Agent({ keepAlive: false }),
+});
 ```
 
 ## Semantic versioning

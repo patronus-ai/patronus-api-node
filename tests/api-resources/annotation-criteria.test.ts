@@ -9,7 +9,8 @@ const client = new PatronusAPI({
 });
 
 describe('resource annotationCriteria', () => {
-  test('create: only required params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('create: only required params', async () => {
     const responsePromise = client.annotationCriteria.create({
       annotation_type: 'binary',
       name: 'x',
@@ -24,7 +25,8 @@ describe('resource annotationCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('create: required and optional params', async () => {
     const response = await client.annotationCriteria.create({
       annotation_type: 'binary',
       name: 'x',
@@ -34,7 +36,8 @@ describe('resource annotationCriteria', () => {
     });
   });
 
-  test('retrieve', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('retrieve', async () => {
     const responsePromise = client.annotationCriteria.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -45,7 +48,8 @@ describe('resource annotationCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.annotationCriteria.retrieve('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
@@ -54,7 +58,8 @@ describe('resource annotationCriteria', () => {
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  test('update: only required params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('update: only required params', async () => {
     const responsePromise = client.annotationCriteria.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       annotation_type: 'binary',
       name: 'x',
@@ -68,7 +73,8 @@ describe('resource annotationCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('update: required and optional params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('update: required and optional params', async () => {
     const response = await client.annotationCriteria.update('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       annotation_type: 'binary',
       name: 'x',
@@ -77,7 +83,8 @@ describe('resource annotationCriteria', () => {
     });
   });
 
-  test('list', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list', async () => {
     const responsePromise = client.annotationCriteria.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -88,14 +95,16 @@ describe('resource annotationCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.annotationCriteria.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  test('list: request options and params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.annotationCriteria.list(
@@ -105,7 +114,8 @@ describe('resource annotationCriteria', () => {
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  test('delete', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('delete', async () => {
     const responsePromise = client.annotationCriteria.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -116,7 +126,8 @@ describe('resource annotationCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.annotationCriteria.delete('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {

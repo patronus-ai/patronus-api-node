@@ -1,84 +1,105 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
+import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
 import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
+import * as TopLevelAPI from './resources/top-level';
 import {
+  AnnotateParams,
+  AnnotateResponse,
+  EvaluateParams,
+  EvaluateResponse,
+  ListAppsParams,
+  ListAppsResponse,
+  ListEvaluatorFamiliesResponse,
+  ListEvaluatorsResponse,
+  WhoamiResponse,
+} from './resources/top-level';
+import {
+  AnnotationCategory,
   AnnotationCriteria,
   AnnotationCriterionCreateParams,
+  AnnotationCriterionCreateResponse,
   AnnotationCriterionListParams,
+  AnnotationCriterionListResponse,
+  AnnotationCriterionRetrieveResponse,
   AnnotationCriterionUpdateParams,
-  CreateAnnotationCriteriaResponse,
-  GetAnnotationCriteriaResponse,
-  ListAnnotationCriteriaResponse,
-  UpdateAnnotationCriteriaResponse,
+  AnnotationCriterionUpdateResponse,
+  AnnotationType,
 } from './resources/annotation-criteria';
-import { AnnotateResponse, AnnotationAnnotateParams, Annotations } from './resources/annotations';
-import { AppListParams, AppResponse, Apps } from './resources/apps';
-import { EvaluateResponse, EvaluationEvaluateParams, Evaluations } from './resources/evaluations';
-import { EvaluatorFamilies, ListEvaluatorFamilyResponse } from './resources/evaluator-families';
-import { Evaluators, ListEvaluatorsResponse } from './resources/evaluators';
 import {
-  CreateExperimentResponse,
+  Dataset,
+  DatasetDownloadCsvResponse,
+  DatasetDownloadJSONLResponse,
+  DatasetHasValues,
+  DatasetListDataResponse,
+  DatasetListParams,
+  DatasetListResponse,
+  DatasetRetrieveResponse,
+  DatasetType,
+  DatasetUpdateParams,
+  DatasetUpdateResponse,
+  DatasetUploadParams,
+  DatasetUploadResponse,
+  Datasets,
+} from './resources/datasets';
+import {
+  EvaluatorCriteria,
+  EvaluatorCriterionAddRevisionParams,
+  EvaluatorCriterionAddRevisionResponse,
+  EvaluatorCriterionArchiveResponse,
+  EvaluatorCriterionCreateParams,
+  EvaluatorCriterionCreateResponse,
+  EvaluatorCriterionListParams,
+  EvaluatorCriterionListResponse,
+} from './resources/evaluator-criteria';
+import {
+  Experiment,
   ExperimentCreateParams,
+  ExperimentCreateResponse,
   ExperimentListParams,
+  ExperimentListResponse,
+  ExperimentRetrieveResponse,
   Experiments,
-  GetExperimentResponse,
-  ListExperimentResponse,
 } from './resources/experiments';
-import { Misc, WhoAmIResponse } from './resources/misc';
 import {
-  CreatePairwiseAnnotationResponse,
-  GetBatchPairwiseAnnotationsResponse,
-  ListPairwiseAnnotationsResponse,
+  PairwiseAnnotation,
   PairwiseAnnotationCreateParams,
+  PairwiseAnnotationCreateResponse,
   PairwiseAnnotationDeleteParams,
   PairwiseAnnotationGetBatchParams,
+  PairwiseAnnotationGetBatchResponse,
   PairwiseAnnotationListParams,
+  PairwiseAnnotationListResponse,
   PairwiseAnnotations,
 } from './resources/pairwise-annotations';
 import {
-  GetProjectResponse,
-  ListProjectsResponse,
   Project,
   ProjectCreateParams,
   ProjectListParams,
+  ProjectListResponse,
+  ProjectRetrieveResponse,
   Projects,
 } from './resources/projects';
 import {
-  CreateDatasetResponse,
-  DatasetCreateParams,
-  DatasetListParams,
-  DatasetUpdateParams,
-  Datasets,
-  GetDatasetsResponse,
-  ListDatasetsResponse,
-  UpdateDatasetResponse,
-} from './resources/datasets/datasets';
-import {
-  CreateEvaluationResultsBatchResponse,
-  EvaluateResultSearchResponse,
-  EvaluationResultBatchCreateParams,
-  EvaluationResultEvaluationFeedbackParams,
+  EvaluationExplainStrategies,
+  EvaluationResult,
+  EvaluationResultCreateBatchParams,
+  EvaluationResultCreateBatchResponse,
+  EvaluationResultListTagsResponse,
+  EvaluationResultRetrieveResponse,
   EvaluationResultSearchParams,
+  EvaluationResultSearchResponse,
   EvaluationResults,
-  GetEvaluationResult,
 } from './resources/evaluation-results/evaluation-results';
-import {
-  ArchiveEvaluatorCriteriaResponse,
-  CreateEvaluatorCriteriaResponse,
-  EvaluatorCriteria,
-  EvaluatorCriterionCreateParams,
-  EvaluatorCriterionListParams,
-  ListEvaluatorCriteriaResponse,
-} from './resources/evaluator-criteria/evaluator-criteria';
 
 export interface ClientOptions {
   /**
-   * API Key for authenticating with the Patronus AI API. Include in request headers as 'X-API-KEY'.
+   * Defaults to process.env['PATRONUS_API_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -150,7 +171,7 @@ export class PatronusAPI extends Core.APIClient {
   /**
    * API Client for interfacing with the Patronus API API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PATRONUS_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['PATRONUS_API_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['PATRONUS_API_BASE_URL'] ?? https://api.patronus.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -161,12 +182,12 @@ export class PatronusAPI extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('PATRONUS_API_BASE_URL'),
-    apiKey = Core.readEnv('PATRONUS_API_KEY'),
+    apiKey = Core.readEnv('PATRONUS_API_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.PatronusAPIError(
-        "The PATRONUS_API_KEY environment variable is missing or empty; either provide it, or instantiate the PatronusAPI client with an apiKey option, like new PatronusAPI({ apiKey: 'My API Key' }).",
+        "The PATRONUS_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the PatronusAPI client with an apiKey option, like new PatronusAPI({ apiKey: 'My API Key' }).",
       );
     }
 
@@ -190,18 +211,74 @@ export class PatronusAPI extends Core.APIClient {
   }
 
   datasets: API.Datasets = new API.Datasets(this);
-  evaluations: API.Evaluations = new API.Evaluations(this);
   evaluationResults: API.EvaluationResults = new API.EvaluationResults(this);
   evaluatorCriteria: API.EvaluatorCriteria = new API.EvaluatorCriteria(this);
   experiments: API.Experiments = new API.Experiments(this);
   projects: API.Projects = new API.Projects(this);
-  evaluators: API.Evaluators = new API.Evaluators(this);
-  misc: API.Misc = new API.Misc(this);
-  apps: API.Apps = new API.Apps(this);
-  evaluatorFamilies: API.EvaluatorFamilies = new API.EvaluatorFamilies(this);
-  annotations: API.Annotations = new API.Annotations(this);
   annotationCriteria: API.AnnotationCriteria = new API.AnnotationCriteria(this);
   pairwiseAnnotations: API.PairwiseAnnotations = new API.PairwiseAnnotations(this);
+
+  /**
+   * Annotate
+   */
+  annotate(
+    body: TopLevelAPI.AnnotateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TopLevelAPI.AnnotateResponse> {
+    return this.post('/v1/annotate', { body, ...options });
+  }
+
+  /**
+   * Requires either **input** or **output** field to be specified. Absence of both
+   * leads to an HTTP_422 (Unprocessable Entity) error.
+   */
+  evaluate(
+    body: TopLevelAPI.EvaluateParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TopLevelAPI.EvaluateResponse> {
+    return this.post('/v1/evaluate', { body, ...options });
+  }
+
+  /**
+   * List Apps
+   */
+  listApps(
+    query?: TopLevelAPI.ListAppsParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TopLevelAPI.ListAppsResponse>;
+  listApps(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.ListAppsResponse>;
+  listApps(
+    query: TopLevelAPI.ListAppsParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TopLevelAPI.ListAppsResponse> {
+    if (isRequestOptions(query)) {
+      return this.listApps({}, query);
+    }
+    return this.get('/v1/apps', { query, ...options });
+  }
+
+  /**
+   * List Evaluator Families
+   */
+  listEvaluatorFamilies(
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TopLevelAPI.ListEvaluatorFamiliesResponse> {
+    return this.get('/v1/evaluator-families', options);
+  }
+
+  /**
+   * List of available evaluators for Evaluation Runs and LLM Monitoring.
+   */
+  listEvaluators(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.ListEvaluatorsResponse> {
+    return this.get('/v1/evaluators', options);
+  }
+
+  /**
+   * Whoami
+   */
+  whoami(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.WhoamiResponse> {
+    return this.get('/v1/whoami', options);
+  }
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -244,98 +321,92 @@ export class PatronusAPI extends Core.APIClient {
 }
 
 PatronusAPI.Datasets = Datasets;
-PatronusAPI.Evaluations = Evaluations;
 PatronusAPI.EvaluationResults = EvaluationResults;
-PatronusAPI.EvaluatorCriteria = EvaluatorCriteria;
 PatronusAPI.Experiments = Experiments;
 PatronusAPI.Projects = Projects;
-PatronusAPI.Evaluators = Evaluators;
-PatronusAPI.Misc = Misc;
-PatronusAPI.Apps = Apps;
-PatronusAPI.EvaluatorFamilies = EvaluatorFamilies;
-PatronusAPI.Annotations = Annotations;
-PatronusAPI.AnnotationCriteria = AnnotationCriteria;
 PatronusAPI.PairwiseAnnotations = PairwiseAnnotations;
 export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
 
   export {
-    Datasets as Datasets,
-    type CreateDatasetResponse as CreateDatasetResponse,
-    type GetDatasetsResponse as GetDatasetsResponse,
-    type ListDatasetsResponse as ListDatasetsResponse,
-    type UpdateDatasetResponse as UpdateDatasetResponse,
-    type DatasetCreateParams as DatasetCreateParams,
-    type DatasetUpdateParams as DatasetUpdateParams,
-    type DatasetListParams as DatasetListParams,
+    type AnnotateResponse as AnnotateResponse,
+    type EvaluateResponse as EvaluateResponse,
+    type ListAppsResponse as ListAppsResponse,
+    type ListEvaluatorFamiliesResponse as ListEvaluatorFamiliesResponse,
+    type ListEvaluatorsResponse as ListEvaluatorsResponse,
+    type WhoamiResponse as WhoamiResponse,
+    type AnnotateParams as AnnotateParams,
+    type EvaluateParams as EvaluateParams,
+    type ListAppsParams as ListAppsParams,
   };
 
   export {
-    Evaluations as Evaluations,
-    type EvaluateResponse as EvaluateResponse,
-    type EvaluationEvaluateParams as EvaluationEvaluateParams,
+    Datasets as Datasets,
+    type Dataset as Dataset,
+    type DatasetHasValues as DatasetHasValues,
+    type DatasetType as DatasetType,
+    type DatasetRetrieveResponse as DatasetRetrieveResponse,
+    type DatasetUpdateResponse as DatasetUpdateResponse,
+    type DatasetListResponse as DatasetListResponse,
+    type DatasetDownloadCsvResponse as DatasetDownloadCsvResponse,
+    type DatasetDownloadJSONLResponse as DatasetDownloadJSONLResponse,
+    type DatasetListDataResponse as DatasetListDataResponse,
+    type DatasetUploadResponse as DatasetUploadResponse,
+    type DatasetUpdateParams as DatasetUpdateParams,
+    type DatasetListParams as DatasetListParams,
+    type DatasetUploadParams as DatasetUploadParams,
   };
 
   export {
     EvaluationResults as EvaluationResults,
-    type CreateEvaluationResultsBatchResponse as CreateEvaluationResultsBatchResponse,
-    type EvaluateResultSearchResponse as EvaluateResultSearchResponse,
-    type GetEvaluationResult as GetEvaluationResult,
-    type EvaluationResultBatchCreateParams as EvaluationResultBatchCreateParams,
-    type EvaluationResultEvaluationFeedbackParams as EvaluationResultEvaluationFeedbackParams,
+    type EvaluationExplainStrategies as EvaluationExplainStrategies,
+    type EvaluationResult as EvaluationResult,
+    type EvaluationResultRetrieveResponse as EvaluationResultRetrieveResponse,
+    type EvaluationResultCreateBatchResponse as EvaluationResultCreateBatchResponse,
+    type EvaluationResultListTagsResponse as EvaluationResultListTagsResponse,
+    type EvaluationResultSearchResponse as EvaluationResultSearchResponse,
+    type EvaluationResultCreateBatchParams as EvaluationResultCreateBatchParams,
     type EvaluationResultSearchParams as EvaluationResultSearchParams,
   };
 
   export {
-    EvaluatorCriteria as EvaluatorCriteria,
-    type ArchiveEvaluatorCriteriaResponse as ArchiveEvaluatorCriteriaResponse,
-    type CreateEvaluatorCriteriaResponse as CreateEvaluatorCriteriaResponse,
-    type ListEvaluatorCriteriaResponse as ListEvaluatorCriteriaResponse,
+    type EvaluatorCriteria as EvaluatorCriteria,
+    type EvaluatorCriterionCreateResponse as EvaluatorCriterionCreateResponse,
+    type EvaluatorCriterionListResponse as EvaluatorCriterionListResponse,
+    type EvaluatorCriterionAddRevisionResponse as EvaluatorCriterionAddRevisionResponse,
+    type EvaluatorCriterionArchiveResponse as EvaluatorCriterionArchiveResponse,
     type EvaluatorCriterionCreateParams as EvaluatorCriterionCreateParams,
     type EvaluatorCriterionListParams as EvaluatorCriterionListParams,
+    type EvaluatorCriterionAddRevisionParams as EvaluatorCriterionAddRevisionParams,
   };
 
   export {
     Experiments as Experiments,
-    type CreateExperimentResponse as CreateExperimentResponse,
-    type GetExperimentResponse as GetExperimentResponse,
-    type ListExperimentResponse as ListExperimentResponse,
+    type Experiment as Experiment,
+    type ExperimentCreateResponse as ExperimentCreateResponse,
+    type ExperimentRetrieveResponse as ExperimentRetrieveResponse,
+    type ExperimentListResponse as ExperimentListResponse,
     type ExperimentCreateParams as ExperimentCreateParams,
     type ExperimentListParams as ExperimentListParams,
   };
 
   export {
     Projects as Projects,
-    type GetProjectResponse as GetProjectResponse,
-    type ListProjectsResponse as ListProjectsResponse,
     type Project as Project,
+    type ProjectRetrieveResponse as ProjectRetrieveResponse,
+    type ProjectListResponse as ProjectListResponse,
     type ProjectCreateParams as ProjectCreateParams,
     type ProjectListParams as ProjectListParams,
   };
 
-  export { Evaluators as Evaluators, type ListEvaluatorsResponse as ListEvaluatorsResponse };
-
-  export { Misc as Misc, type WhoAmIResponse as WhoAmIResponse };
-
-  export { Apps as Apps, type AppResponse as AppResponse, type AppListParams as AppListParams };
-
   export {
-    EvaluatorFamilies as EvaluatorFamilies,
-    type ListEvaluatorFamilyResponse as ListEvaluatorFamilyResponse,
-  };
-
-  export {
-    Annotations as Annotations,
-    type AnnotateResponse as AnnotateResponse,
-    type AnnotationAnnotateParams as AnnotationAnnotateParams,
-  };
-
-  export {
-    AnnotationCriteria as AnnotationCriteria,
-    type CreateAnnotationCriteriaResponse as CreateAnnotationCriteriaResponse,
-    type GetAnnotationCriteriaResponse as GetAnnotationCriteriaResponse,
-    type ListAnnotationCriteriaResponse as ListAnnotationCriteriaResponse,
-    type UpdateAnnotationCriteriaResponse as UpdateAnnotationCriteriaResponse,
+    type AnnotationCriteria as AnnotationCriteria,
+    type AnnotationCategory as AnnotationCategory,
+    type AnnotationType as AnnotationType,
+    type AnnotationCriterionCreateResponse as AnnotationCriterionCreateResponse,
+    type AnnotationCriterionRetrieveResponse as AnnotationCriterionRetrieveResponse,
+    type AnnotationCriterionUpdateResponse as AnnotationCriterionUpdateResponse,
+    type AnnotationCriterionListResponse as AnnotationCriterionListResponse,
     type AnnotationCriterionCreateParams as AnnotationCriterionCreateParams,
     type AnnotationCriterionUpdateParams as AnnotationCriterionUpdateParams,
     type AnnotationCriterionListParams as AnnotationCriterionListParams,
@@ -343,9 +414,10 @@ export declare namespace PatronusAPI {
 
   export {
     PairwiseAnnotations as PairwiseAnnotations,
-    type CreatePairwiseAnnotationResponse as CreatePairwiseAnnotationResponse,
-    type GetBatchPairwiseAnnotationsResponse as GetBatchPairwiseAnnotationsResponse,
-    type ListPairwiseAnnotationsResponse as ListPairwiseAnnotationsResponse,
+    type PairwiseAnnotation as PairwiseAnnotation,
+    type PairwiseAnnotationCreateResponse as PairwiseAnnotationCreateResponse,
+    type PairwiseAnnotationListResponse as PairwiseAnnotationListResponse,
+    type PairwiseAnnotationGetBatchResponse as PairwiseAnnotationGetBatchResponse,
     type PairwiseAnnotationCreateParams as PairwiseAnnotationCreateParams,
     type PairwiseAnnotationListParams as PairwiseAnnotationListParams,
     type PairwiseAnnotationDeleteParams as PairwiseAnnotationDeleteParams,

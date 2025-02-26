@@ -11,14 +11,14 @@ export class AnnotationCriteria extends APIResource {
   create(
     body: AnnotationCriterionCreateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<CreateAnnotationCriteriaResponse> {
+  ): Core.APIPromise<AnnotationCriterionCreateResponse> {
     return this._client.post('/v1/annotation-criteria', { body, ...options });
   }
 
   /**
    * Get Annotation Criteria
    */
-  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<GetAnnotationCriteriaResponse> {
+  retrieve(id: string, options?: Core.RequestOptions): Core.APIPromise<AnnotationCriterionRetrieveResponse> {
     return this._client.get(`/v1/annotation-criteria/${id}`, options);
   }
 
@@ -29,7 +29,7 @@ export class AnnotationCriteria extends APIResource {
     id: string,
     body: AnnotationCriterionUpdateParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<UpdateAnnotationCriteriaResponse> {
+  ): Core.APIPromise<AnnotationCriterionUpdateResponse> {
     return this._client.put(`/v1/annotation-criteria/${id}`, { body, ...options });
   }
 
@@ -39,12 +39,12 @@ export class AnnotationCriteria extends APIResource {
   list(
     query?: AnnotationCriterionListParams,
     options?: Core.RequestOptions,
-  ): Core.APIPromise<ListAnnotationCriteriaResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<ListAnnotationCriteriaResponse>;
+  ): Core.APIPromise<AnnotationCriterionListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<AnnotationCriterionListResponse>;
   list(
     query: AnnotationCriterionListParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
-  ): Core.APIPromise<ListAnnotationCriteriaResponse> {
+  ): Core.APIPromise<AnnotationCriterionListResponse> {
     if (isRequestOptions(query)) {
       return this.list({}, query);
     }
@@ -62,170 +62,68 @@ export class AnnotationCriteria extends APIResource {
   }
 }
 
-export interface CreateAnnotationCriteriaResponse {
-  annotation_criteria: CreateAnnotationCriteriaResponse.AnnotationCriteria;
+export interface AnnotationCategory {
+  label?: string | null;
+
+  score?: number | null;
 }
 
-export namespace CreateAnnotationCriteriaResponse {
-  export interface AnnotationCriteria {
-    id: string;
+export interface AnnotationCriteria {
+  id: string;
 
-    annotation_type: string;
+  annotation_type: string;
 
-    categories: Array<AnnotationCriteria.Category> | null;
+  categories: Array<AnnotationCategory> | null;
 
-    created_at: string;
+  created_at: string;
 
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriteria {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
-}
-
-export interface GetAnnotationCriteriaResponse {
-  annotation_criteria: GetAnnotationCriteriaResponse.AnnotationCriteria;
-}
-
-export namespace GetAnnotationCriteriaResponse {
-  export interface AnnotationCriteria {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriteria.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriteria {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
-}
-
-export interface ListAnnotationCriteriaResponse {
-  annotation_criteria: Array<ListAnnotationCriteriaResponse.AnnotationCriterion>;
-}
-
-export namespace ListAnnotationCriteriaResponse {
-  export interface AnnotationCriterion {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriterion.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriterion {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
-}
-
-export interface UpdateAnnotationCriteriaResponse {
-  annotation_criteria: UpdateAnnotationCriteriaResponse.AnnotationCriteria;
-}
-
-export namespace UpdateAnnotationCriteriaResponse {
-  export interface AnnotationCriteria {
-    id: string;
-
-    annotation_type: string;
-
-    categories: Array<AnnotationCriteria.Category> | null;
-
-    created_at: string;
-
-    description: string | null;
-
-    name: string;
-
-    project_id: string;
-
-    updated_at: string;
-  }
-
-  export namespace AnnotationCriteria {
-    export interface Category {
-      label?: string | null;
-
-      score?: number | null;
-    }
-  }
-}
-
-export interface AnnotationCriterionCreateParams {
-  annotation_type: 'binary' | 'continuous' | 'discrete' | 'categorical' | 'text_annotation';
+  description: string | null;
 
   name: string;
 
   project_id: string;
 
-  categories?: Array<AnnotationCriterionCreateParams.Category> | null;
-
-  description?: string | null;
+  updated_at: string;
 }
 
-export namespace AnnotationCriterionCreateParams {
-  export interface Category {
-    label?: string | null;
+export type AnnotationType = 'binary' | 'continuous' | 'discrete' | 'categorical' | 'text_annotation';
 
-    score?: number | null;
-  }
+export interface AnnotationCriterionCreateResponse {
+  annotation_criteria: AnnotationCriteria;
 }
 
-export interface AnnotationCriterionUpdateParams {
-  annotation_type: 'binary' | 'continuous' | 'discrete' | 'categorical' | 'text_annotation';
+export interface AnnotationCriterionRetrieveResponse {
+  annotation_criteria: AnnotationCriteria;
+}
+
+export interface AnnotationCriterionUpdateResponse {
+  annotation_criteria: AnnotationCriteria;
+}
+
+export interface AnnotationCriterionListResponse {
+  annotation_criteria: Array<AnnotationCriteria>;
+}
+
+export interface AnnotationCriterionCreateParams {
+  annotation_type: AnnotationType;
 
   name: string;
 
-  categories?: Array<AnnotationCriterionUpdateParams.Category> | null;
+  project_id: string;
+
+  categories?: Array<AnnotationCategory> | null;
 
   description?: string | null;
 }
 
-export namespace AnnotationCriterionUpdateParams {
-  export interface Category {
-    label?: string | null;
+export interface AnnotationCriterionUpdateParams {
+  annotation_type: AnnotationType;
 
-    score?: number | null;
-  }
+  name: string;
+
+  categories?: Array<AnnotationCategory> | null;
+
+  description?: string | null;
 }
 
 export interface AnnotationCriterionListParams {
@@ -238,10 +136,13 @@ export interface AnnotationCriterionListParams {
 
 export declare namespace AnnotationCriteria {
   export {
-    type CreateAnnotationCriteriaResponse as CreateAnnotationCriteriaResponse,
-    type GetAnnotationCriteriaResponse as GetAnnotationCriteriaResponse,
-    type ListAnnotationCriteriaResponse as ListAnnotationCriteriaResponse,
-    type UpdateAnnotationCriteriaResponse as UpdateAnnotationCriteriaResponse,
+    type AnnotationCategory as AnnotationCategory,
+    type AnnotationCriteria as AnnotationCriteria,
+    type AnnotationType as AnnotationType,
+    type AnnotationCriterionCreateResponse as AnnotationCriterionCreateResponse,
+    type AnnotationCriterionRetrieveResponse as AnnotationCriterionRetrieveResponse,
+    type AnnotationCriterionUpdateResponse as AnnotationCriterionUpdateResponse,
+    type AnnotationCriterionListResponse as AnnotationCriterionListResponse,
     type AnnotationCriterionCreateParams as AnnotationCriterionCreateParams,
     type AnnotationCriterionUpdateParams as AnnotationCriterionUpdateParams,
     type AnnotationCriterionListParams as AnnotationCriterionListParams,

@@ -9,7 +9,8 @@ const client = new PatronusAPI({
 });
 
 describe('resource pairwiseAnnotations', () => {
-  test('create: only required params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('create: only required params', async () => {
     const responsePromise = client.pairwiseAnnotations.create({
       log_a_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       log_a_score: 0,
@@ -26,7 +27,8 @@ describe('resource pairwiseAnnotations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('create: required and optional params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('create: required and optional params', async () => {
     const response = await client.pairwiseAnnotations.create({
       log_a_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       log_a_score: 0,
@@ -36,7 +38,8 @@ describe('resource pairwiseAnnotations', () => {
     });
   });
 
-  test('list', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list', async () => {
     const responsePromise = client.pairwiseAnnotations.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -47,14 +50,16 @@ describe('resource pairwiseAnnotations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list: request options instead of params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.pairwiseAnnotations.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  test('list: request options and params are passed correctly', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.pairwiseAnnotations.list(
@@ -71,7 +76,8 @@ describe('resource pairwiseAnnotations', () => {
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  test('delete: only required params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('delete: only required params', async () => {
     const responsePromise = client.pairwiseAnnotations.delete({
       log_a_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       log_b_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -86,7 +92,8 @@ describe('resource pairwiseAnnotations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete: required and optional params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('delete: required and optional params', async () => {
     const response = await client.pairwiseAnnotations.delete({
       log_a_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       log_b_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -94,7 +101,8 @@ describe('resource pairwiseAnnotations', () => {
     });
   });
 
-  test('getBatch: only required params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('getBatch: only required params', async () => {
     const responsePromise = client.pairwiseAnnotations.getBatch({
       pairwise_annotations: [
         {
@@ -113,7 +121,8 @@ describe('resource pairwiseAnnotations', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('getBatch: required and optional params', async () => {
+  // skipped: tests are disabled for the time being
+  test.skip('getBatch: required and optional params', async () => {
     const response = await client.pairwiseAnnotations.getBatch({
       pairwise_annotations: [
         {

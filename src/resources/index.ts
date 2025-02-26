@@ -2,60 +2,68 @@
 
 export {
   AnnotationCriteria,
-  type CreateAnnotationCriteriaResponse,
-  type GetAnnotationCriteriaResponse,
-  type ListAnnotationCriteriaResponse,
-  type UpdateAnnotationCriteriaResponse,
+  type AnnotationCategory,
+  type AnnotationType,
+  type AnnotationCriterionCreateResponse,
+  type AnnotationCriterionRetrieveResponse,
+  type AnnotationCriterionUpdateResponse,
+  type AnnotationCriterionListResponse,
   type AnnotationCriterionCreateParams,
   type AnnotationCriterionUpdateParams,
   type AnnotationCriterionListParams,
 } from './annotation-criteria';
-export { Annotations, type AnnotateResponse, type AnnotationAnnotateParams } from './annotations';
-export { Apps, type AppResponse, type AppListParams } from './apps';
 export {
   Datasets,
-  type CreateDatasetResponse,
-  type GetDatasetsResponse,
-  type ListDatasetsResponse,
-  type UpdateDatasetResponse,
-  type DatasetCreateParams,
+  type Dataset,
+  type DatasetHasValues,
+  type DatasetType,
+  type DatasetRetrieveResponse,
+  type DatasetUpdateResponse,
+  type DatasetListResponse,
+  type DatasetDownloadCsvResponse,
+  type DatasetDownloadJSONLResponse,
+  type DatasetListDataResponse,
+  type DatasetUploadResponse,
   type DatasetUpdateParams,
   type DatasetListParams,
-} from './datasets/datasets';
+  type DatasetUploadParams,
+} from './datasets';
 export {
   EvaluationResults,
-  type CreateEvaluationResultsBatchResponse,
-  type EvaluateResultSearchResponse,
-  type GetEvaluationResult,
-  type EvaluationResultBatchCreateParams,
-  type EvaluationResultEvaluationFeedbackParams,
+  type EvaluationExplainStrategies,
+  type EvaluationResult,
+  type EvaluationResultRetrieveResponse,
+  type EvaluationResultCreateBatchResponse,
+  type EvaluationResultListTagsResponse,
+  type EvaluationResultSearchResponse,
+  type EvaluationResultCreateBatchParams,
   type EvaluationResultSearchParams,
 } from './evaluation-results/evaluation-results';
-export { Evaluations, type EvaluateResponse, type EvaluationEvaluateParams } from './evaluations';
 export {
   EvaluatorCriteria,
-  type ArchiveEvaluatorCriteriaResponse,
-  type CreateEvaluatorCriteriaResponse,
-  type ListEvaluatorCriteriaResponse,
+  type EvaluatorCriterionCreateResponse,
+  type EvaluatorCriterionListResponse,
+  type EvaluatorCriterionAddRevisionResponse,
+  type EvaluatorCriterionArchiveResponse,
   type EvaluatorCriterionCreateParams,
   type EvaluatorCriterionListParams,
-} from './evaluator-criteria/evaluator-criteria';
-export { EvaluatorFamilies, type ListEvaluatorFamilyResponse } from './evaluator-families';
-export { Evaluators, type ListEvaluatorsResponse } from './evaluators';
+  type EvaluatorCriterionAddRevisionParams,
+} from './evaluator-criteria';
 export {
   Experiments,
-  type CreateExperimentResponse,
-  type GetExperimentResponse,
-  type ListExperimentResponse,
+  type Experiment,
+  type ExperimentCreateResponse,
+  type ExperimentRetrieveResponse,
+  type ExperimentListResponse,
   type ExperimentCreateParams,
   type ExperimentListParams,
 } from './experiments';
-export { Misc, type WhoAmIResponse } from './misc';
 export {
   PairwiseAnnotations,
-  type CreatePairwiseAnnotationResponse,
-  type GetBatchPairwiseAnnotationsResponse,
-  type ListPairwiseAnnotationsResponse,
+  type PairwiseAnnotation,
+  type PairwiseAnnotationCreateResponse,
+  type PairwiseAnnotationListResponse,
+  type PairwiseAnnotationGetBatchResponse,
   type PairwiseAnnotationCreateParams,
   type PairwiseAnnotationListParams,
   type PairwiseAnnotationDeleteParams,
@@ -63,9 +71,20 @@ export {
 } from './pairwise-annotations';
 export {
   Projects,
-  type GetProjectResponse,
-  type ListProjectsResponse,
   type Project,
+  type ProjectRetrieveResponse,
+  type ProjectListResponse,
   type ProjectCreateParams,
   type ProjectListParams,
 } from './projects';
+export {
+  type AnnotateResponse,
+  type EvaluateResponse,
+  type ListAppsResponse,
+  type ListEvaluatorFamiliesResponse,
+  type ListEvaluatorsResponse,
+  type WhoamiResponse,
+  type AnnotateParams,
+  type EvaluateParams,
+  type ListAppsParams,
+} from './top-level';

@@ -1,15 +1,58 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import * as EvaluationResultsAPI from './evaluation-results/evaluation-results';
 
-export class Evaluations extends APIResource {
-  /**
-   * Requires either **input** or **output** field to be specified. Absence of both
-   * leads to an HTTP_422 (Unprocessable Entity) error.
-   */
-  evaluate(body: EvaluationEvaluateParams, options?: Core.RequestOptions): Core.APIPromise<EvaluateResponse> {
-    return this._client.post('/v1/evaluate', { body, ...options });
+export interface AnnotateResponse {
+  evaluation: AnnotateResponse.Evaluation;
+}
+
+export namespace AnnotateResponse {
+  export interface Evaluation {
+    id: string;
+
+    created_at: string | null;
+
+    criteria: string | null;
+
+    criteria_id: string | null;
+
+    evaluation_duration: string | null;
+
+    evaluator_family: string | null;
+
+    evaluator_id: string | null;
+
+    explain_strategy: string | null;
+
+    explanation: string | null;
+
+    explanation_duration: string | null;
+
+    log_id: string;
+
+    score: number | null;
+
+    text_output: string | null;
+
+    annotation_criteria_id?: string | null;
+
+    criteria_config?: unknown | null;
+
+    criteria_revision?: number | null;
+
+    evaluation_feedback?: boolean | null;
+
+    evaluation_type?: string | null;
+
+    metadata?: unknown | null;
+
+    metric_description?: string | null;
+
+    metric_name?: string | null;
+
+    pass?: boolean | null;
+
+    usage?: unknown | null;
   }
 }
 
@@ -23,7 +66,7 @@ export namespace EvaluateResponse {
 
     error_message: string | null;
 
-    evaluation_result: Result.EvaluationResult | null;
+    evaluation_result: EvaluationResultsAPI.EvaluationResult | null;
 
     evaluator_id: string;
 
@@ -32,137 +75,139 @@ export namespace EvaluateResponse {
      */
     status: string;
   }
+}
 
-  export namespace Result {
-    export interface EvaluationResult {
-      id: string | null;
+export interface ListAppsResponse {
+  apps: Array<ListAppsResponse.App>;
+}
 
-      additional_info: EvaluationResult.AdditionalInfo;
+export namespace ListAppsResponse {
+  export interface App {
+    name: string;
+  }
+}
 
-      app: string | null;
+export interface ListEvaluatorFamiliesResponse {
+  evaluator_families: Array<ListEvaluatorFamiliesResponse.EvaluatorFamily>;
+}
 
-      created_at: string | null;
+export namespace ListEvaluatorFamiliesResponse {
+  export interface EvaluatorFamily {
+    family_name: string;
 
-      criteria: string | null;
+    optional_input_fields: Array<string>;
 
-      criteria_revision: number | null;
+    profile_config_schema: unknown | null;
 
-      dataset_id: string | null;
+    required_input_fields: Array<string>;
+  }
+}
 
-      dataset_sample_id: number | null;
+export interface ListEvaluatorsResponse {
+  evaluators: Array<ListEvaluatorsResponse.Evaluator>;
+}
 
-      evaluated_model_gold_answer: string | null;
+export namespace ListEvaluatorsResponse {
+  export interface Evaluator {
+    id: string;
 
-      evaluated_model_id: string | null;
+    aliases: Array<string>;
 
-      evaluated_model_input: string | null;
+    description: string | null;
 
-      evaluated_model_name: string | null;
+    /**
+     * Whether the evaluator is available for LLM Monitoring.
+     */
+    evaluation_enabled: boolean;
 
-      evaluated_model_output: string | null;
+    /**
+     * Whether the evaluator is available for Evaluation Runs.
+     */
+    evaluation_run_enabled: boolean;
 
-      evaluated_model_params: unknown | null;
+    evaluator_family: string | null;
 
-      evaluated_model_provider: string | null;
+    image_url: string | null;
 
-      evaluated_model_retrieved_context: Array<string> | null;
+    name: string | null;
 
-      evaluated_model_selected_model: string | null;
+    /**
+     * Whether a profile is required by the evaluator. Learn more about profiles
+     * [here](https://docs.patronus.ai/docs/profiles).
+     */
+    profile_required: boolean;
+  }
+}
 
-      evaluated_model_system_prompt: string | null;
+export interface WhoamiResponse {
+  caller: WhoamiResponse.Caller;
+}
 
-      evaluation_duration: string | null;
+export namespace WhoamiResponse {
+  export interface Caller {
+    api_key: Caller.APIKey | null;
 
-      evaluation_feedback: boolean | null;
+    user: Caller.User | null;
+  }
 
-      evaluation_run_id: number | null;
+  export namespace Caller {
+    export interface APIKey {
+      id: string;
 
-      evaluator_family: string | null;
-
-      evaluator_id: string | null;
-
-      evaluator_profile_public_id: string | null;
-
-      experiment_id: string | null;
-
-      explain_strategy: 'never' | 'on-fail' | 'on-success' | 'always' | null;
-
-      explanation: string | null;
-
-      explanation_duration: string | null;
-
-      external: boolean;
-
-      favorite: boolean | null;
-
-      log_id: string | null;
-
-      profile_name: string | null;
-
-      project_id: string | null;
-
-      tags: Record<string, string> | null;
-
-      annotation_criteria_id?: string | null;
-
-      evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
-
-      evaluation_metadata?: unknown | null;
-
-      evaluation_type?: string | null;
-
-      metric_description?: string | null;
-
-      metric_name?: string | null;
-
-      pass?: boolean | null;
-
-      score_raw?: number | null;
-
-      text_output?: string | null;
-
-      usage_tokens?: number | null;
+      account: APIKey.Account;
     }
 
-    export namespace EvaluationResult {
-      export interface AdditionalInfo {
-        confidence_interval: AdditionalInfo.ConfidenceInterval | null;
+    export namespace APIKey {
+      export interface Account {
+        id: string;
 
-        extra: unknown | null;
-
-        positions?: Array<unknown> | null;
+        name: string;
       }
+    }
 
-      export namespace AdditionalInfo {
-        export interface ConfidenceInterval {
-          alpha: number;
+    export interface User {
+      id: string;
 
-          lower: number | null;
+      accounts: Array<User.Account>;
 
-          median: number | null;
+      is_staff: boolean;
 
-          strategy: string;
+      sub: string;
+    }
 
-          upper: number | null;
-        }
-      }
+    export namespace User {
+      export interface Account {
+        id: string;
 
-      export interface EvaluatedModelAttachment {
-        media_type: string;
+        name: string;
 
-        url: string;
+        role: string | null;
 
-        usage_type: string;
+        features_enabled?: Array<string>;
       }
     }
   }
 }
 
-export interface EvaluationEvaluateParams {
+export interface AnnotateParams {
+  annotation_criteria_id: string;
+
+  log_id: string;
+
+  explanation?: string | null;
+
+  value_pass?: boolean | null;
+
+  value_score?: number | null;
+
+  value_text?: string | null;
+}
+
+export interface EvaluateParams {
   /**
    * List of evaluators to evaluate against.
    */
-  evaluators: Array<EvaluationEvaluateParams.Evaluator>;
+  evaluators: Array<EvaluateParams.Evaluator>;
 
   /**
    * Assigns evaluation results to the app.
@@ -223,7 +268,7 @@ export interface EvaluationEvaluateParams {
    * - `usage_type`: Type of the attachment (e.g., "evaluated_model_system_prompt",
    *   "evaluated_model_input").
    */
-  evaluated_model_attachments?: Array<EvaluationEvaluateParams.EvaluatedModelAttachment> | null;
+  evaluated_model_attachments?: Array<EvaluateParams.EvaluatedModelAttachment> | null;
 
   /**
    * Gold answer for given evaluated model input
@@ -294,7 +339,7 @@ export interface EvaluationEvaluateParams {
   trace_id?: string | null;
 }
 
-export namespace EvaluationEvaluateParams {
+export namespace EvaluateParams {
   export interface Evaluator {
     /**
      * Evaluator identifier, alias or id
@@ -317,7 +362,7 @@ export namespace EvaluationEvaluateParams {
      *             *Ignored if evaluation criteria don't support explanations.
      *             *`explain_strategy` is overwriting the `explain` parameter.
      */
-    explain_strategy?: 'never' | 'on-fail' | 'on-success' | 'always';
+    explain_strategy?: EvaluationResultsAPI.EvaluationExplainStrategies;
   }
 
   export interface EvaluatedModelAttachment {
@@ -334,9 +379,22 @@ export namespace EvaluationEvaluateParams {
   }
 }
 
-export declare namespace Evaluations {
+export interface ListAppsParams {
+  limit?: number;
+
+  offset?: number;
+}
+
+export declare namespace TopLevel {
   export {
+    type AnnotateResponse as AnnotateResponse,
     type EvaluateResponse as EvaluateResponse,
-    type EvaluationEvaluateParams as EvaluationEvaluateParams,
+    type ListAppsResponse as ListAppsResponse,
+    type ListEvaluatorFamiliesResponse as ListEvaluatorFamiliesResponse,
+    type ListEvaluatorsResponse as ListEvaluatorsResponse,
+    type WhoamiResponse as WhoamiResponse,
+    type AnnotateParams as AnnotateParams,
+    type EvaluateParams as EvaluateParams,
+    type ListAppsParams as ListAppsParams,
   };
 }
