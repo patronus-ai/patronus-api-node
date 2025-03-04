@@ -9,8 +9,7 @@ const client = new PatronusAPI({
 });
 
 describe('resource evaluatorCriteria', () => {
-  // skipped: tests are disabled for the time being
-  test.skip('create: only required params', async () => {
+  test('create: only required params', async () => {
     const responsePromise = client.evaluatorCriteria.create({
       config: { foo: 'bar' },
       evaluator_family: 'evaluator_family',
@@ -25,8 +24,7 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('create: required and optional params', async () => {
+  test('create: required and optional params', async () => {
     const response = await client.evaluatorCriteria.create({
       config: { foo: 'bar' },
       evaluator_family: 'evaluator_family',
@@ -35,8 +33,7 @@ describe('resource evaluatorCriteria', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.evaluatorCriteria.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -47,16 +44,14 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('list: request options instead of params are passed correctly', async () => {
+  test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.evaluatorCriteria.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluatorCriteria.list(
@@ -76,8 +71,7 @@ describe('resource evaluatorCriteria', () => {
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('addRevision: only required params', async () => {
+  test('addRevision: only required params', async () => {
     const responsePromise = client.evaluatorCriteria.addRevision('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       config: { foo: 'bar' },
     });
@@ -90,16 +84,14 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('addRevision: required and optional params', async () => {
+  test('addRevision: required and optional params', async () => {
     const response = await client.evaluatorCriteria.addRevision('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
       config: { foo: 'bar' },
       description: 'description',
     });
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('archive', async () => {
+  test('archive', async () => {
     const responsePromise = client.evaluatorCriteria.archive('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -110,8 +102,7 @@ describe('resource evaluatorCriteria', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('archive: request options instead of params are passed correctly', async () => {
+  test('archive: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluatorCriteria.archive('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
