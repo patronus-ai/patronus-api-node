@@ -9,8 +9,7 @@ const client = new PatronusAPI({
 });
 
 describe('resource favorite', () => {
-  // skipped: tests are disabled for the time being
-  test.skip('mark', async () => {
+  test('mark', async () => {
     const responsePromise = client.evaluationResults.favorite.mark(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -21,16 +20,14 @@ describe('resource favorite', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('mark: request options instead of params are passed correctly', async () => {
+  test('mark: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluationResults.favorite.mark(0, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('unmark', async () => {
+  test('unmark', async () => {
     const responsePromise = client.evaluationResults.favorite.unmark(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -41,8 +38,7 @@ describe('resource favorite', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('unmark: request options instead of params are passed correctly', async () => {
+  test('unmark: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluationResults.favorite.unmark(0, { path: '/_stainless_unknown_path' }),

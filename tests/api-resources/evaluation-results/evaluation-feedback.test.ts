@@ -9,8 +9,7 @@ const client = new PatronusAPI({
 });
 
 describe('resource evaluationFeedback', () => {
-  // skipped: tests are disabled for the time being
-  test.skip('delete', async () => {
+  test('delete', async () => {
     const responsePromise = client.evaluationResults.evaluationFeedback.delete(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -21,16 +20,14 @@ describe('resource evaluationFeedback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('delete: request options instead of params are passed correctly', async () => {
+  test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.evaluationResults.evaluationFeedback.delete(0, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('submit: only required params', async () => {
+  test('submit: only required params', async () => {
     const responsePromise = client.evaluationResults.evaluationFeedback.submit(0, { feedback: 'positive' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -41,8 +38,7 @@ describe('resource evaluationFeedback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('submit: required and optional params', async () => {
+  test('submit: required and optional params', async () => {
     const response = await client.evaluationResults.evaluationFeedback.submit(0, { feedback: 'positive' });
   });
 });

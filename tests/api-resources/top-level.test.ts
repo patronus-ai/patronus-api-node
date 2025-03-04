@@ -9,8 +9,7 @@ const client = new PatronusAPI({
 });
 
 describe('top level methods', () => {
-  // skipped: tests are disabled for the time being
-  test.skip('annotate: only required params', async () => {
+  test('annotate: only required params', async () => {
     const responsePromise = client.annotate({
       annotation_criteria_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       log_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -24,8 +23,7 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('annotate: required and optional params', async () => {
+  test('annotate: required and optional params', async () => {
     const response = await client.annotate({
       annotation_criteria_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       log_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
@@ -36,8 +34,7 @@ describe('top level methods', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('evaluate: only required params', async () => {
+  test('evaluate: only required params', async () => {
     const responsePromise = client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -48,8 +45,7 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('evaluate: required and optional params', async () => {
+  test('evaluate: required and optional params', async () => {
     const response = await client.evaluate({
       evaluators: [{ evaluator: 'evaluator', criteria: 'x', explain_strategy: 'never' }],
       app: 'xx',
@@ -75,8 +71,7 @@ describe('top level methods', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listApps', async () => {
+  test('listApps', async () => {
     const responsePromise = client.listApps();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -87,24 +82,21 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listApps: request options instead of params are passed correctly', async () => {
+  test('listApps: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.listApps({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listApps: request options and params are passed correctly', async () => {
+  test('listApps: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.listApps({ limit: 0, offset: 0 }, { path: '/_stainless_unknown_path' }),
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listEvaluatorFamilies', async () => {
+  test('listEvaluatorFamilies', async () => {
     const responsePromise = client.listEvaluatorFamilies();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -115,16 +107,14 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listEvaluatorFamilies: request options instead of params are passed correctly', async () => {
+  test('listEvaluatorFamilies: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.listEvaluatorFamilies({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listEvaluators', async () => {
+  test('listEvaluators', async () => {
     const responsePromise = client.listEvaluators();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -135,16 +125,14 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listEvaluators: request options instead of params are passed correctly', async () => {
+  test('listEvaluators: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.listEvaluators({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('whoami', async () => {
+  test('whoami', async () => {
     const responsePromise = client.whoami();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -155,8 +143,7 @@ describe('top level methods', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('whoami: request options instead of params are passed correctly', async () => {
+  test('whoami: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.whoami({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,

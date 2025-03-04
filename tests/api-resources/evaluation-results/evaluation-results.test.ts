@@ -9,8 +9,7 @@ const client = new PatronusAPI({
 });
 
 describe('resource evaluationResults', () => {
-  // skipped: tests are disabled for the time being
-  test.skip('retrieve', async () => {
+  test('retrieve', async () => {
     const responsePromise = client.evaluationResults.retrieve(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -21,16 +20,14 @@ describe('resource evaluationResults', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('retrieve: request options instead of params are passed correctly', async () => {
+  test('retrieve: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.evaluationResults.retrieve(0, { path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('createBatch: only required params', async () => {
+  test('createBatch: only required params', async () => {
     const responsePromise = client.evaluationResults.createBatch({
       evaluation_results: [{ evaluator_id: 'evaluator_id' }],
     });
@@ -43,8 +40,7 @@ describe('resource evaluationResults', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('createBatch: required and optional params', async () => {
+  test('createBatch: required and optional params', async () => {
     const response = await client.evaluationResults.createBatch({
       evaluation_results: [
         {
@@ -78,8 +74,7 @@ describe('resource evaluationResults', () => {
     });
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listTags', async () => {
+  test('listTags', async () => {
     const responsePromise = client.evaluationResults.listTags();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -90,16 +85,14 @@ describe('resource evaluationResults', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('listTags: request options instead of params are passed correctly', async () => {
+  test('listTags: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.evaluationResults.listTags({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  // skipped: tests are disabled for the time being
-  test.skip('search', async () => {
+  test('search', async () => {
     const responsePromise = client.evaluationResults.search({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
