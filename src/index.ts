@@ -46,6 +46,14 @@ import {
   Datasets,
 } from './resources/datasets';
 import {
+  EvaluationBatchCreateParams,
+  EvaluationBatchCreateResponse,
+  EvaluationRetrieveResponse,
+  EvaluationSearchParams,
+  EvaluationSearchResponse,
+  Evaluations,
+} from './resources/evaluations';
+import {
   EvaluatorCriteria,
   EvaluatorCriterionAddRevisionParams,
   EvaluatorCriterionAddRevisionResponse,
@@ -64,6 +72,7 @@ import {
   ExperimentRetrieveResponse,
   Experiments,
 } from './resources/experiments';
+import { LogSearchParams, LogSearchResponse, Logs } from './resources/logs';
 import {
   PairwiseAnnotation,
   PairwiseAnnotationCreateParams,
@@ -83,6 +92,7 @@ import {
   ProjectRetrieveResponse,
   Projects,
 } from './resources/projects';
+import { SpanSearchParams, SpanSearchResponse, Spans } from './resources/spans';
 import {
   EvaluationExplainStrategies,
   EvaluationResult,
@@ -215,6 +225,9 @@ export class PatronusAPI extends Core.APIClient {
   projects: API.Projects = new API.Projects(this);
   annotationCriteria: API.AnnotationCriteria = new API.AnnotationCriteria(this);
   pairwiseAnnotations: API.PairwiseAnnotations = new API.PairwiseAnnotations(this);
+  logs: API.Logs = new API.Logs(this);
+  spans: API.Spans = new API.Spans(this);
+  evaluations: API.Evaluations = new API.Evaluations(this);
 
   /**
    * Annotate
@@ -323,6 +336,9 @@ PatronusAPI.EvaluationResults = EvaluationResults;
 PatronusAPI.Experiments = Experiments;
 PatronusAPI.Projects = Projects;
 PatronusAPI.PairwiseAnnotations = PairwiseAnnotations;
+PatronusAPI.Logs = Logs;
+PatronusAPI.Spans = Spans;
+PatronusAPI.Evaluations = Evaluations;
 export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
 
@@ -418,6 +434,27 @@ export declare namespace PatronusAPI {
     type PairwiseAnnotationListParams as PairwiseAnnotationListParams,
     type PairwiseAnnotationDeleteParams as PairwiseAnnotationDeleteParams,
     type PairwiseAnnotationGetBatchParams as PairwiseAnnotationGetBatchParams,
+  };
+
+  export {
+    Logs as Logs,
+    type LogSearchResponse as LogSearchResponse,
+    type LogSearchParams as LogSearchParams,
+  };
+
+  export {
+    Spans as Spans,
+    type SpanSearchResponse as SpanSearchResponse,
+    type SpanSearchParams as SpanSearchParams,
+  };
+
+  export {
+    Evaluations as Evaluations,
+    type EvaluationRetrieveResponse as EvaluationRetrieveResponse,
+    type EvaluationBatchCreateResponse as EvaluationBatchCreateResponse,
+    type EvaluationSearchResponse as EvaluationSearchResponse,
+    type EvaluationBatchCreateParams as EvaluationBatchCreateParams,
+    type EvaluationSearchParams as EvaluationSearchParams,
   };
 }
 
