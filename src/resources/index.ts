@@ -38,6 +38,14 @@ export {
   type EvaluationResultSearchParams,
 } from './evaluation-results/evaluation-results';
 export {
+  Evaluations,
+  type EvaluationRetrieveResponse,
+  type EvaluationBatchCreateResponse,
+  type EvaluationSearchResponse,
+  type EvaluationBatchCreateParams,
+  type EvaluationSearchParams,
+} from './evaluations';
+export {
   EvaluatorCriteria,
   type EvaluatorCriterionCreateResponse,
   type EvaluatorCriterionListResponse,
@@ -56,6 +64,7 @@ export {
   type ExperimentCreateParams,
   type ExperimentListParams,
 } from './experiments';
+export { Logs, type LogSearchResponse, type LogSearchParams } from './logs';
 export {
   PairwiseAnnotations,
   type PairwiseAnnotation,
@@ -75,6 +84,7 @@ export {
   type ProjectCreateParams,
   type ProjectListParams,
 } from './projects';
+export { Spans, type SpanSearchResponse, type SpanSearchParams } from './spans';
 export {
   type AnnotateResponse,
   type EvaluateResponse,
