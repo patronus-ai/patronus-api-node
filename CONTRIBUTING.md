@@ -42,14 +42,14 @@ If you’d like to use the repository from source, you can either install from g
 To install via git:
 
 ```sh
-$ npm install git+ssh://git@github.com:stainless-sdks/patronus-api-node.git
+$ npm install git+ssh://git@github.com:patronus-ai/patronus-api-node.git
 ```
 
 Alternatively, to link a local copy of the repo:
 
 ```sh
 # Clone
-$ git clone https://www.github.com/stainless-sdks/patronus-api-node
+$ git clone https://www.github.com/patronus-ai/patronus-api-node
 $ cd patronus-api-node
 
 # With yarn
