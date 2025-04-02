@@ -30,9 +30,9 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const dataset = await client.datasets.list();
+  const datasets = await client.datasets.list();
 
-  console.log(dataset.datasets);
+  console.log(datasets.datasets);
 }
 
 main();
@@ -51,7 +51,7 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const dataset: PatronusAPI.DatasetListResponse = await client.datasets.list();
+  const datasets: PatronusAPI.DatasetListResponse = await client.datasets.list();
 }
 
 main();
@@ -98,7 +98,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const dataset = await client.datasets.list().catch(async (err) => {
+  const datasets = await client.datasets.list().catch(async (err) => {
     if (err instanceof PatronusAPI.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
@@ -183,9 +183,9 @@ const response = await client.datasets.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: dataset, response: raw } = await client.datasets.list().withResponse();
+const { data: datasets, response: raw } = await client.datasets.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(dataset.datasets);
+console.log(datasets.datasets);
 ```
 
 ### Making custom/undocumented requests
