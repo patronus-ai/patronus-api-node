@@ -80,7 +80,7 @@ export interface EvaluationResult {
 
   evaluated_model_output: string | null;
 
-  evaluated_model_params: Record<string, unknown> | null;
+  evaluated_model_params: unknown | null;
 
   evaluated_model_provider: string | null;
 
@@ -126,7 +126,7 @@ export interface EvaluationResult {
 
   evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
 
-  evaluation_metadata?: Record<string, unknown> | null;
+  evaluation_metadata?: unknown | null;
 
   evaluation_type?: string | null;
 
@@ -147,7 +147,7 @@ export namespace EvaluationResult {
   export interface AdditionalInfo {
     confidence_interval: AdditionalInfo.ConfidenceInterval | null;
 
-    extra: Record<string, unknown> | null;
+    extra: unknown | null;
 
     positions?: Array<Array<number>> | null;
   }
@@ -270,7 +270,7 @@ export namespace EvaluationResultCreateBatchParams {
 
     evaluation_duration?: string | null;
 
-    evaluation_metadata?: Record<string, unknown> | null;
+    evaluation_metadata?: unknown | null;
 
     experiment_id?: string | null;
 
@@ -290,7 +290,7 @@ export namespace EvaluationResultCreateBatchParams {
     /**
      * Tags are key-value pairs used to label resources
      */
-    tags?: Record<string, string>;
+    tags?: unknown;
 
     text_output?: string | null;
   }

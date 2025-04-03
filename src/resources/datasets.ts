@@ -3,6 +3,7 @@
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
 import * as Core from '../core';
+import { JSONLDecoder } from '../internal/decoders/jsonl';
 
 export class Datasets extends APIResource {
   /**
@@ -51,21 +52,24 @@ export class Datasets extends APIResource {
   /**
    * Download Dataset Csv
    */
-  downloadCsv(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
+  downloadCsv(id: string, options?: Core.RequestOptions): Core.APIPromise<string> {
     return this._client.get(`/v1/datasets/${id}/csv`, {
       ...options,
-      headers: { Accept: '*/*', ...options?.headers },
+      headers: { Accept: 'text/csv', ...options?.headers },
     });
   }
 
   /**
    * Download Dataset Jsonl
    */
-  downloadJSONL(id: string, options?: Core.RequestOptions): Core.APIPromise<void> {
-    return this._client.get(`/v1/datasets/${id}/jsonl`, {
-      ...options,
-      headers: { Accept: '*/*', ...options?.headers },
-    });
+  downloadJSONL(id: string, options?: Core.RequestOptions): Core.APIPromise<string> {
+    return this._client
+      .get(`/v1/datasets/${id}/jsonl`, {
+        ...options,
+        headers: { Accept: 'application/jsonl', ...options?.headers },
+        __binaryResponse: true,
+      })
+      ._thenUnwrap((_, props) => JSONLDecoder.fromResponse(props.response, props.controller));
   }
 
   /**
@@ -239,6 +243,10 @@ export interface DatasetListResponse {
   datasets: Array<Dataset>;
 }
 
+export type DatasetDownloadCsvResponse = Core.Uploadable;
+
+export type DatasetDownloadJSONLResponse = Core.Uploadable;
+
 export interface DatasetListDataResponse {
   data: Array<DatasetListDataResponse.Data>;
 }
@@ -265,7 +273,7 @@ export namespace DatasetListDataResponse {
 
     meta_evaluated_model_name: string | null;
 
-    meta_evaluated_model_params: Record<string, unknown> | null;
+    meta_evaluated_model_params: unknown | null;
 
     meta_evaluated_model_provider: string | null;
 
@@ -320,6 +328,8 @@ export declare namespace Datasets {
     type DatasetRetrieveResponse as DatasetRetrieveResponse,
     type DatasetUpdateResponse as DatasetUpdateResponse,
     type DatasetListResponse as DatasetListResponse,
+    type DatasetDownloadCsvResponse as DatasetDownloadCsvResponse,
+    type DatasetDownloadJSONLResponse as DatasetDownloadJSONLResponse,
     type DatasetListDataResponse as DatasetListDataResponse,
     type DatasetUploadResponse as DatasetUploadResponse,
     type DatasetUpdateParams as DatasetUpdateParams,

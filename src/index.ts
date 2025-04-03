@@ -33,6 +33,8 @@ import {
 } from './resources/annotation-criteria';
 import {
   Dataset,
+  DatasetDownloadCsvResponse,
+  DatasetDownloadJSONLResponse,
   DatasetHasValues,
   DatasetListDataResponse,
   DatasetListParams,
@@ -45,14 +47,7 @@ import {
   DatasetUploadResponse,
   Datasets,
 } from './resources/datasets';
-import {
-  EvaluationBatchCreateParams,
-  EvaluationBatchCreateResponse,
-  EvaluationRetrieveResponse,
-  EvaluationSearchParams,
-  EvaluationSearchResponse,
-  Evaluations,
-} from './resources/evaluations';
+import { Evaluations } from './resources/evaluations';
 import {
   EvaluatorCriteria,
   EvaluatorCriterionAddRevisionParams,
@@ -72,7 +67,7 @@ import {
   ExperimentRetrieveResponse,
   Experiments,
 } from './resources/experiments';
-import { LogSearchParams, LogSearchResponse, Logs } from './resources/logs';
+import { Logs } from './resources/logs';
 import {
   PairwiseAnnotation,
   PairwiseAnnotationCreateParams,
@@ -92,7 +87,7 @@ import {
   ProjectRetrieveResponse,
   Projects,
 } from './resources/projects';
-import { SpanSearchParams, SpanSearchResponse, Spans } from './resources/spans';
+import { Spans } from './resources/spans';
 import {
   EvaluationExplainStrategies,
   EvaluationResult,
@@ -362,6 +357,8 @@ export declare namespace PatronusAPI {
     type DatasetRetrieveResponse as DatasetRetrieveResponse,
     type DatasetUpdateResponse as DatasetUpdateResponse,
     type DatasetListResponse as DatasetListResponse,
+    type DatasetDownloadCsvResponse as DatasetDownloadCsvResponse,
+    type DatasetDownloadJSONLResponse as DatasetDownloadJSONLResponse,
     type DatasetListDataResponse as DatasetListDataResponse,
     type DatasetUploadResponse as DatasetUploadResponse,
     type DatasetUpdateParams as DatasetUpdateParams,
@@ -436,26 +433,11 @@ export declare namespace PatronusAPI {
     type PairwiseAnnotationGetBatchParams as PairwiseAnnotationGetBatchParams,
   };
 
-  export {
-    Logs as Logs,
-    type LogSearchResponse as LogSearchResponse,
-    type LogSearchParams as LogSearchParams,
-  };
+  export { Logs as Logs };
 
-  export {
-    Spans as Spans,
-    type SpanSearchResponse as SpanSearchResponse,
-    type SpanSearchParams as SpanSearchParams,
-  };
+  export { Spans as Spans };
 
-  export {
-    Evaluations as Evaluations,
-    type EvaluationRetrieveResponse as EvaluationRetrieveResponse,
-    type EvaluationBatchCreateResponse as EvaluationBatchCreateResponse,
-    type EvaluationSearchResponse as EvaluationSearchResponse,
-    type EvaluationBatchCreateParams as EvaluationBatchCreateParams,
-    type EvaluationSearchParams as EvaluationSearchParams,
-  };
+  export { Evaluations as Evaluations };
 }
 
 export { toFile, fileFromPath } from './uploads';
