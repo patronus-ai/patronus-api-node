@@ -99,7 +99,8 @@ describe('resource datasets', () => {
     );
   });
 
-  test('downloadJSONL', async () => {
+  // Prism doesn't support JSONL responses yet
+  test.skip('downloadJSONL', async () => {
     const responsePromise = client.datasets.downloadJSONL('id');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -110,7 +111,8 @@ describe('resource datasets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('downloadJSONL: request options instead of params are passed correctly', async () => {
+  // Prism doesn't support JSONL responses yet
+  test.skip('downloadJSONL: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(client.datasets.downloadJSONL('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
