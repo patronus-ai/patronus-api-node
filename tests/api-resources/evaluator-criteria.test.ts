@@ -11,7 +11,7 @@ const client = new PatronusAPI({
 describe('resource evaluatorCriteria', () => {
   test('create: only required params', async () => {
     const responsePromise = client.evaluatorCriteria.create({
-      config: { foo: 'bar' },
+      config: {},
       evaluator_family: 'evaluator_family',
       name: 'name',
     });
@@ -26,7 +26,7 @@ describe('resource evaluatorCriteria', () => {
 
   test('create: required and optional params', async () => {
     const response = await client.evaluatorCriteria.create({
-      config: { foo: 'bar' },
+      config: {},
       evaluator_family: 'evaluator_family',
       name: 'name',
       description: 'description',
@@ -73,7 +73,7 @@ describe('resource evaluatorCriteria', () => {
 
   test('addRevision: only required params', async () => {
     const responsePromise = client.evaluatorCriteria.addRevision('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      config: { foo: 'bar' },
+      config: {},
     });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -86,7 +86,7 @@ describe('resource evaluatorCriteria', () => {
 
   test('addRevision: required and optional params', async () => {
     const response = await client.evaluatorCriteria.addRevision('182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', {
-      config: { foo: 'bar' },
+      config: {},
       description: 'description',
     });
   });

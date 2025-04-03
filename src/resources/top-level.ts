@@ -36,7 +36,7 @@ export namespace AnnotateResponse {
 
     annotation_criteria_id?: string | null;
 
-    criteria_config?: Record<string, unknown> | null;
+    criteria_config?: unknown | null;
 
     criteria_revision?: number | null;
 
@@ -44,7 +44,7 @@ export namespace AnnotateResponse {
 
     evaluation_type?: string | null;
 
-    metadata?: Record<string, unknown> | null;
+    metadata?: unknown | null;
 
     metric_description?: string | null;
 
@@ -52,7 +52,7 @@ export namespace AnnotateResponse {
 
     pass?: boolean | null;
 
-    usage?: Record<string, unknown> | null;
+    usage?: unknown | null;
   }
 }
 
@@ -97,7 +97,7 @@ export namespace ListEvaluatorFamiliesResponse {
 
     optional_input_fields: Array<string>;
 
-    profile_config_schema: Record<string, unknown> | null;
+    profile_config_schema: unknown | null;
 
     required_input_fields: Array<string>;
   }
@@ -256,7 +256,7 @@ export interface EvaluateParams {
    * is no guarantee that the dataset and sample are present in the Patronus AI
    * platform, as this is a self-reported value.
    */
-  dataset_sample_id?: number | null;
+  dataset_sample_id?: string | null;
 
   /**
    * Optional list of attachments to be associated with the evaluation sample. This
@@ -334,7 +334,7 @@ export interface EvaluateParams {
   /**
    * Tags are key-value pairs used to label resources
    */
-  tags?: Record<string, string>;
+  tags?: unknown;
 
   trace_id?: string | null;
 }
@@ -366,7 +366,14 @@ export namespace EvaluateParams {
   }
 
   export interface EvaluatedModelAttachment {
-    media_type: 'image/jpeg' | 'image/png';
+    media_type:
+      | 'image/jpeg'
+      | 'image/png'
+      | 'audio/flac'
+      | 'audio/mp3'
+      | 'audio/mp4'
+      | 'audio/mpeg'
+      | 'audio/wav';
 
     url: string;
 

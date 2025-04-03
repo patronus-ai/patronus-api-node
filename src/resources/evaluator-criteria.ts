@@ -56,7 +56,7 @@ export class EvaluatorCriteria extends APIResource {
 }
 
 export interface EvaluatorCriteria {
-  config: Record<string, unknown> | null;
+  config: unknown | null;
 
   created_at: string;
 
@@ -90,7 +90,7 @@ export interface EvaluatorCriterionArchiveResponse {
 }
 
 export interface EvaluatorCriterionCreateParams {
-  config: Record<string, unknown>;
+  config: unknown;
 
   evaluator_family: string;
 
@@ -120,7 +120,7 @@ export interface EvaluatorCriterionListParams {
 }
 
 export interface EvaluatorCriterionAddRevisionParams {
-  config: Record<string, unknown>;
+  config: unknown;
 
   description?: string | null;
 }

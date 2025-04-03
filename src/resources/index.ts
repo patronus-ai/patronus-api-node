@@ -20,6 +20,8 @@ export {
   type DatasetRetrieveResponse,
   type DatasetUpdateResponse,
   type DatasetListResponse,
+  type DatasetDownloadCsvResponse,
+  type DatasetDownloadJSONLResponse,
   type DatasetListDataResponse,
   type DatasetUploadResponse,
   type DatasetUpdateParams,
@@ -37,14 +39,7 @@ export {
   type EvaluationResultCreateBatchParams,
   type EvaluationResultSearchParams,
 } from './evaluation-results/evaluation-results';
-export {
-  Evaluations,
-  type EvaluationRetrieveResponse,
-  type EvaluationBatchCreateResponse,
-  type EvaluationSearchResponse,
-  type EvaluationBatchCreateParams,
-  type EvaluationSearchParams,
-} from './evaluations';
+export { Evaluations } from './evaluations';
 export {
   EvaluatorCriteria,
   type EvaluatorCriterionCreateResponse,
@@ -64,7 +59,7 @@ export {
   type ExperimentCreateParams,
   type ExperimentListParams,
 } from './experiments';
-export { Logs, type LogSearchResponse, type LogSearchParams } from './logs';
+export { Logs } from './logs';
 export {
   PairwiseAnnotations,
   type PairwiseAnnotation,
@@ -84,7 +79,7 @@ export {
   type ProjectCreateParams,
   type ProjectListParams,
 } from './projects';
-export { Spans, type SpanSearchResponse, type SpanSearchParams } from './spans';
+export { Spans } from './spans';
 export {
   type AnnotateResponse,
   type EvaluateResponse,
