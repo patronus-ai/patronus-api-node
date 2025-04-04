@@ -2,6 +2,7 @@
 
 import { APIResource } from '../resource';
 import { isRequestOptions } from '../core';
+import { APIPromise } from '../core';
 import * as Core from '../core';
 import { JSONLDecoder } from '../internal/decoders/jsonl';
 
@@ -62,14 +63,20 @@ export class Datasets extends APIResource {
   /**
    * Download Dataset Jsonl
    */
-  downloadJSONL(id: string, options?: Core.RequestOptions): Core.APIPromise<string> {
+  downloadJSONL(
+    id: string,
+    options?: Core.RequestOptions,
+  ): APIPromise<JSONLDecoder<DatasetDownloadJSONLResponse>> {
     return this._client
       .get(`/v1/datasets/${id}/jsonl`, {
         ...options,
         headers: { Accept: 'application/jsonl', ...options?.headers },
+        stream: true,
         __binaryResponse: true,
       })
-      ._thenUnwrap((_, props) => JSONLDecoder.fromResponse(props.response, props.controller));
+      ._thenUnwrap((_, props) => JSONLDecoder.fromResponse(props.response, props.controller)) as APIPromise<
+      JSONLDecoder<DatasetDownloadJSONLResponse>
+    >;
   }
 
   /**
