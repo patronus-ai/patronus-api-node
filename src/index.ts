@@ -47,7 +47,14 @@ import {
   DatasetUploadResponse,
   Datasets,
 } from './resources/datasets';
-import { Evaluations } from './resources/evaluations';
+import {
+  EvaluationBatchCreateParams,
+  EvaluationBatchCreateResponse,
+  EvaluationRetrieveResponse,
+  EvaluationSearchParams,
+  EvaluationSearchResponse,
+  Evaluations,
+} from './resources/evaluations';
 import {
   EvaluatorCriteria,
   EvaluatorCriterionAddRevisionParams,
@@ -437,7 +444,14 @@ export declare namespace PatronusAPI {
 
   export { Spans as Spans };
 
-  export { Evaluations as Evaluations };
+  export {
+    Evaluations as Evaluations,
+    type EvaluationRetrieveResponse as EvaluationRetrieveResponse,
+    type EvaluationBatchCreateResponse as EvaluationBatchCreateResponse,
+    type EvaluationSearchResponse as EvaluationSearchResponse,
+    type EvaluationBatchCreateParams as EvaluationBatchCreateParams,
+    type EvaluationSearchParams as EvaluationSearchParams,
+  };
 }
 
 export { toFile, fileFromPath } from './uploads';
