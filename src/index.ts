@@ -74,7 +74,6 @@ import {
   ExperimentRetrieveResponse,
   Experiments,
 } from './resources/experiments';
-import { Logs } from './resources/logs';
 import {
   PairwiseAnnotation,
   PairwiseAnnotationCreateParams,
@@ -108,7 +107,6 @@ import {
   PromptUpdateResponse,
   Prompts,
 } from './resources/prompts';
-import { Spans } from './resources/spans';
 import { TraceInsight, TraceInsightListParams, TraceInsightListResponse } from './resources/trace-insight';
 import {
   TraceInsightJobCreateParams,
@@ -117,17 +115,6 @@ import {
   TraceInsightJobListResponse,
   TraceInsightJobs,
 } from './resources/trace-insight-jobs';
-import {
-  EvaluationExplainStrategies,
-  EvaluationResult,
-  EvaluationResultCreateBatchParams,
-  EvaluationResultCreateBatchResponse,
-  EvaluationResultListTagsResponse,
-  EvaluationResultRetrieveResponse,
-  EvaluationResultSearchParams,
-  EvaluationResultSearchResponse,
-  EvaluationResults,
-} from './resources/evaluation-results/evaluation-results';
 import { Otel } from './resources/otel/otel';
 
 export interface ClientOptions {
@@ -244,14 +231,11 @@ export class PatronusAPI extends Core.APIClient {
   }
 
   datasets: API.Datasets = new API.Datasets(this);
-  evaluationResults: API.EvaluationResults = new API.EvaluationResults(this);
   evaluatorCriteria: API.EvaluatorCriteria = new API.EvaluatorCriteria(this);
   experiments: API.Experiments = new API.Experiments(this);
   projects: API.Projects = new API.Projects(this);
   annotationCriteria: API.AnnotationCriteria = new API.AnnotationCriteria(this);
   pairwiseAnnotations: API.PairwiseAnnotations = new API.PairwiseAnnotations(this);
-  logs: API.Logs = new API.Logs(this);
-  spans: API.Spans = new API.Spans(this);
   evaluations: API.Evaluations = new API.Evaluations(this);
   prompts: API.Prompts = new API.Prompts(this);
   otel: API.Otel = new API.Otel(this);
@@ -361,12 +345,9 @@ export class PatronusAPI extends Core.APIClient {
 }
 
 PatronusAPI.Datasets = Datasets;
-PatronusAPI.EvaluationResults = EvaluationResults;
 PatronusAPI.Experiments = Experiments;
 PatronusAPI.Projects = Projects;
 PatronusAPI.PairwiseAnnotations = PairwiseAnnotations;
-PatronusAPI.Logs = Logs;
-PatronusAPI.Spans = Spans;
 PatronusAPI.Evaluations = Evaluations;
 PatronusAPI.Prompts = Prompts;
 PatronusAPI.Otel = Otel;
@@ -402,18 +383,6 @@ export declare namespace PatronusAPI {
     type DatasetUpdateParams as DatasetUpdateParams,
     type DatasetListParams as DatasetListParams,
     type DatasetUploadParams as DatasetUploadParams,
-  };
-
-  export {
-    EvaluationResults as EvaluationResults,
-    type EvaluationExplainStrategies as EvaluationExplainStrategies,
-    type EvaluationResult as EvaluationResult,
-    type EvaluationResultRetrieveResponse as EvaluationResultRetrieveResponse,
-    type EvaluationResultCreateBatchResponse as EvaluationResultCreateBatchResponse,
-    type EvaluationResultListTagsResponse as EvaluationResultListTagsResponse,
-    type EvaluationResultSearchResponse as EvaluationResultSearchResponse,
-    type EvaluationResultCreateBatchParams as EvaluationResultCreateBatchParams,
-    type EvaluationResultSearchParams as EvaluationResultSearchParams,
   };
 
   export {
@@ -470,10 +439,6 @@ export declare namespace PatronusAPI {
     type PairwiseAnnotationDeleteParams as PairwiseAnnotationDeleteParams,
     type PairwiseAnnotationGetBatchParams as PairwiseAnnotationGetBatchParams,
   };
-
-  export { Logs as Logs };
-
-  export { Spans as Spans };
 
   export {
     Evaluations as Evaluations,
