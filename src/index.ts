@@ -94,7 +94,29 @@ import {
   ProjectRetrieveResponse,
   Projects,
 } from './resources/projects';
+import {
+  PromptCreateParams,
+  PromptCreateResponse,
+  PromptCreateRevisionParams,
+  PromptCreateRevisionResponse,
+  PromptDeleteParams,
+  PromptDeleteResponse,
+  PromptListParams,
+  PromptListResponse,
+  PromptSetLabelsParams,
+  PromptUpdateParams,
+  PromptUpdateResponse,
+  Prompts,
+} from './resources/prompts';
 import { Spans } from './resources/spans';
+import { TraceInsight, TraceInsightListParams, TraceInsightListResponse } from './resources/trace-insight';
+import {
+  TraceInsightJobCreateParams,
+  TraceInsightJobCreateResponse,
+  TraceInsightJobListParams,
+  TraceInsightJobListResponse,
+  TraceInsightJobs,
+} from './resources/trace-insight-jobs';
 import {
   EvaluationExplainStrategies,
   EvaluationResult,
@@ -106,6 +128,7 @@ import {
   EvaluationResultSearchResponse,
   EvaluationResults,
 } from './resources/evaluation-results/evaluation-results';
+import { Otel } from './resources/otel/otel';
 
 export interface ClientOptions {
   /**
@@ -230,6 +253,10 @@ export class PatronusAPI extends Core.APIClient {
   logs: API.Logs = new API.Logs(this);
   spans: API.Spans = new API.Spans(this);
   evaluations: API.Evaluations = new API.Evaluations(this);
+  prompts: API.Prompts = new API.Prompts(this);
+  otel: API.Otel = new API.Otel(this);
+  traceInsightJobs: API.TraceInsightJobs = new API.TraceInsightJobs(this);
+  traceInsight: API.TraceInsight = new API.TraceInsight(this);
 
   /**
    * Annotate
@@ -341,6 +368,10 @@ PatronusAPI.PairwiseAnnotations = PairwiseAnnotations;
 PatronusAPI.Logs = Logs;
 PatronusAPI.Spans = Spans;
 PatronusAPI.Evaluations = Evaluations;
+PatronusAPI.Prompts = Prompts;
+PatronusAPI.Otel = Otel;
+PatronusAPI.TraceInsightJobs = TraceInsightJobs;
+PatronusAPI.TraceInsight = TraceInsight;
 export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
 
@@ -451,6 +482,37 @@ export declare namespace PatronusAPI {
     type EvaluationSearchResponse as EvaluationSearchResponse,
     type EvaluationBatchCreateParams as EvaluationBatchCreateParams,
     type EvaluationSearchParams as EvaluationSearchParams,
+  };
+
+  export {
+    Prompts as Prompts,
+    type PromptCreateResponse as PromptCreateResponse,
+    type PromptUpdateResponse as PromptUpdateResponse,
+    type PromptListResponse as PromptListResponse,
+    type PromptDeleteResponse as PromptDeleteResponse,
+    type PromptCreateRevisionResponse as PromptCreateRevisionResponse,
+    type PromptCreateParams as PromptCreateParams,
+    type PromptUpdateParams as PromptUpdateParams,
+    type PromptListParams as PromptListParams,
+    type PromptDeleteParams as PromptDeleteParams,
+    type PromptCreateRevisionParams as PromptCreateRevisionParams,
+    type PromptSetLabelsParams as PromptSetLabelsParams,
+  };
+
+  export { Otel as Otel };
+
+  export {
+    TraceInsightJobs as TraceInsightJobs,
+    type TraceInsightJobCreateResponse as TraceInsightJobCreateResponse,
+    type TraceInsightJobListResponse as TraceInsightJobListResponse,
+    type TraceInsightJobCreateParams as TraceInsightJobCreateParams,
+    type TraceInsightJobListParams as TraceInsightJobListParams,
+  };
+
+  export {
+    TraceInsight as TraceInsight,
+    type TraceInsightListResponse as TraceInsightListResponse,
+    type TraceInsightListParams as TraceInsightListParams,
   };
 }
 
