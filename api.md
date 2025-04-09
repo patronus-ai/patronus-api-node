@@ -165,3 +165,16 @@ Methods:
 # Spans
 
 # Evaluations
+
+Types:
+
+- <code><a href="./src/resources/evaluations.ts">EvaluationRetrieveResponse</a></code>
+- <code><a href="./src/resources/evaluations.ts">EvaluationBatchCreateResponse</a></code>
+- <code><a href="./src/resources/evaluations.ts">EvaluationSearchResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">retrieve</a>(id) -> EvaluationRetrieveResponse</code>
+- <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">delete</a>(id) -> void</code>
+- <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/resources/evaluations.ts">batchCreate</a>({ ...params }) -> EvaluationBatchCreateResponse</code>
+- <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/resources/evaluations.ts">search</a>({ ...params }) -> EvaluationSearchResponse</code>
