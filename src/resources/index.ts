@@ -39,7 +39,14 @@ export {
   type EvaluationResultCreateBatchParams,
   type EvaluationResultSearchParams,
 } from './evaluation-results/evaluation-results';
-export { Evaluations } from './evaluations';
+export {
+  Evaluations,
+  type EvaluationRetrieveResponse,
+  type EvaluationBatchCreateResponse,
+  type EvaluationSearchResponse,
+  type EvaluationBatchCreateParams,
+  type EvaluationSearchParams,
+} from './evaluations';
 export {
   EvaluatorCriteria,
   type EvaluatorCriterionCreateResponse,
