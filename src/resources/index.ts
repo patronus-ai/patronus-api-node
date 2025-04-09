@@ -67,6 +67,7 @@ export {
   type ExperimentListParams,
 } from './experiments';
 export { Logs } from './logs';
+export { Otel } from './otel/otel';
 export {
   PairwiseAnnotations,
   type PairwiseAnnotation,
@@ -86,7 +87,29 @@ export {
   type ProjectCreateParams,
   type ProjectListParams,
 } from './projects';
+export {
+  Prompts,
+  type PromptCreateResponse,
+  type PromptUpdateResponse,
+  type PromptListResponse,
+  type PromptDeleteResponse,
+  type PromptCreateRevisionResponse,
+  type PromptCreateParams,
+  type PromptUpdateParams,
+  type PromptListParams,
+  type PromptDeleteParams,
+  type PromptCreateRevisionParams,
+  type PromptSetLabelsParams,
+} from './prompts';
 export { Spans } from './spans';
+export { TraceInsight, type TraceInsightListResponse, type TraceInsightListParams } from './trace-insight';
+export {
+  TraceInsightJobs,
+  type TraceInsightJobCreateResponse,
+  type TraceInsightJobListResponse,
+  type TraceInsightJobCreateParams,
+  type TraceInsightJobListParams,
+} from './trace-insight-jobs';
 export {
   type AnnotateResponse,
   type EvaluateResponse,

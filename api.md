@@ -178,3 +178,66 @@ Methods:
 - <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">delete</a>(id) -> void</code>
 - <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/resources/evaluations.ts">batchCreate</a>({ ...params }) -> EvaluationBatchCreateResponse</code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/resources/evaluations.ts">search</a>({ ...params }) -> EvaluationSearchResponse</code>
+
+# Prompts
+
+Types:
+
+- <code><a href="./src/resources/prompts.ts">PromptCreateResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptUpdateResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptListResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptDeleteResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptCreateRevisionResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/prompts">client.prompts.<a href="./src/resources/prompts.ts">create</a>({ ...params }) -> PromptCreateResponse</code>
+- <code title="patch /v1/prompts/{name}">client.prompts.<a href="./src/resources/prompts.ts">update</a>(pathName, { ...params }) -> unknown</code>
+- <code title="get /v1/prompts">client.prompts.<a href="./src/resources/prompts.ts">list</a>({ ...params }) -> PromptListResponse</code>
+- <code title="delete /v1/prompts/{name}">client.prompts.<a href="./src/resources/prompts.ts">delete</a>(name, { ...params }) -> unknown</code>
+- <code title="post /v1/prompts/{name}/revision">client.prompts.<a href="./src/resources/prompts.ts">createRevision</a>(name, { ...params }) -> PromptCreateRevisionResponse</code>
+- <code title="post /v1/prompts/{name}/set-labels">client.prompts.<a href="./src/resources/prompts.ts">setLabels</a>(name, { ...params }) -> void</code>
+
+# Otel
+
+## Logs
+
+Types:
+
+- <code><a href="./src/resources/otel/logs.ts">LogSearchResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/otel/logs/search">client.otel.logs.<a href="./src/resources/otel/logs.ts">search</a>({ ...params }) -> LogSearchResponse</code>
+
+## Spans
+
+Types:
+
+- <code><a href="./src/resources/otel/spans.ts">SpanSearchResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/otel/spans/search">client.otel.spans.<a href="./src/resources/otel/spans.ts">search</a>({ ...params }) -> SpanSearchResponse</code>
+
+# TraceInsightJobs
+
+Types:
+
+- <code><a href="./src/resources/trace-insight-jobs.ts">TraceInsightJobCreateResponse</a></code>
+- <code><a href="./src/resources/trace-insight-jobs.ts">TraceInsightJobListResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/trace-insight-jobs">client.traceInsightJobs.<a href="./src/resources/trace-insight-jobs.ts">create</a>({ ...params }) -> TraceInsightJobCreateResponse</code>
+- <code title="get /v1/trace-insight-jobs">client.traceInsightJobs.<a href="./src/resources/trace-insight-jobs.ts">list</a>({ ...params }) -> TraceInsightJobListResponse</code>
+
+# TraceInsight
+
+Types:
+
+- <code><a href="./src/resources/trace-insight.ts">TraceInsightListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/trace-insight">client.traceInsight.<a href="./src/resources/trace-insight.ts">list</a>({ ...params }) -> TraceInsightListResponse</code>
