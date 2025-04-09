@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import * as EvaluationResultsAPI from './evaluation-results/evaluation-results';
-
 export interface AnnotateResponse {
   evaluation: AnnotateResponse.Evaluation;
 }
@@ -66,7 +64,7 @@ export namespace EvaluateResponse {
 
     error_message: string | null;
 
-    evaluation_result: EvaluationResultsAPI.EvaluationResult | null;
+    evaluation_result: Result.EvaluationResult | null;
 
     evaluator_id: string;
 
@@ -74,6 +72,130 @@ export namespace EvaluateResponse {
      * Status of the criterion evaluation. "success" indicates successful evaluation.
      */
     status: string;
+  }
+
+  export namespace Result {
+    export interface EvaluationResult {
+      id: string | null;
+
+      additional_info: EvaluationResult.AdditionalInfo;
+
+      app: string | null;
+
+      created_at: string | null;
+
+      criteria: string | null;
+
+      criteria_revision: number | null;
+
+      dataset_id: string | null;
+
+      dataset_sample_id: number | null;
+
+      evaluated_model_gold_answer: string | null;
+
+      evaluated_model_id: string | null;
+
+      evaluated_model_input: string | null;
+
+      evaluated_model_name: string | null;
+
+      evaluated_model_output: string | null;
+
+      evaluated_model_params: unknown | null;
+
+      evaluated_model_provider: string | null;
+
+      evaluated_model_retrieved_context: Array<string> | null;
+
+      evaluated_model_selected_model: string | null;
+
+      evaluated_model_system_prompt: string | null;
+
+      evaluation_duration: string | null;
+
+      evaluation_feedback: boolean | null;
+
+      evaluation_run_id: number | null;
+
+      evaluator_family: string | null;
+
+      evaluator_id: string | null;
+
+      evaluator_profile_public_id: string | null;
+
+      experiment_id: string | null;
+
+      explain_strategy: 'never' | 'on-fail' | 'on-success' | 'always' | null;
+
+      explanation: string | null;
+
+      explanation_duration: string | null;
+
+      external: boolean;
+
+      favorite: boolean | null;
+
+      log_id: string | null;
+
+      profile_name: string | null;
+
+      project_id: string | null;
+
+      tags: Record<string, string> | null;
+
+      annotation_criteria_id?: string | null;
+
+      evaluated_model_attachments?: Array<EvaluationResult.EvaluatedModelAttachment> | null;
+
+      evaluation_metadata?: unknown | null;
+
+      evaluation_type?: string | null;
+
+      metric_description?: string | null;
+
+      metric_name?: string | null;
+
+      pass?: boolean | null;
+
+      score_raw?: number | null;
+
+      text_output?: string | null;
+
+      usage_tokens?: number | null;
+    }
+
+    export namespace EvaluationResult {
+      export interface AdditionalInfo {
+        confidence_interval: AdditionalInfo.ConfidenceInterval | null;
+
+        extra: unknown | null;
+
+        positions?: Array<Array<number>> | null;
+      }
+
+      export namespace AdditionalInfo {
+        export interface ConfidenceInterval {
+          alpha: number;
+
+          lower: number | null;
+
+          median: number | null;
+
+          strategy: string;
+
+          upper: number | null;
+        }
+      }
+
+      export interface EvaluatedModelAttachment {
+        media_type: string;
+
+        url: string;
+
+        usage_type: string;
+      }
+    }
   }
 }
 
@@ -362,7 +484,7 @@ export namespace EvaluateParams {
      *             *Ignored if evaluation criteria don't support explanations.
      *             *`explain_strategy` is overwriting the `explain` parameter.
      */
-    explain_strategy?: EvaluationResultsAPI.EvaluationExplainStrategies;
+    explain_strategy?: 'never' | 'on-fail' | 'on-success' | 'always';
   }
 
   export interface EvaluatedModelAttachment {

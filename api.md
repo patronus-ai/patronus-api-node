@@ -44,38 +44,6 @@ Methods:
 - <code title="get /v1/datasets/{id}/data">client.datasets.<a href="./src/resources/datasets.ts">listData</a>(id) -> DatasetListDataResponse</code>
 - <code title="post /v1/datasets">client.datasets.<a href="./src/resources/datasets.ts">upload</a>({ ...params }) -> DatasetUploadResponse</code>
 
-# EvaluationResults
-
-Types:
-
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationExplainStrategies</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResult</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultRetrieveResponse</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultCreateBatchResponse</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultListTagsResponse</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultSearchResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/evaluation-results/{id}">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">retrieve</a>(id) -> EvaluationResultRetrieveResponse</code>
-- <code title="post /v1/evaluation-results/batch">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">createBatch</a>({ ...params }) -> EvaluationResultCreateBatchResponse</code>
-- <code title="get /v1/evaluation-results/tags">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">listTags</a>() -> EvaluationResultListTagsResponse</code>
-- <code title="post /v1/evaluation-results/search">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">search</a>({ ...params }) -> EvaluationResultSearchResponse</code>
-
-## Favorite
-
-Methods:
-
-- <code title="post /v1/evaluation-results/{id}/favorite">client.evaluationResults.favorite.<a href="./src/resources/evaluation-results/favorite.ts">mark</a>(id) -> void</code>
-- <code title="delete /v1/evaluation-results/{id}/favorite">client.evaluationResults.favorite.<a href="./src/resources/evaluation-results/favorite.ts">unmark</a>(id) -> void</code>
-
-## EvaluationFeedback
-
-Methods:
-
-- <code title="delete /v1/evaluation-results/{id}/evaluation-feedback">client.evaluationResults.evaluationFeedback.<a href="./src/resources/evaluation-results/evaluation-feedback.ts">delete</a>(id) -> void</code>
-- <code title="post /v1/evaluation-results/{id}/evaluation-feedback">client.evaluationResults.evaluationFeedback.<a href="./src/resources/evaluation-results/evaluation-feedback.ts">submit</a>(id, { ...params }) -> void</code>
-
 # EvaluatorCriteria
 
 Types:
@@ -159,10 +127,6 @@ Methods:
 - <code title="get /v1/pairwise-annotations">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">list</a>({ ...params }) -> PairwiseAnnotationListResponse</code>
 - <code title="delete /v1/pairwise-annotations">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">delete</a>({ ...params }) -> void</code>
 - <code title="post /v1/pairwise-annotations/get-batch">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">getBatch</a>({ ...params }) -> PairwiseAnnotationGetBatchResponse</code>
-
-# Logs
-
-# Spans
 
 # Evaluations
 

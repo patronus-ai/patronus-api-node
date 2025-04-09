@@ -1,4 +1,4 @@
-configured_endpoints: 58
+configured_endpoints: 50
 openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/patronus-ai%2Fpatronus-api-cc86f024c54fb18a11d022cf0b66ed462fca5f37a2c6f82b5af1d28e43d2712b.yml
 openapi_spec_hash: f6e3169893e91d6514443c09890dce93
-config_hash: d1b3f9907b566516a15d53008002ff94
+config_hash: 3e6640256fb400f8fcf693d52b978593

@@ -29,17 +29,6 @@ export {
   type DatasetUploadParams,
 } from './datasets';
 export {
-  EvaluationResults,
-  type EvaluationExplainStrategies,
-  type EvaluationResult,
-  type EvaluationResultRetrieveResponse,
-  type EvaluationResultCreateBatchResponse,
-  type EvaluationResultListTagsResponse,
-  type EvaluationResultSearchResponse,
-  type EvaluationResultCreateBatchParams,
-  type EvaluationResultSearchParams,
-} from './evaluation-results/evaluation-results';
-export {
   Evaluations,
   type EvaluationRetrieveResponse,
   type EvaluationBatchCreateResponse,
@@ -66,7 +55,6 @@ export {
   type ExperimentCreateParams,
   type ExperimentListParams,
 } from './experiments';
-export { Logs } from './logs';
 export { Otel } from './otel/otel';
 export {
   PairwiseAnnotations,
@@ -101,7 +89,6 @@ export {
   type PromptCreateRevisionParams,
   type PromptSetLabelsParams,
 } from './prompts';
-export { Spans } from './spans';
 export { TraceInsight, type TraceInsightListResponse, type TraceInsightListParams } from './trace-insight';
 export {
   TraceInsightJobs,
