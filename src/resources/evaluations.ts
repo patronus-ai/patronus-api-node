@@ -322,12 +322,12 @@ export interface EvaluationSearchParams {
   filters?: Array<EvaluationSearchParams.Filter> | null;
 
   /**
-   * Deprecated, please use 'filters' instead.
+   * @deprecated Deprecated, please use 'filters' instead.
    */
   log_id_in?: Array<string> | null;
 
   /**
-   * Deprecated, please use 'filters' instead.
+   * @deprecated Deprecated, please use 'filters' instead.
    */
   trace_id?: string | null;
 }
