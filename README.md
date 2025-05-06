@@ -30,7 +30,9 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const response = await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] });
+  const response = await client.evaluate({
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+  });
 
   console.log(response.results);
 }
@@ -51,7 +53,9 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const params: PatronusAPI.EvaluateParams = { evaluators: [{ evaluator: 'evaluator' }] };
+  const params: PatronusAPI.EvaluateParams = {
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+  };
   const response: PatronusAPI.EvaluateResponse = await client.evaluate(params);
 }
 
@@ -69,15 +73,17 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const response = await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }).catch(async (err) => {
-    if (err instanceof PatronusAPI.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+  const response = await client
+    .evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] })
+    .catch(async (err) => {
+      if (err instanceof PatronusAPI.APIError) {
+        console.log(err.status); // 400
+        console.log(err.name); // BadRequestError
+        console.log(err.headers); // {server: 'nginx', ...}
+      } else {
+        throw err;
+      }
+    });
 }
 
 main();
@@ -112,7 +118,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
+await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] }, {
   maxRetries: 5,
 });
 ```
@@ -129,7 +135,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
+await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -150,12 +156,14 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new PatronusAPI();
 
-const response = await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }).asResponse();
+const response = await client
+  .evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client
-  .evaluate({ evaluators: [{ evaluator: 'evaluator' }] })
+  .evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.results);
@@ -263,7 +271,7 @@ const client = new PatronusAPI({
 
 // Override per-request:
 await client.evaluate(
-  { evaluators: [{ evaluator: 'evaluator' }] },
+  { evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
