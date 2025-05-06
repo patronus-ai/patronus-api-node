@@ -1,7 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export { AnnotationCriteria } from './annotation-criteria';
-export { Datasets } from './datasets';
 export {
   Evaluations,
   type EvaluationRetrieveResponse,
@@ -30,7 +28,6 @@ export {
   type ExperimentListParams,
 } from './experiments';
 export { Otel } from './otel/otel';
-export { PairwiseAnnotations } from './pairwise-annotations';
 export {
   Projects,
   type Project,

@@ -20,7 +20,7 @@ or products provided by Patronus API please follow the respective company's secu
 
 ### Patronus API Terms and Policies
 
-Please contact dev-feedback@patronus-api.com for any questions or concerns regarding security of our services.
+Please contact contact@patronus.ai for any questions or concerns regarding security of our services.
 
 ---
 

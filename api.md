@@ -16,8 +16,6 @@ Methods:
 - <code title="get /v1/evaluators">client.<a href="./src/index.ts">listEvaluators</a>() -> ListEvaluatorsResponse</code>
 - <code title="get /v1/whoami">client.<a href="./src/index.ts">whoami</a>() -> WhoamiResponse</code>
 
-# Datasets
-
 # EvaluatorCriteria
 
 Types:
@@ -65,10 +63,6 @@ Methods:
 - <code title="get /v1/projects/{id}">client.projects.<a href="./src/resources/projects.ts">retrieve</a>(id) -> ProjectRetrieveResponse</code>
 - <code title="get /v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
 - <code title="delete /v1/projects/{id}">client.projects.<a href="./src/resources/projects.ts">delete</a>(id) -> void</code>
-
-# AnnotationCriteria
-
-# PairwiseAnnotations
 
 # Evaluations
 
