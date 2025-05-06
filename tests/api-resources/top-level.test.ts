@@ -31,11 +31,6 @@ describe('top level methods', () => {
       evaluated_model_attachments: [
         { media_type: 'image/jpeg', url: 'https://example.com', usage_type: 'evaluated_model_system_prompt' },
       ],
-      evaluated_model_gold_answer: 'evaluated_model_gold_answer',
-      evaluated_model_input: 'evaluated_model_input',
-      evaluated_model_output: 'evaluated_model_output',
-      evaluated_model_retrieved_context: ['string'],
-      evaluated_model_system_prompt: 'evaluated_model_system_prompt',
       experiment_id: 'experiment_id',
       gold_answer: 'gold_answer',
       log_id: 'log_id',
