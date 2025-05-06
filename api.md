@@ -1,21 +1,3 @@
-# PatronusAPI
-
-Types:
-
-- <code><a href="./src/resources/top-level.ts">EvaluateResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">ListAppsResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">ListEvaluatorFamiliesResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">ListEvaluatorsResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">WhoamiResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/evaluate">client.<a href="./src/index.ts">evaluate</a>({ ...params }) -> EvaluateResponse</code>
-- <code title="get /v1/apps">client.<a href="./src/index.ts">listApps</a>({ ...params }) -> ListAppsResponse</code>
-- <code title="get /v1/evaluator-families">client.<a href="./src/index.ts">listEvaluatorFamilies</a>() -> ListEvaluatorFamiliesResponse</code>
-- <code title="get /v1/evaluators">client.<a href="./src/index.ts">listEvaluators</a>() -> ListEvaluatorsResponse</code>
-- <code title="get /v1/whoami">client.<a href="./src/index.ts">whoami</a>() -> WhoamiResponse</code>
-
 # EvaluatorCriteria
 
 Types:
@@ -70,6 +52,7 @@ Types:
 
 - <code><a href="./src/resources/evaluations.ts">EvaluationRetrieveResponse</a></code>
 - <code><a href="./src/resources/evaluations.ts">EvaluationBatchCreateResponse</a></code>
+- <code><a href="./src/resources/evaluations.ts">EvaluationEvaluateResponse</a></code>
 - <code><a href="./src/resources/evaluations.ts">EvaluationSearchResponse</a></code>
 
 Methods:
@@ -77,6 +60,7 @@ Methods:
 - <code title="get /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">retrieve</a>(id) -> EvaluationRetrieveResponse</code>
 - <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">delete</a>(id) -> void</code>
 - <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/resources/evaluations.ts">batchCreate</a>({ ...params }) -> EvaluationBatchCreateResponse</code>
+- <code title="post /v1/evaluate">client.evaluations.<a href="./src/resources/evaluations.ts">evaluate</a>({ ...params }) -> EvaluationEvaluateResponse</code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/resources/evaluations.ts">search</a>({ ...params }) -> EvaluationSearchResponse</code>
 
 # Prompts
@@ -120,24 +104,48 @@ Methods:
 
 - <code title="post /v1/otel/spans/search">client.otel.spans.<a href="./src/resources/otel/spans.ts">search</a>({ ...params }) -> SpanSearchResponse</code>
 
-# TraceInsightJobs
-
-Types:
-
-- <code><a href="./src/resources/trace-insight-jobs.ts">TraceInsightJobCreateResponse</a></code>
-- <code><a href="./src/resources/trace-insight-jobs.ts">TraceInsightJobListResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/trace-insight-jobs">client.traceInsightJobs.<a href="./src/resources/trace-insight-jobs.ts">create</a>({ ...params }) -> TraceInsightJobCreateResponse</code>
-- <code title="get /v1/trace-insight-jobs">client.traceInsightJobs.<a href="./src/resources/trace-insight-jobs.ts">list</a>({ ...params }) -> TraceInsightJobListResponse</code>
-
 # TraceInsight
 
 Types:
 
 - <code><a href="./src/resources/trace-insight.ts">TraceInsightListResponse</a></code>
+- <code><a href="./src/resources/trace-insight.ts">TraceInsightCreateJobResponse</a></code>
+- <code><a href="./src/resources/trace-insight.ts">TraceInsightListJobsResponse</a></code>
 
 Methods:
 
 - <code title="get /v1/trace-insight">client.traceInsight.<a href="./src/resources/trace-insight.ts">list</a>({ ...params }) -> TraceInsightListResponse</code>
+- <code title="post /v1/trace-insight-jobs">client.traceInsight.<a href="./src/resources/trace-insight.ts">createJob</a>({ ...params }) -> TraceInsightCreateJobResponse</code>
+- <code title="get /v1/trace-insight-jobs">client.traceInsight.<a href="./src/resources/trace-insight.ts">listJobs</a>({ ...params }) -> TraceInsightListJobsResponse</code>
+
+# Evaluators
+
+Types:
+
+- <code><a href="./src/resources/evaluators.ts">EvaluatorListResponse</a></code>
+- <code><a href="./src/resources/evaluators.ts">EvaluatorListFamiliesResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/evaluators">client.evaluators.<a href="./src/resources/evaluators.ts">list</a>() -> EvaluatorListResponse</code>
+- <code title="get /v1/evaluator-families">client.evaluators.<a href="./src/resources/evaluators.ts">listFamilies</a>() -> EvaluatorListFamiliesResponse</code>
+
+# Whoami
+
+Types:
+
+- <code><a href="./src/resources/whoami.ts">WhoamiRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/whoami">client.whoami.<a href="./src/resources/whoami.ts">retrieve</a>() -> WhoamiRetrieveResponse</code>
+
+# Apps
+
+Types:
+
+- <code><a href="./src/resources/apps.ts">AppListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/apps">client.apps.<a href="./src/resources/apps.ts">list</a>({ ...params }) -> AppListResponse</code>

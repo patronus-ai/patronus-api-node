@@ -1,24 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import * as TopLevelAPI from './resources/top-level';
-import {
-  EvaluateParams,
-  EvaluateResponse,
-  ListAppsParams,
-  ListAppsResponse,
-  ListEvaluatorFamiliesResponse,
-  ListEvaluatorsResponse,
-  WhoamiResponse,
-} from './resources/top-level';
+import { AppListParams, AppListResponse, Apps } from './resources/apps';
 import {
   EvaluationBatchCreateParams,
   EvaluationBatchCreateResponse,
+  EvaluationEvaluateParams,
+  EvaluationEvaluateResponse,
   EvaluationRetrieveResponse,
   EvaluationSearchParams,
   EvaluationSearchResponse,
@@ -34,6 +26,7 @@ import {
   EvaluatorCriterionListParams,
   EvaluatorCriterionListResponse,
 } from './resources/evaluator-criteria';
+import { EvaluatorListFamiliesResponse, EvaluatorListResponse, Evaluators } from './resources/evaluators';
 import {
   Experiment,
   ExperimentCreateParams,
@@ -65,14 +58,16 @@ import {
   PromptUpdateResponse,
   Prompts,
 } from './resources/prompts';
-import { TraceInsight, TraceInsightListParams, TraceInsightListResponse } from './resources/trace-insight';
 import {
-  TraceInsightJobCreateParams,
-  TraceInsightJobCreateResponse,
-  TraceInsightJobListParams,
-  TraceInsightJobListResponse,
-  TraceInsightJobs,
-} from './resources/trace-insight-jobs';
+  TraceInsight,
+  TraceInsightCreateJobParams,
+  TraceInsightCreateJobResponse,
+  TraceInsightListJobsParams,
+  TraceInsightListJobsResponse,
+  TraceInsightListParams,
+  TraceInsightListResponse,
+} from './resources/trace-insight';
+import { Whoami, WhoamiRetrieveResponse } from './resources/whoami';
 import { Otel } from './resources/otel/otel';
 
 export interface ClientOptions {
@@ -194,60 +189,10 @@ export class PatronusAPI extends Core.APIClient {
   evaluations: API.Evaluations = new API.Evaluations(this);
   prompts: API.Prompts = new API.Prompts(this);
   otel: API.Otel = new API.Otel(this);
-  traceInsightJobs: API.TraceInsightJobs = new API.TraceInsightJobs(this);
   traceInsight: API.TraceInsight = new API.TraceInsight(this);
-
-  /**
-   * Requires either **input** or **output** field to be specified. Absence of both
-   * leads to an HTTP_422 (Unprocessable Entity) error.
-   */
-  evaluate(
-    body: TopLevelAPI.EvaluateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.EvaluateResponse> {
-    return this.post('/v1/evaluate', { body, ...options });
-  }
-
-  /**
-   * List Apps
-   */
-  listApps(
-    query?: TopLevelAPI.ListAppsParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.ListAppsResponse>;
-  listApps(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.ListAppsResponse>;
-  listApps(
-    query: TopLevelAPI.ListAppsParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.ListAppsResponse> {
-    if (isRequestOptions(query)) {
-      return this.listApps({}, query);
-    }
-    return this.get('/v1/apps', { query, ...options });
-  }
-
-  /**
-   * List Evaluator Families
-   */
-  listEvaluatorFamilies(
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.ListEvaluatorFamiliesResponse> {
-    return this.get('/v1/evaluator-families', options);
-  }
-
-  /**
-   * List of available evaluators for Evaluation Runs and LLM Monitoring.
-   */
-  listEvaluators(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.ListEvaluatorsResponse> {
-    return this.get('/v1/evaluators', options);
-  }
-
-  /**
-   * Whoami
-   */
-  whoami(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.WhoamiResponse> {
-    return this.get('/v1/whoami', options);
-  }
+  evaluators: API.Evaluators = new API.Evaluators(this);
+  whoami: API.Whoami = new API.Whoami(this);
+  apps: API.Apps = new API.Apps(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -290,20 +235,12 @@ PatronusAPI.Projects = Projects;
 PatronusAPI.Evaluations = Evaluations;
 PatronusAPI.Prompts = Prompts;
 PatronusAPI.Otel = Otel;
-PatronusAPI.TraceInsightJobs = TraceInsightJobs;
 PatronusAPI.TraceInsight = TraceInsight;
+PatronusAPI.Evaluators = Evaluators;
+PatronusAPI.Whoami = Whoami;
+PatronusAPI.Apps = Apps;
 export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
-
-  export {
-    type EvaluateResponse as EvaluateResponse,
-    type ListAppsResponse as ListAppsResponse,
-    type ListEvaluatorFamiliesResponse as ListEvaluatorFamiliesResponse,
-    type ListEvaluatorsResponse as ListEvaluatorsResponse,
-    type WhoamiResponse as WhoamiResponse,
-    type EvaluateParams as EvaluateParams,
-    type ListAppsParams as ListAppsParams,
-  };
 
   export {
     type EvaluatorCriteria as EvaluatorCriteria,
@@ -339,8 +276,10 @@ export declare namespace PatronusAPI {
     Evaluations as Evaluations,
     type EvaluationRetrieveResponse as EvaluationRetrieveResponse,
     type EvaluationBatchCreateResponse as EvaluationBatchCreateResponse,
+    type EvaluationEvaluateResponse as EvaluationEvaluateResponse,
     type EvaluationSearchResponse as EvaluationSearchResponse,
     type EvaluationBatchCreateParams as EvaluationBatchCreateParams,
+    type EvaluationEvaluateParams as EvaluationEvaluateParams,
     type EvaluationSearchParams as EvaluationSearchParams,
   };
 
@@ -362,18 +301,24 @@ export declare namespace PatronusAPI {
   export { Otel as Otel };
 
   export {
-    TraceInsightJobs as TraceInsightJobs,
-    type TraceInsightJobCreateResponse as TraceInsightJobCreateResponse,
-    type TraceInsightJobListResponse as TraceInsightJobListResponse,
-    type TraceInsightJobCreateParams as TraceInsightJobCreateParams,
-    type TraceInsightJobListParams as TraceInsightJobListParams,
+    TraceInsight as TraceInsight,
+    type TraceInsightListResponse as TraceInsightListResponse,
+    type TraceInsightCreateJobResponse as TraceInsightCreateJobResponse,
+    type TraceInsightListJobsResponse as TraceInsightListJobsResponse,
+    type TraceInsightListParams as TraceInsightListParams,
+    type TraceInsightCreateJobParams as TraceInsightCreateJobParams,
+    type TraceInsightListJobsParams as TraceInsightListJobsParams,
   };
 
   export {
-    TraceInsight as TraceInsight,
-    type TraceInsightListResponse as TraceInsightListResponse,
-    type TraceInsightListParams as TraceInsightListParams,
+    Evaluators as Evaluators,
+    type EvaluatorListResponse as EvaluatorListResponse,
+    type EvaluatorListFamiliesResponse as EvaluatorListFamiliesResponse,
   };
+
+  export { Whoami as Whoami, type WhoamiRetrieveResponse as WhoamiRetrieveResponse };
+
+  export { Apps as Apps, type AppListResponse as AppListResponse, type AppListParams as AppListParams };
 }
 
 export { toFile, fileFromPath } from './uploads';
