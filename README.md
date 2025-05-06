@@ -31,7 +31,7 @@ const client = new PatronusAPI({
 
 async function main() {
   const response = await client.evaluate({
-    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
     task_context: 'The blue whale is the largest known animal.',
     task_input: 'What is the largest animal in the world?',
     task_output: 'The giant sandworm.',
@@ -57,7 +57,7 @@ const client = new PatronusAPI({
 
 async function main() {
   const params: PatronusAPI.EvaluateParams = {
-    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
     task_context: 'The blue whale is the largest known animal.',
     task_input: 'What is the largest animal in the world?',
     task_output: 'The giant sandworm.',
@@ -81,7 +81,7 @@ a subclass of `APIError` will be thrown:
 async function main() {
   const response = await client
     .evaluate({
-      evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+      evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
       task_context: 'The blue whale is the largest known animal.',
       task_input: 'What is the largest animal in the world?',
       task_output: 'The giant sandworm.',
@@ -129,7 +129,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
+await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
   maxRetries: 5,
 });
 ```
@@ -146,7 +146,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
+await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -169,7 +169,7 @@ const client = new PatronusAPI();
 
 const response = await client
   .evaluate({
-    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
     task_context: 'The blue whale is the largest known animal.',
     task_input: 'What is the largest animal in the world?',
     task_output: 'The giant sandworm.',
@@ -180,7 +180,7 @@ console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client
   .evaluate({
-    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
     task_context: 'The blue whale is the largest known animal.',
     task_input: 'What is the largest animal in the world?',
     task_output: 'The giant sandworm.',
@@ -293,7 +293,7 @@ const client = new PatronusAPI({
 // Override per-request:
 await client.evaluate(
   {
-    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
     task_context: 'The blue whale is the largest known animal.',
     task_input: 'What is the largest animal in the world?',
     task_output: 'The giant sandworm.',
