@@ -9,8 +9,8 @@ const client = new PatronusAPI({
 });
 
 describe('resource traceInsight', () => {
-  test('list: only required params', async () => {
-    const responsePromise = client.traceInsight.list({ trace_id: 'trace_id' });
+  test('list', async () => {
+    const responsePromise = client.traceInsight.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,7 +20,28 @@ describe('resource traceInsight', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('list: required and optional params', async () => {
-    const response = await client.traceInsight.list({ trace_id: 'trace_id' });
+  test('list: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.traceInsight.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      PatronusAPI.NotFoundError,
+    );
+  });
+
+  test('list: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.traceInsight.list(
+        {
+          app: 'app',
+          experiment_id: 'experiment_id',
+          job_id: 'job_id',
+          limit: 1,
+          offset: 0,
+          project_id: 'project_id',
+          trace_id: 'trace_id',
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 });

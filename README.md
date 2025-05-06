@@ -30,9 +30,9 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const datasets = await client.datasets.list();
+  const response = await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] });
 
-  console.log(datasets.datasets);
+  console.log(response.results);
 }
 
 main();
@@ -51,43 +51,14 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const datasets: PatronusAPI.DatasetListResponse = await client.datasets.list();
+  const params: PatronusAPI.EvaluateParams = { evaluators: [{ evaluator: 'evaluator' }] };
+  const response: PatronusAPI.EvaluateResponse = await client.evaluate(params);
 }
 
 main();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
-
-## File uploads
-
-Request parameters that correspond to file uploads can be passed in many different forms:
-
-- `File` (or an object with the same structure)
-- a `fetch` `Response` (or an object with the same structure)
-- an `fs.ReadStream`
-- the return value of our `toFile` helper
-
-```ts
-import fs from 'fs';
-import fetch from 'node-fetch';
-import PatronusAPI, { toFile } from 'patronus-api';
-
-const client = new PatronusAPI();
-
-// If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.datasets.upload({ dataset_name: 'x', file: fs.createReadStream('/path/to/file') });
-
-// Or if you have the web `File` API you can pass a `File` instance:
-await client.datasets.upload({ dataset_name: 'x', file: new File(['my bytes'], 'file') });
-
-// You can also pass a `fetch` `Response`:
-await client.datasets.upload({ dataset_name: 'x', file: await fetch('https://somesite/file') });
-
-// Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.datasets.upload({ dataset_name: 'x', file: await toFile(Buffer.from('my bytes'), 'file') });
-await client.datasets.upload({ dataset_name: 'x', file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
-```
 
 ## Handling errors
 
@@ -98,7 +69,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const datasets = await client.datasets.list().catch(async (err) => {
+  const response = await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }).catch(async (err) => {
     if (err instanceof PatronusAPI.APIError) {
       console.log(err.status); // 400
       console.log(err.name); // BadRequestError
@@ -141,7 +112,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.datasets.list({
+await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
   maxRetries: 5,
 });
 ```
@@ -158,7 +129,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.datasets.list({
+await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }, {
   timeout: 5 * 1000,
 });
 ```
@@ -179,13 +150,15 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new PatronusAPI();
 
-const response = await client.datasets.list().asResponse();
+const response = await client.evaluate({ evaluators: [{ evaluator: 'evaluator' }] }).asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: datasets, response: raw } = await client.datasets.list().withResponse();
+const { data: response, response: raw } = await client
+  .evaluate({ evaluators: [{ evaluator: 'evaluator' }] })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(datasets.datasets);
+console.log(response.results);
 ```
 
 ### Making custom/undocumented requests
@@ -289,9 +262,12 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.datasets.list({
-  httpAgent: new http.Agent({ keepAlive: false }),
-});
+await client.evaluate(
+  { evaluators: [{ evaluator: 'evaluator' }] },
+  {
+    httpAgent: new http.Agent({ keepAlive: false }),
+  },
+);
 ```
 
 ## Semantic versioning
