@@ -22,6 +22,34 @@ export class TraceInsight extends APIResource {
     }
     return this._client.get('/v1/trace-insight', { query, ...options });
   }
+
+  /**
+   * Create Insight Job
+   */
+  createJob(
+    body: TraceInsightCreateJobParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TraceInsightCreateJobResponse> {
+    return this._client.post('/v1/trace-insight-jobs', { body, ...options });
+  }
+
+  /**
+   * List Insight Jobs
+   */
+  listJobs(
+    query?: TraceInsightListJobsParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TraceInsightListJobsResponse>;
+  listJobs(options?: Core.RequestOptions): Core.APIPromise<TraceInsightListJobsResponse>;
+  listJobs(
+    query: TraceInsightListJobsParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TraceInsightListJobsResponse> {
+    if (isRequestOptions(query)) {
+      return this.listJobs({}, query);
+    }
+    return this._client.get('/v1/trace-insight-jobs', { query, ...options });
+  }
 }
 
 export interface TraceInsightListResponse {
@@ -110,6 +138,36 @@ export namespace TraceInsightListResponse {
   }
 }
 
+export interface TraceInsightCreateJobResponse {
+  job_id: string;
+
+  status: string;
+
+  trace_id: string;
+}
+
+export interface TraceInsightListJobsResponse {
+  insight_jobs: Array<TraceInsightListJobsResponse.InsightJob>;
+}
+
+export namespace TraceInsightListJobsResponse {
+  export interface InsightJob {
+    app: string | null;
+
+    created_at: string;
+
+    experiment_id: string | null;
+
+    job_id: string;
+
+    project_id: string;
+
+    status: string;
+
+    trace_id: string;
+  }
+}
+
 export interface TraceInsightListParams {
   app?: string | null;
 
@@ -126,9 +184,35 @@ export interface TraceInsightListParams {
   trace_id?: string | null;
 }
 
+export interface TraceInsightCreateJobParams {
+  trace_id: string;
+}
+
+export interface TraceInsightListJobsParams {
+  app?: string | null;
+
+  experiment_id?: string | null;
+
+  job_id?: string | null;
+
+  job_status?: 'pending' | 'success' | 'failed' | 'cancelled' | null;
+
+  limit?: number;
+
+  offset?: number;
+
+  project_id?: string | null;
+
+  trace_id?: string | null;
+}
+
 export declare namespace TraceInsight {
   export {
     type TraceInsightListResponse as TraceInsightListResponse,
+    type TraceInsightCreateJobResponse as TraceInsightCreateJobResponse,
+    type TraceInsightListJobsResponse as TraceInsightListJobsResponse,
     type TraceInsightListParams as TraceInsightListParams,
+    type TraceInsightCreateJobParams as TraceInsightCreateJobParams,
+    type TraceInsightListJobsParams as TraceInsightListJobsParams,
   };
 }
