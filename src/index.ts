@@ -72,7 +72,7 @@ import { Otel } from './resources/otel/otel';
 
 export interface ClientOptions {
   /**
-   * Defaults to process.env['PATRONUS_API_API_KEY'].
+   * Defaults to process.env['PATRONUS_API_KEY'].
    */
   apiKey?: string | undefined;
 
@@ -144,7 +144,7 @@ export class PatronusAPI extends Core.APIClient {
   /**
    * API Client for interfacing with the Patronus API API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PATRONUS_API_API_KEY'] ?? undefined]
+   * @param {string | undefined} [opts.apiKey=process.env['PATRONUS_API_KEY'] ?? undefined]
    * @param {string} [opts.baseURL=process.env['PATRONUS_API_BASE_URL'] ?? https://api.patronus.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -155,12 +155,12 @@ export class PatronusAPI extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('PATRONUS_API_BASE_URL'),
-    apiKey = Core.readEnv('PATRONUS_API_API_KEY'),
+    apiKey = Core.readEnv('PATRONUS_API_KEY'),
     ...opts
   }: ClientOptions = {}) {
     if (apiKey === undefined) {
       throw new Errors.PatronusAPIError(
-        "The PATRONUS_API_API_KEY environment variable is missing or empty; either provide it, or instantiate the PatronusAPI client with an apiKey option, like new PatronusAPI({ apiKey: 'My API Key' }).",
+        "The PATRONUS_API_KEY environment variable is missing or empty; either provide it, or instantiate the PatronusAPI client with an apiKey option, like new PatronusAPI({ apiKey: 'My API Key' }).",
       );
     }
 
