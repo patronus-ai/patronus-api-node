@@ -111,17 +111,17 @@ describe('resource evaluations', () => {
       evaluated_model_attachments: [
         { media_type: 'image/jpeg', url: 'https://example.com', usage_type: 'evaluated_model_system_prompt' },
       ],
-      evaluated_model_gold_answer: 'evaluated_model_gold_answer',
-      evaluated_model_input: 'evaluated_model_input',
-      evaluated_model_output: 'evaluated_model_output',
-      evaluated_model_retrieved_context: ['string'],
-      evaluated_model_system_prompt: 'evaluated_model_system_prompt',
       experiment_id: 'experiment_id',
+      gold_answer: 'gold_answer',
       log_id: 'log_id',
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_name: 'project_name',
       span_id: 'span_id',
+      system_prompt: 'system_prompt',
       tags: {},
+      task_context: ['string'],
+      task_input: 'task_input',
+      task_output: 'task_output',
       trace_id: 'trace_id',
     });
   });

@@ -542,36 +542,6 @@ export interface EvaluationEvaluateParams {
   evaluated_model_attachments?: Array<EvaluationEvaluateParams.EvaluatedModelAttachment> | null;
 
   /**
-   * Gold answer for given evaluated model input
-   */
-  evaluated_model_gold_answer?: string | null;
-
-  /**
-   * The input (prompt) provided to LLM.
-   */
-  evaluated_model_input?: string | null;
-
-  /**
-   * LLM's response to the given input.
-   */
-  evaluated_model_output?: string | null;
-
-  /**
-   * Optional context retrieved from vector database. This is a list of strings, with
-   * the following restrictions:
-   *
-   * - Number of items must be less/equal than 50.
-   * - The sum of tokens in all elements must be less/equal than 120000, using
-   *   o200k_base tiktoken encoding
-   */
-  evaluated_model_retrieved_context?: Array<string> | string | null;
-
-  /**
-   * The system prompt provided to the LLM.
-   */
-  evaluated_model_system_prompt?: string | null;
-
-  /**
    * Assign evaluation results to the experiment.
    *
    * - `experiment_id` cannot be used together with `app`.
@@ -579,6 +549,11 @@ export interface EvaluationEvaluateParams {
    *   experiment.
    */
   experiment_id?: string | null;
+
+  /**
+   * Gold answer for given evaluated model input
+   */
+  gold_answer?: string | null;
 
   log_id?: string | null;
 
@@ -603,9 +578,34 @@ export interface EvaluationEvaluateParams {
   span_id?: string | null;
 
   /**
+   * The system prompt provided to the LLM.
+   */
+  system_prompt?: string | null;
+
+  /**
    * Tags are key-value pairs used to label resources
    */
   tags?: unknown;
+
+  /**
+   * Optional context retrieved from vector database. This is a list of strings, with
+   * the following restrictions:
+   *
+   * - Number of items must be less/equal than 50.
+   * - The sum of tokens in all elements must be less/equal than 120000, using
+   *   o200k_base tiktoken encoding
+   */
+  task_context?: Array<string> | string | null;
+
+  /**
+   * The input (prompt) provided to LLM.
+   */
+  task_input?: string | null;
+
+  /**
+   * LLM's response to the given input.
+   */
+  task_output?: string | null;
 
   trace_id?: string | null;
 }
