@@ -325,23 +325,27 @@ export interface EvaluateParams {
   evaluated_model_attachments?: Array<EvaluateParams.EvaluatedModelAttachment> | null;
 
   /**
-   * Gold answer for given evaluated model input
+   * @deprecated [DEPRECATED] Gold answer for given evaluated model input. Use
+   * gold_answer instead.
    */
   evaluated_model_gold_answer?: string | null;
 
   /**
-   * The input (prompt) provided to LLM.
+   * @deprecated [DEPRECATED] The input (prompt) provided to LLM. Use task_input
+   * instead.
    */
   evaluated_model_input?: string | null;
 
   /**
-   * LLM's response to the given input.
+   * @deprecated [DEPRECATED] LLM's response to the given input. Use task_output
+   * instead.
    */
   evaluated_model_output?: string | null;
 
   /**
-   * Optional context retrieved from vector database. This is a list of strings, with
-   * the following restrictions:
+   * @deprecated [DEPRECATED] Optional context retrieved from vector database. Use
+   * task_context instead. This is a list of strings, with the following
+   * restrictions:
    *
    * - Number of items must be less/equal than 50.
    * - The sum of tokens in all elements must be less/equal than 120000, using
@@ -350,7 +354,8 @@ export interface EvaluateParams {
   evaluated_model_retrieved_context?: Array<string> | string | null;
 
   /**
-   * The system prompt provided to the LLM.
+   * @deprecated [DEPRECATED] The system prompt provided to the LLM. Use
+   * system_prompt instead.
    */
   evaluated_model_system_prompt?: string | null;
 
@@ -362,6 +367,11 @@ export interface EvaluateParams {
    *   experiment.
    */
   experiment_id?: string | null;
+
+  /**
+   * Gold answer for given evaluated model input
+   */
+  gold_answer?: string | null;
 
   log_id?: string | null;
 
@@ -386,9 +396,34 @@ export interface EvaluateParams {
   span_id?: string | null;
 
   /**
+   * The system prompt provided to the LLM.
+   */
+  system_prompt?: string | null;
+
+  /**
    * Tags are key-value pairs used to label resources
    */
   tags?: unknown;
+
+  /**
+   * Optional context retrieved from vector database. This is a list of strings, with
+   * the following restrictions:
+   *
+   * - Number of items must be less/equal than 50.
+   * - The sum of tokens in all elements must be less/equal than 120000, using
+   *   o200k_base tiktoken encoding
+   */
+  task_context?: Array<string> | string | null;
+
+  /**
+   * The input (prompt) provided to LLM.
+   */
+  task_input?: string | null;
+
+  /**
+   * LLM's response to the given input.
+   */
+  task_output?: string | null;
 
   trace_id?: string | null;
 }

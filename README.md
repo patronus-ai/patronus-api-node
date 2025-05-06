@@ -32,6 +32,9 @@ const client = new PatronusAPI({
 async function main() {
   const response = await client.evaluate({
     evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
   });
 
   console.log(response.results);
@@ -55,6 +58,9 @@ const client = new PatronusAPI({
 async function main() {
   const params: PatronusAPI.EvaluateParams = {
     evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
   };
   const response: PatronusAPI.EvaluateResponse = await client.evaluate(params);
 }
@@ -74,7 +80,12 @@ a subclass of `APIError` will be thrown:
 ```ts
 async function main() {
   const response = await client
-    .evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] })
+    .evaluate({
+      evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+      task_context: 'The blue whale is the largest known animal.',
+      task_input: 'What is the largest animal in the world?',
+      task_output: 'The giant sandworm.',
+    })
     .catch(async (err) => {
       if (err instanceof PatronusAPI.APIError) {
         console.log(err.status); // 400
@@ -118,7 +129,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] }, {
+await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
   maxRetries: 5,
 });
 ```
@@ -135,7 +146,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] }, {
+await client.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -157,13 +168,23 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 const client = new PatronusAPI();
 
 const response = await client
-  .evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] })
+  .evaluate({
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  })
   .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
 const { data: response, response: raw } = await client
-  .evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] })
+  .evaluate({
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  })
   .withResponse();
 console.log(raw.headers.get('X-My-Header'));
 console.log(response.results);
@@ -271,7 +292,12 @@ const client = new PatronusAPI({
 
 // Override per-request:
 await client.evaluate(
-  { evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }] },
+  {
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain: true }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  },
   {
     httpAgent: new http.Agent({ keepAlive: false }),
   },
