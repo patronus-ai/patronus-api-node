@@ -1,6 +1,7 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
 import { APIResource } from '../resource';
+import { isRequestOptions } from '../core';
 import * as Core from '../core';
 
 export class TraceInsightJobs extends APIResource {
@@ -18,9 +19,17 @@ export class TraceInsightJobs extends APIResource {
    * List Insight Jobs
    */
   list(
-    query: TraceInsightJobListParams,
+    query?: TraceInsightJobListParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<TraceInsightJobListResponse>;
+  list(options?: Core.RequestOptions): Core.APIPromise<TraceInsightJobListResponse>;
+  list(
+    query: TraceInsightJobListParams | Core.RequestOptions = {},
     options?: Core.RequestOptions,
   ): Core.APIPromise<TraceInsightJobListResponse> {
+    if (isRequestOptions(query)) {
+      return this.list({}, query);
+    }
     return this._client.get('/v1/trace-insight-jobs', { query, ...options });
   }
 }
@@ -34,14 +43,22 @@ export interface TraceInsightJobCreateResponse {
 }
 
 export interface TraceInsightJobListResponse {
-  insights: Array<TraceInsightJobListResponse.Insight>;
+  insight_jobs: Array<TraceInsightJobListResponse.InsightJob>;
 }
 
 export namespace TraceInsightJobListResponse {
-  export interface Insight {
-    job_id: string | null;
+  export interface InsightJob {
+    app: string | null;
 
-    status: string | null;
+    created_at: string;
+
+    experiment_id: string | null;
+
+    job_id: string;
+
+    project_id: string;
+
+    status: string;
 
     trace_id: string;
   }
@@ -52,7 +69,21 @@ export interface TraceInsightJobCreateParams {
 }
 
 export interface TraceInsightJobListParams {
-  trace_id: string | null;
+  app?: string | null;
+
+  experiment_id?: string | null;
+
+  job_id?: string | null;
+
+  job_status?: 'pending' | 'success' | 'failed' | 'cancelled' | null;
+
+  limit?: number;
+
+  offset?: number;
+
+  project_id?: string | null;
+
+  trace_id?: string | null;
 }
 
 export declare namespace TraceInsightJobs {

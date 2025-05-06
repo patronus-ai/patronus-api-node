@@ -1,59 +1,5 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-export interface AnnotateResponse {
-  evaluation: AnnotateResponse.Evaluation;
-}
-
-export namespace AnnotateResponse {
-  export interface Evaluation {
-    id: string;
-
-    created_at: string | null;
-
-    criteria: string | null;
-
-    criteria_id: string | null;
-
-    evaluation_duration: string | null;
-
-    evaluator_family: string | null;
-
-    evaluator_id: string | null;
-
-    explain_strategy: string | null;
-
-    explanation: string | null;
-
-    explanation_duration: string | null;
-
-    log_id: string;
-
-    score: number | null;
-
-    text_output: string | null;
-
-    annotation_criteria_id?: string | null;
-
-    criteria_config?: unknown | null;
-
-    criteria_revision?: number | null;
-
-    evaluation_feedback?: boolean | null;
-
-    evaluation_type?: string | null;
-
-    metadata?: unknown | null;
-
-    metric_description?: string | null;
-
-    metric_name?: string | null;
-
-    pass?: boolean | null;
-
-    usage?: unknown | null;
-  }
-}
-
 export interface EvaluateResponse {
   results: Array<EvaluateResponse.Result>;
 }
@@ -311,20 +257,6 @@ export namespace WhoamiResponse {
   }
 }
 
-export interface AnnotateParams {
-  annotation_criteria_id: string;
-
-  log_id: string;
-
-  explanation?: string | null;
-
-  value_pass?: boolean | null;
-
-  value_score?: number | null;
-
-  value_text?: string | null;
-}
-
 export interface EvaluateParams {
   /**
    * List of evaluators to evaluate against.
@@ -516,13 +448,11 @@ export interface ListAppsParams {
 
 export declare namespace TopLevel {
   export {
-    type AnnotateResponse as AnnotateResponse,
     type EvaluateResponse as EvaluateResponse,
     type ListAppsResponse as ListAppsResponse,
     type ListEvaluatorFamiliesResponse as ListEvaluatorFamiliesResponse,
     type ListEvaluatorsResponse as ListEvaluatorsResponse,
     type WhoamiResponse as WhoamiResponse,
-    type AnnotateParams as AnnotateParams,
     type EvaluateParams as EvaluateParams,
     type ListAppsParams as ListAppsParams,
   };

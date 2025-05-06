@@ -2,15 +2,12 @@
 
 import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
-import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
 import * as TopLevelAPI from './resources/top-level';
 import {
-  AnnotateParams,
-  AnnotateResponse,
   EvaluateParams,
   EvaluateResponse,
   ListAppsParams,
@@ -19,34 +16,8 @@ import {
   ListEvaluatorsResponse,
   WhoamiResponse,
 } from './resources/top-level';
-import {
-  AnnotationCategory,
-  AnnotationCriteria,
-  AnnotationCriterionCreateParams,
-  AnnotationCriterionCreateResponse,
-  AnnotationCriterionListParams,
-  AnnotationCriterionListResponse,
-  AnnotationCriterionRetrieveResponse,
-  AnnotationCriterionUpdateParams,
-  AnnotationCriterionUpdateResponse,
-  AnnotationType,
-} from './resources/annotation-criteria';
-import {
-  Dataset,
-  DatasetDownloadCsvResponse,
-  DatasetDownloadJSONLResponse,
-  DatasetHasValues,
-  DatasetListDataResponse,
-  DatasetListParams,
-  DatasetListResponse,
-  DatasetRetrieveResponse,
-  DatasetType,
-  DatasetUpdateParams,
-  DatasetUpdateResponse,
-  DatasetUploadParams,
-  DatasetUploadResponse,
-  Datasets,
-} from './resources/datasets';
+import { AnnotationCriteria } from './resources/annotation-criteria';
+import { Datasets } from './resources/datasets';
 import {
   EvaluationBatchCreateParams,
   EvaluationBatchCreateResponse,
@@ -74,17 +45,7 @@ import {
   ExperimentRetrieveResponse,
   Experiments,
 } from './resources/experiments';
-import {
-  PairwiseAnnotation,
-  PairwiseAnnotationCreateParams,
-  PairwiseAnnotationCreateResponse,
-  PairwiseAnnotationDeleteParams,
-  PairwiseAnnotationGetBatchParams,
-  PairwiseAnnotationGetBatchResponse,
-  PairwiseAnnotationListParams,
-  PairwiseAnnotationListResponse,
-  PairwiseAnnotations,
-} from './resources/pairwise-annotations';
+import { PairwiseAnnotations } from './resources/pairwise-annotations';
 import {
   Project,
   ProjectCreateParams,
@@ -243,16 +204,6 @@ export class PatronusAPI extends Core.APIClient {
   traceInsight: API.TraceInsight = new API.TraceInsight(this);
 
   /**
-   * Annotate
-   */
-  annotate(
-    body: TopLevelAPI.AnnotateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.AnnotateResponse> {
-    return this.post('/v1/annotate', { body, ...options });
-  }
-
-  /**
    * Requires either **input** or **output** field to be specified. Absence of both
    * leads to an HTTP_422 (Unprocessable Entity) error.
    */
@@ -319,10 +270,6 @@ export class PatronusAPI extends Core.APIClient {
     return { 'X-API-KEY': this.apiKey };
   }
 
-  protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
-  }
-
   static PatronusAPI = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
@@ -347,6 +294,7 @@ export class PatronusAPI extends Core.APIClient {
 PatronusAPI.Datasets = Datasets;
 PatronusAPI.Experiments = Experiments;
 PatronusAPI.Projects = Projects;
+PatronusAPI.AnnotationCriteria = AnnotationCriteria;
 PatronusAPI.PairwiseAnnotations = PairwiseAnnotations;
 PatronusAPI.Evaluations = Evaluations;
 PatronusAPI.Prompts = Prompts;
@@ -357,33 +305,16 @@ export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
 
   export {
-    type AnnotateResponse as AnnotateResponse,
     type EvaluateResponse as EvaluateResponse,
     type ListAppsResponse as ListAppsResponse,
     type ListEvaluatorFamiliesResponse as ListEvaluatorFamiliesResponse,
     type ListEvaluatorsResponse as ListEvaluatorsResponse,
     type WhoamiResponse as WhoamiResponse,
-    type AnnotateParams as AnnotateParams,
     type EvaluateParams as EvaluateParams,
     type ListAppsParams as ListAppsParams,
   };
 
-  export {
-    Datasets as Datasets,
-    type Dataset as Dataset,
-    type DatasetHasValues as DatasetHasValues,
-    type DatasetType as DatasetType,
-    type DatasetRetrieveResponse as DatasetRetrieveResponse,
-    type DatasetUpdateResponse as DatasetUpdateResponse,
-    type DatasetListResponse as DatasetListResponse,
-    type DatasetDownloadCsvResponse as DatasetDownloadCsvResponse,
-    type DatasetDownloadJSONLResponse as DatasetDownloadJSONLResponse,
-    type DatasetListDataResponse as DatasetListDataResponse,
-    type DatasetUploadResponse as DatasetUploadResponse,
-    type DatasetUpdateParams as DatasetUpdateParams,
-    type DatasetListParams as DatasetListParams,
-    type DatasetUploadParams as DatasetUploadParams,
-  };
+  export { Datasets as Datasets };
 
   export {
     type EvaluatorCriteria as EvaluatorCriteria,
@@ -415,30 +346,9 @@ export declare namespace PatronusAPI {
     type ProjectListParams as ProjectListParams,
   };
 
-  export {
-    type AnnotationCriteria as AnnotationCriteria,
-    type AnnotationCategory as AnnotationCategory,
-    type AnnotationType as AnnotationType,
-    type AnnotationCriterionCreateResponse as AnnotationCriterionCreateResponse,
-    type AnnotationCriterionRetrieveResponse as AnnotationCriterionRetrieveResponse,
-    type AnnotationCriterionUpdateResponse as AnnotationCriterionUpdateResponse,
-    type AnnotationCriterionListResponse as AnnotationCriterionListResponse,
-    type AnnotationCriterionCreateParams as AnnotationCriterionCreateParams,
-    type AnnotationCriterionUpdateParams as AnnotationCriterionUpdateParams,
-    type AnnotationCriterionListParams as AnnotationCriterionListParams,
-  };
+  export { AnnotationCriteria as AnnotationCriteria };
 
-  export {
-    PairwiseAnnotations as PairwiseAnnotations,
-    type PairwiseAnnotation as PairwiseAnnotation,
-    type PairwiseAnnotationCreateResponse as PairwiseAnnotationCreateResponse,
-    type PairwiseAnnotationListResponse as PairwiseAnnotationListResponse,
-    type PairwiseAnnotationGetBatchResponse as PairwiseAnnotationGetBatchResponse,
-    type PairwiseAnnotationCreateParams as PairwiseAnnotationCreateParams,
-    type PairwiseAnnotationListParams as PairwiseAnnotationListParams,
-    type PairwiseAnnotationDeleteParams as PairwiseAnnotationDeleteParams,
-    type PairwiseAnnotationGetBatchParams as PairwiseAnnotationGetBatchParams,
-  };
+  export { PairwiseAnnotations as PairwiseAnnotations };
 
   export {
     Evaluations as Evaluations,
