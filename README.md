@@ -25,9 +25,7 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import PatronusAPI from 'patronus-api';
 
-const client = new PatronusAPI({
-  apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
-});
+const client = new PatronusAPI();
 
 async function main() {
   const response = await client.evaluations.evaluate({
@@ -51,9 +49,7 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import PatronusAPI from 'patronus-api';
 
-const client = new PatronusAPI({
-  apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
-});
+const client = new PatronusAPI();
 
 async function main() {
   const params: PatronusAPI.EvaluationEvaluateParams = {
