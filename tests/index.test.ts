@@ -23,6 +23,7 @@ describe('instantiate client', () => {
     const client = new PatronusAPI({
       baseURL: 'http://localhost:5000/',
       defaultHeaders: { 'X-My-Default-Header': '2' },
+      accessToken: 'My Access Token',
     });
 
     test('they are used in the request', () => {
@@ -54,6 +55,7 @@ describe('instantiate client', () => {
       const client = new PatronusAPI({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo' },
+        accessToken: 'My Access Token',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo');
     });
@@ -62,12 +64,17 @@ describe('instantiate client', () => {
       const client = new PatronusAPI({
         baseURL: 'http://localhost:5000/',
         defaultQuery: { apiVersion: 'foo', hello: 'world' },
+        accessToken: 'My Access Token',
       });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/foo?apiVersion=foo&hello=world');
     });
 
     test('overriding with `undefined`', () => {
-      const client = new PatronusAPI({ baseURL: 'http://localhost:5000/', defaultQuery: { hello: 'world' } });
+      const client = new PatronusAPI({
+        baseURL: 'http://localhost:5000/',
+        defaultQuery: { hello: 'world' },
+        accessToken: 'My Access Token',
+      });
       expect(client.buildURL('/foo', { hello: undefined })).toEqual('http://localhost:5000/foo');
     });
   });
@@ -75,6 +82,7 @@ describe('instantiate client', () => {
   test('custom fetch', async () => {
     const client = new PatronusAPI({
       baseURL: 'http://localhost:5000/',
+      accessToken: 'My Access Token',
       fetch: (url) => {
         return Promise.resolve(
           new Response(JSON.stringify({ url, custom: true }), {
@@ -90,12 +98,17 @@ describe('instantiate client', () => {
 
   test('explicit global fetch', async () => {
     // make sure the global fetch type is assignable to our Fetch type
-    const client = new PatronusAPI({ baseURL: 'http://localhost:5000/', fetch: defaultFetch });
+    const client = new PatronusAPI({
+      baseURL: 'http://localhost:5000/',
+      accessToken: 'My Access Token',
+      fetch: defaultFetch,
+    });
   });
 
   test('custom signal', async () => {
     const client = new PatronusAPI({
       baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
+      accessToken: 'My Access Token',
       fetch: (...args) => {
         return new Promise((resolve, reject) =>
           setTimeout(
@@ -125,7 +138,11 @@ describe('instantiate client', () => {
       return new Response(JSON.stringify({}), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PatronusAPI({ baseURL: 'http://localhost:5000/', fetch: testFetch });
+    const client = new PatronusAPI({
+      baseURL: 'http://localhost:5000/',
+      accessToken: 'My Access Token',
+      fetch: testFetch,
+    });
 
     await client.patch('/foo');
     expect(capturedRequest?.method).toEqual('PATCH');
@@ -133,12 +150,18 @@ describe('instantiate client', () => {
 
   describe('baseUrl', () => {
     test('trailing slash', () => {
-      const client = new PatronusAPI({ baseURL: 'http://localhost:5000/custom/path/' });
+      const client = new PatronusAPI({
+        baseURL: 'http://localhost:5000/custom/path/',
+        accessToken: 'My Access Token',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
     test('no trailing slash', () => {
-      const client = new PatronusAPI({ baseURL: 'http://localhost:5000/custom/path' });
+      const client = new PatronusAPI({
+        baseURL: 'http://localhost:5000/custom/path',
+        accessToken: 'My Access Token',
+      });
       expect(client.buildURL('/foo', null)).toEqual('http://localhost:5000/custom/path/foo');
     });
 
@@ -147,41 +170,41 @@ describe('instantiate client', () => {
     });
 
     test('explicit option', () => {
-      const client = new PatronusAPI({ baseURL: 'https://example.com' });
+      const client = new PatronusAPI({ baseURL: 'https://example.com', accessToken: 'My Access Token' });
       expect(client.baseURL).toEqual('https://example.com');
     });
 
     test('env variable', () => {
       process.env['PATRONUS_API_BASE_URL'] = 'https://example.com/from_env';
-      const client = new PatronusAPI({});
+      const client = new PatronusAPI({ accessToken: 'My Access Token' });
       expect(client.baseURL).toEqual('https://example.com/from_env');
     });
 
     test('empty env variable', () => {
       process.env['PATRONUS_API_BASE_URL'] = ''; // empty
-      const client = new PatronusAPI({});
+      const client = new PatronusAPI({ accessToken: 'My Access Token' });
       expect(client.baseURL).toEqual('https://api.patronus.ai');
     });
 
     test('blank env variable', () => {
       process.env['PATRONUS_API_BASE_URL'] = '  '; // blank
-      const client = new PatronusAPI({});
+      const client = new PatronusAPI({ accessToken: 'My Access Token' });
       expect(client.baseURL).toEqual('https://api.patronus.ai');
     });
   });
 
   test('maxRetries option is correctly set', () => {
-    const client = new PatronusAPI({ maxRetries: 4 });
+    const client = new PatronusAPI({ maxRetries: 4, accessToken: 'My Access Token' });
     expect(client.maxRetries).toEqual(4);
 
     // default
-    const client2 = new PatronusAPI({});
+    const client2 = new PatronusAPI({ accessToken: 'My Access Token' });
     expect(client2.maxRetries).toEqual(2);
   });
 });
 
 describe('request building', () => {
-  const client = new PatronusAPI({});
+  const client = new PatronusAPI({ accessToken: 'My Access Token' });
 
   describe('Content-Length', () => {
     test('handles multi-byte characters', () => {
@@ -223,7 +246,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PatronusAPI({ timeout: 10, fetch: testFetch });
+    const client = new PatronusAPI({ accessToken: 'My Access Token', timeout: 10, fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -253,7 +276,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PatronusAPI({ fetch: testFetch, maxRetries: 4 });
+    const client = new PatronusAPI({ accessToken: 'My Access Token', fetch: testFetch, maxRetries: 4 });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
 
@@ -277,7 +300,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new PatronusAPI({ fetch: testFetch, maxRetries: 4 });
+    const client = new PatronusAPI({ accessToken: 'My Access Token', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -307,6 +330,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
     const client = new PatronusAPI({
+      accessToken: 'My Access Token',
       fetch: testFetch,
       maxRetries: 4,
       defaultHeaders: { 'X-Stainless-Retry-Count': null },
@@ -338,7 +362,7 @@ describe('retries', () => {
       capturedRequest = init;
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
-    const client = new PatronusAPI({ fetch: testFetch, maxRetries: 4 });
+    const client = new PatronusAPI({ accessToken: 'My Access Token', fetch: testFetch, maxRetries: 4 });
 
     expect(
       await client.request({
@@ -365,7 +389,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PatronusAPI({ fetch: testFetch });
+    const client = new PatronusAPI({ accessToken: 'My Access Token', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
@@ -392,7 +416,7 @@ describe('retries', () => {
       return new Response(JSON.stringify({ a: 1 }), { headers: { 'Content-Type': 'application/json' } });
     };
 
-    const client = new PatronusAPI({ fetch: testFetch });
+    const client = new PatronusAPI({ accessToken: 'My Access Token', fetch: testFetch });
 
     expect(await client.request({ path: '/foo', method: 'get' })).toEqual({ a: 1 });
     expect(count).toEqual(2);
