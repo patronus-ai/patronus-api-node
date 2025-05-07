@@ -26,7 +26,7 @@ The full API of this library can be found in [api.md](api.md).
 import PatronusAPI from 'patronus-api';
 
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
+  apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
@@ -52,7 +52,7 @@ This library includes TypeScript definitions for all request params and response
 import PatronusAPI from 'patronus-api';
 
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
+  apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
 });
 
 async function main() {
