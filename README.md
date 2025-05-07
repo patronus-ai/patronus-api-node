@@ -26,7 +26,6 @@ The full API of this library can be found in [api.md](api.md).
 import PatronusAPI from 'patronus-api';
 
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
   apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
 });
 
@@ -53,7 +52,6 @@ This library includes TypeScript definitions for all request params and response
 import PatronusAPI from 'patronus-api';
 
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
   apiKey: process.env['PATRONUS_API_KEY'], // This is the default and can be omitted
 });
 
@@ -127,7 +125,6 @@ You can use the `maxRetries` option to configure or disable this:
 ```js
 // Configure the default for all requests:
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
   maxRetries: 0, // default is 2
 });
 
@@ -145,7 +142,6 @@ Requests time out after 1 minute by default. You can configure this with a `time
 ```ts
 // Configure the default for all requests:
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -291,7 +287,6 @@ import { HttpsProxyAgent } from 'https-proxy-agent';
 
 // Configure the default for all requests:
 const client = new PatronusAPI({
-  accessToken: 'My Access Token',
   httpAgent: new HttpsProxyAgent(process.env.PROXY_URL),
 });
 
