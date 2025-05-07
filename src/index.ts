@@ -207,6 +207,13 @@ export class PatronusAPI extends Core.APIClient {
   }
 
   protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.apiKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
     if (this.accessToken && headers['authorization']) {
       return;
     }
@@ -215,11 +222,25 @@ export class PatronusAPI extends Core.APIClient {
     }
 
     throw new Error(
-      'Could not resolve authentication method. Expected the accessToken to be set. Or for the "Authorization" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected either apiKey or accessToken to be set. Or for one of the "X-API-KEY" or "Authorization" headers to be explicitly omitted',
     );
   }
 
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    return {
+      ...this.apiKeyAuth(opts),
+      ...this.bearerAuth(opts),
+    };
+  }
+
+  protected apiKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.apiKey == null) {
+      return {};
+    }
+    return { 'X-API-KEY': this.apiKey };
+  }
+
+  protected bearerAuth(opts: Core.FinalRequestOptions): Core.Headers {
     if (this.accessToken == null) {
       return {};
     }
