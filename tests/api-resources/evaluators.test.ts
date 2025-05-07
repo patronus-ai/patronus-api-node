@@ -8,9 +8,9 @@ const client = new PatronusAPI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource evaluationFeedback', () => {
-  test('delete', async () => {
-    const responsePromise = client.evaluationResults.evaluationFeedback.delete(0);
+describe('resource evaluators', () => {
+  test('list', async () => {
+    const responsePromise = client.evaluators.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,15 +20,15 @@ describe('resource evaluationFeedback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('delete: request options instead of params are passed correctly', async () => {
+  test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(
-      client.evaluationResults.evaluationFeedback.delete(0, { path: '/_stainless_unknown_path' }),
-    ).rejects.toThrow(PatronusAPI.NotFoundError);
+    await expect(client.evaluators.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      PatronusAPI.NotFoundError,
+    );
   });
 
-  test('submit: only required params', async () => {
-    const responsePromise = client.evaluationResults.evaluationFeedback.submit(0, { feedback: 'positive' });
+  test('listFamilies', async () => {
+    const responsePromise = client.evaluators.listFamilies();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -38,7 +38,10 @@ describe('resource evaluationFeedback', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('submit: required and optional params', async () => {
-    const response = await client.evaluationResults.evaluationFeedback.submit(0, { feedback: 'positive' });
+  test('listFamilies: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.evaluators.listFamilies({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      PatronusAPI.NotFoundError,
+    );
   });
 });

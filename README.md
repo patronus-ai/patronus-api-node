@@ -4,18 +4,15 @@
 
 This library provides convenient access to the Patronus API REST API from server-side TypeScript or JavaScript.
 
-The REST API documentation can be found on [docs.patronus-api.com](https://docs.patronus-api.com). The full API of this library can be found in [api.md](api.md).
+The REST API documentation can be found on [docs.patronus.ai](https://docs.patronus.ai/docs/api_ref). The full API of this library can be found in [api.md](api.md).
 
 It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
 ```sh
-npm install git+ssh://git@github.com:stainless-sdks/patronus-api-node.git
+npm install patronus-api
 ```
-
-> [!NOTE]
-> Once this package is [published to npm](https://app.stainless.com/docs/guides/publish), this will become: `npm install patronus-api`
 
 ## Usage
 
@@ -30,9 +27,14 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const dataset = await client.datasets.list();
+  const response = await client.evaluations.evaluate({
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  });
 
-  console.log(dataset.datasets);
+  console.log(response.results);
 }
 
 main();
@@ -51,43 +53,19 @@ const client = new PatronusAPI({
 });
 
 async function main() {
-  const dataset: PatronusAPI.DatasetListResponse = await client.datasets.list();
+  const params: PatronusAPI.EvaluationEvaluateParams = {
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  };
+  const response: PatronusAPI.EvaluationEvaluateResponse = await client.evaluations.evaluate(params);
 }
 
 main();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
-
-## File uploads
-
-Request parameters that correspond to file uploads can be passed in many different forms:
-
-- `File` (or an object with the same structure)
-- a `fetch` `Response` (or an object with the same structure)
-- an `fs.ReadStream`
-- the return value of our `toFile` helper
-
-```ts
-import fs from 'fs';
-import fetch from 'node-fetch';
-import PatronusAPI, { toFile } from 'patronus-api';
-
-const client = new PatronusAPI();
-
-// If you have access to Node `fs` we recommend using `fs.createReadStream()`:
-await client.datasets.upload({ dataset_name: 'x', file: fs.createReadStream('/path/to/file') });
-
-// Or if you have the web `File` API you can pass a `File` instance:
-await client.datasets.upload({ dataset_name: 'x', file: new File(['my bytes'], 'file') });
-
-// You can also pass a `fetch` `Response`:
-await client.datasets.upload({ dataset_name: 'x', file: await fetch('https://somesite/file') });
-
-// Finally, if none of the above are convenient, you can use our `toFile` helper:
-await client.datasets.upload({ dataset_name: 'x', file: await toFile(Buffer.from('my bytes'), 'file') });
-await client.datasets.upload({ dataset_name: 'x', file: await toFile(new Uint8Array([0, 1, 2]), 'file') });
-```
 
 ## Handling errors
 
@@ -98,21 +76,28 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 async function main() {
-  const dataset = await client.datasets.list().catch(async (err) => {
-    if (err instanceof PatronusAPI.APIError) {
-      console.log(err.status); // 400
-      console.log(err.name); // BadRequestError
-      console.log(err.headers); // {server: 'nginx', ...}
-    } else {
-      throw err;
-    }
-  });
+  const response = await client.evaluations
+    .evaluate({
+      evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
+      task_context: 'The blue whale is the largest known animal.',
+      task_input: 'What is the largest animal in the world?',
+      task_output: 'The giant sandworm.',
+    })
+    .catch(async (err) => {
+      if (err instanceof PatronusAPI.APIError) {
+        console.log(err.status); // 400
+        console.log(err.name); // BadRequestError
+        console.log(err.headers); // {server: 'nginx', ...}
+      } else {
+        throw err;
+      }
+    });
 }
 
 main();
 ```
 
-Error codes are as followed:
+Error codes are as follows:
 
 | Status Code | Error Type                 |
 | ----------- | -------------------------- |
@@ -141,7 +126,7 @@ const client = new PatronusAPI({
 });
 
 // Or, configure per-request:
-await client.datasets.list({
+await client.evaluations.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
   maxRetries: 5,
 });
 ```
@@ -158,7 +143,7 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.datasets.list({
+await client.evaluations.evaluate({ evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }], task_context: 'The blue whale is the largest known animal.', task_input: 'What is the largest animal in the world?', task_output: 'The giant sandworm.' }, {
   timeout: 5 * 1000,
 });
 ```
@@ -179,13 +164,27 @@ You can also use the `.withResponse()` method to get the raw `Response` along wi
 ```ts
 const client = new PatronusAPI();
 
-const response = await client.datasets.list().asResponse();
+const response = await client.evaluations
+  .evaluate({
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  })
+  .asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: dataset, response: raw } = await client.datasets.list().withResponse();
+const { data: response, response: raw } = await client.evaluations
+  .evaluate({
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  })
+  .withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(dataset.datasets);
+console.log(response.results);
 ```
 
 ### Making custom/undocumented requests
@@ -248,7 +247,7 @@ import PatronusAPI from 'patronus-api';
 ```
 
 To do the inverse, add `import "patronus-api/shims/node"` (which does import polyfills).
-This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/stainless-sdks/patronus-api-node/tree/main/src/_shims#readme)).
+This can also be useful if you are getting the wrong TypeScript types for `Response` ([more details](https://github.com/patronus-ai/patronus-api-node/tree/main/src/_shims#readme)).
 
 ### Logging and middleware
 
@@ -289,9 +288,17 @@ const client = new PatronusAPI({
 });
 
 // Override per-request:
-await client.datasets.list({
-  httpAgent: new http.Agent({ keepAlive: false }),
-});
+await client.evaluations.evaluate(
+  {
+    evaluators: [{ evaluator: 'lynx', criteria: 'patronus:hallucination', explain_strategy: 'always' }],
+    task_context: 'The blue whale is the largest known animal.',
+    task_input: 'What is the largest animal in the world?',
+    task_output: 'The giant sandworm.',
+  },
+  {
+    httpAgent: new http.Agent({ keepAlive: false }),
+  },
+);
 ```
 
 ## Semantic versioning
@@ -304,7 +311,7 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/patronus-api-node/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/patronus-ai/patronus-api-node/issues) with questions, bugs, or suggestions.
 
 ## Requirements
 

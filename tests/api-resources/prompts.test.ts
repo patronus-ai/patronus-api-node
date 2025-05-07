@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import PatronusAPI, { toFile } from 'patronus-api';
+import PatronusAPI from 'patronus-api';
 import { Response } from 'node-fetch';
 
 const client = new PatronusAPI({
@@ -8,9 +8,9 @@ const client = new PatronusAPI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource datasets', () => {
-  test('retrieve', async () => {
-    const responsePromise = client.datasets.retrieve('id');
+describe('resource prompts', () => {
+  test('create: only required params', async () => {
+    const responsePromise = client.prompts.create({ body: 'body', name: 'name' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -20,15 +20,19 @@ describe('resource datasets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('retrieve: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.datasets.retrieve('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PatronusAPI.NotFoundError,
-    );
+  test('create: required and optional params', async () => {
+    const response = await client.prompts.create({
+      body: 'body',
+      name: 'name',
+      description: 'description',
+      labels: ['string'],
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_name: 'project_name',
+    });
   });
 
   test('update', async () => {
-    const responsePromise = client.datasets.update('dataset_id', {});
+    const responsePromise = client.prompts.update('name', {});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -39,7 +43,7 @@ describe('resource datasets', () => {
   });
 
   test('list', async () => {
-    const responsePromise = client.datasets.list();
+    const responsePromise = client.prompts.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -51,7 +55,7 @@ describe('resource datasets', () => {
 
   test('list: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.datasets.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.prompts.list({ path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
@@ -59,12 +63,22 @@ describe('resource datasets', () => {
   test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.datasets.list({ type: 'Patronus Managed' }, { path: '/_stainless_unknown_path' }),
+      client.prompts.list(
+        {
+          id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          label: 'label',
+          name: 'name',
+          project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+          project_name: 'project_name',
+          version: 0,
+        },
+        { path: '/_stainless_unknown_path' },
+      ),
     ).rejects.toThrow(PatronusAPI.NotFoundError);
   });
 
   test('delete', async () => {
-    const responsePromise = client.datasets.delete('id');
+    const responsePromise = client.prompts.delete('name');
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -76,13 +90,24 @@ describe('resource datasets', () => {
 
   test('delete: request options instead of params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.datasets.delete('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
+    await expect(client.prompts.delete('name', { path: '/_stainless_unknown_path' })).rejects.toThrow(
       PatronusAPI.NotFoundError,
     );
   });
 
-  test('downloadCsv', async () => {
-    const responsePromise = client.datasets.downloadCsv('id');
+  test('delete: request options and params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(
+      client.prompts.delete(
+        'name',
+        { project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e', project_name: 'project_name' },
+        { path: '/_stainless_unknown_path' },
+      ),
+    ).rejects.toThrow(PatronusAPI.NotFoundError);
+  });
+
+  test('createRevision: only required params', async () => {
+    const responsePromise = client.prompts.createRevision('name', { body: 'body' });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -92,54 +117,16 @@ describe('resource datasets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('downloadCsv: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.datasets.downloadCsv('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PatronusAPI.NotFoundError,
-    );
-  });
-
-  test('downloadJSONL', async () => {
-    const responsePromise = client.datasets.downloadJSONL('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('downloadJSONL: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.datasets.downloadJSONL('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PatronusAPI.NotFoundError,
-    );
-  });
-
-  test('listData', async () => {
-    const responsePromise = client.datasets.listData('id');
-    const rawResponse = await responsePromise.asResponse();
-    expect(rawResponse).toBeInstanceOf(Response);
-    const response = await responsePromise;
-    expect(response).not.toBeInstanceOf(Response);
-    const dataAndResponse = await responsePromise.withResponse();
-    expect(dataAndResponse.data).toBe(response);
-    expect(dataAndResponse.response).toBe(rawResponse);
-  });
-
-  test('listData: request options instead of params are passed correctly', async () => {
-    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
-    await expect(client.datasets.listData('id', { path: '/_stainless_unknown_path' })).rejects.toThrow(
-      PatronusAPI.NotFoundError,
-    );
-  });
-
-  test('upload: only required params', async () => {
-    const responsePromise = client.datasets.upload({
-      dataset_name: 'x',
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
+  test('createRevision: required and optional params', async () => {
+    const response = await client.prompts.createRevision('name', {
+      body: 'body',
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_name: 'project_name',
     });
+  });
+
+  test('setLabels: only required params', async () => {
+    const responsePromise = client.prompts.setLabels('name', { labels: ['string'], version: 0 });
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -149,12 +136,12 @@ describe('resource datasets', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  test('upload: required and optional params', async () => {
-    const response = await client.datasets.upload({
-      dataset_name: 'x',
-      file: await toFile(Buffer.from('# my file contents'), 'README.md'),
-      custom_field_mapping: 'custom_field_mapping',
-      dataset_description: 'dataset_description',
+  test('setLabels: required and optional params', async () => {
+    const response = await client.prompts.setLabels('name', {
+      labels: ['string'],
+      version: 0,
+      project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
+      project_name: 'project_name',
     });
   });
 });

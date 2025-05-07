@@ -1,12 +1,12 @@
 {
   "name": "patronus-api",
-  "version": "0.0.1-alpha.0",
+  "version": "0.1.0",
   "description": "The official TypeScript library for the Patronus API API",
-  "author": "Patronus API <dev-feedback@patronus-api.com>",
+  "author": "Patronus API <contact@patronus.ai>",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "type": "commonjs",
-  "repository": "github:stainless-sdks/patronus-api-node",
+  "repository": "github:patronus-ai/patronus-api-node",
   "license": "Apache-2.0",
   "packageManager": "yarn@1.22.22",
   "files": [
@@ -107,17 +107,17 @@
       "default": "./dist/index.mjs"
     },
     "./*.mjs": {
-      "types": ["./dist/*.d.ts", "./dist/*/index.d.ts"],
-      "default": ["./dist/*.mjs", "./dist/*/index.mjs"]
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.mjs"
     },
     "./*.js": {
-      "types": ["./dist/*.d.ts", "./dist/*/index.d.ts"],
-      "default": ["./dist/*.js", "./dist/*/index.js"]
+      "types": "./dist/*.d.ts",
+      "default": "./dist/*.js"
     },
     "./*": {
-      "types": ["./dist/*.d.ts", "./dist/*/index.d.ts"],
-      "require": ["./dist/*.js", "./dist/*/index.js"],
-      "default": ["./dist/*.mjs", "./dist/*/index.mjs"]
+      "types": "./dist/*.d.ts",
+      "require": "./dist/*.js",
+      "default": "./dist/*.mjs"
     }
   }
 }

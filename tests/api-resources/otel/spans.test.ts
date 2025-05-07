@@ -10,7 +10,7 @@ const client = new PatronusAPI({
 
 describe('resource spans', () => {
   test('search', async () => {
-    const responsePromise = client.spans.search({});
+    const responsePromise = client.otel.spans.search({});
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;

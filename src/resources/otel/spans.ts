@@ -1,14 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../../resource';
+import * as Core from '../../core';
 
 export class Spans extends APIResource {
   /**
-   * The endpoint is deprecated. Please use `/v1/otel/spans/search` instead.
+   * Search Spans
    */
   search(body: SpanSearchParams, options?: Core.RequestOptions): Core.APIPromise<SpanSearchResponse> {
-    return this._client.post('/v1/spans/search', { body, ...options });
+    return this._client.post('/v1/otel/spans/search', { body, ...options });
   }
 }
 
@@ -55,13 +55,25 @@ export namespace SpanSearchResponse {
 }
 
 export interface SpanSearchParams {
+  filters?: Array<SpanSearchParams.Filter>;
+
   limit?: number;
 
-  parent_span_id?: 'any' | null;
+  order?: 'timestamp asc' | 'timestamp desc';
+}
 
-  project_id?: string | null;
+export namespace SpanSearchParams {
+  export interface Filter {
+    and_?: Array<unknown> | null;
 
-  trace_id?: string | null;
+    field?: string | null;
+
+    op?: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le' | 'starts_with' | 'ends_with' | null;
+
+    or_?: Array<unknown> | null;
+
+    value?: unknown;
+  }
 }
 
 export declare namespace Spans {

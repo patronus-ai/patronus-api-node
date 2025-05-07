@@ -8,9 +8,9 @@ const client = new PatronusAPI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource logs', () => {
-  test('search', async () => {
-    const responsePromise = client.logs.search({});
+describe('resource whoami', () => {
+  test('retrieve', async () => {
+    const responsePromise = client.whoami.retrieve();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -18,5 +18,12 @@ describe('resource logs', () => {
     const dataAndResponse = await responsePromise.withResponse();
     expect(dataAndResponse.data).toBe(response);
     expect(dataAndResponse.response).toBe(rawResponse);
+  });
+
+  test('retrieve: request options instead of params are passed correctly', async () => {
+    // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
+    await expect(client.whoami.retrieve({ path: '/_stainless_unknown_path' })).rejects.toThrow(
+      PatronusAPI.NotFoundError,
+    );
   });
 });

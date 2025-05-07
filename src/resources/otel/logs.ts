@@ -1,14 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { APIResource } from '../resource';
-import * as Core from '../core';
+import { APIResource } from '../../resource';
+import * as Core from '../../core';
 
 export class Logs extends APIResource {
   /**
-   * The endpoint is deprecated. Please use `/v1/otel/logs/search` instead.
+   * Search Logs
    */
   search(body: LogSearchParams, options?: Core.RequestOptions): Core.APIPromise<LogSearchResponse> {
-    return this._client.post('/v1/logs/search', { body, ...options });
+    return this._client.post('/v1/otel/logs/search', { body, ...options });
   }
 }
 
@@ -51,9 +51,25 @@ export namespace LogSearchResponse {
 }
 
 export interface LogSearchParams {
+  filters?: Array<LogSearchParams.Filter>;
+
   limit?: number;
 
-  trace_id?: string | null;
+  order?: 'timestamp asc' | 'timestamp desc';
+}
+
+export namespace LogSearchParams {
+  export interface Filter {
+    and_?: Array<unknown> | null;
+
+    field?: string | null;
+
+    op?: 'eq' | 'ne' | 'gt' | 'ge' | 'lt' | 'le' | 'starts_with' | 'ends_with' | null;
+
+    or_?: Array<unknown> | null;
+
+    value?: unknown;
+  }
 }
 
 export declare namespace Logs {

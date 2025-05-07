@@ -1,79 +1,3 @@
-# PatronusAPI
-
-Types:
-
-- <code><a href="./src/resources/top-level.ts">AnnotateResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">EvaluateResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">ListAppsResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">ListEvaluatorFamiliesResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">ListEvaluatorsResponse</a></code>
-- <code><a href="./src/resources/top-level.ts">WhoamiResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/annotate">client.<a href="./src/index.ts">annotate</a>({ ...params }) -> AnnotateResponse</code>
-- <code title="post /v1/evaluate">client.<a href="./src/index.ts">evaluate</a>({ ...params }) -> EvaluateResponse</code>
-- <code title="get /v1/apps">client.<a href="./src/index.ts">listApps</a>({ ...params }) -> ListAppsResponse</code>
-- <code title="get /v1/evaluator-families">client.<a href="./src/index.ts">listEvaluatorFamilies</a>() -> ListEvaluatorFamiliesResponse</code>
-- <code title="get /v1/evaluators">client.<a href="./src/index.ts">listEvaluators</a>() -> ListEvaluatorsResponse</code>
-- <code title="get /v1/whoami">client.<a href="./src/index.ts">whoami</a>() -> WhoamiResponse</code>
-
-# Datasets
-
-Types:
-
-- <code><a href="./src/resources/datasets.ts">Dataset</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetHasValues</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetType</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetRetrieveResponse</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetUpdateResponse</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetListResponse</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetListDataResponse</a></code>
-- <code><a href="./src/resources/datasets.ts">DatasetUploadResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/datasets/{id}">client.datasets.<a href="./src/resources/datasets.ts">retrieve</a>(id) -> DatasetRetrieveResponse</code>
-- <code title="patch /v1/datasets/{dataset_id}">client.datasets.<a href="./src/resources/datasets.ts">update</a>(datasetId, { ...params }) -> DatasetUpdateResponse</code>
-- <code title="get /v1/datasets">client.datasets.<a href="./src/resources/datasets.ts">list</a>({ ...params }) -> DatasetListResponse</code>
-- <code title="delete /v1/datasets/{id}">client.datasets.<a href="./src/resources/datasets.ts">delete</a>(id) -> void</code>
-- <code title="get /v1/datasets/{id}/csv">client.datasets.<a href="./src/resources/datasets.ts">downloadCsv</a>(id) -> void</code>
-- <code title="get /v1/datasets/{id}/jsonl">client.datasets.<a href="./src/resources/datasets.ts">downloadJSONL</a>(id) -> void</code>
-- <code title="get /v1/datasets/{id}/data">client.datasets.<a href="./src/resources/datasets.ts">listData</a>(id) -> DatasetListDataResponse</code>
-- <code title="post /v1/datasets">client.datasets.<a href="./src/resources/datasets.ts">upload</a>({ ...params }) -> DatasetUploadResponse</code>
-
-# EvaluationResults
-
-Types:
-
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationExplainStrategies</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResult</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultRetrieveResponse</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultCreateBatchResponse</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultListTagsResponse</a></code>
-- <code><a href="./src/resources/evaluation-results/evaluation-results.ts">EvaluationResultSearchResponse</a></code>
-
-Methods:
-
-- <code title="get /v1/evaluation-results/{id}">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">retrieve</a>(id) -> EvaluationResultRetrieveResponse</code>
-- <code title="post /v1/evaluation-results/batch">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">createBatch</a>({ ...params }) -> EvaluationResultCreateBatchResponse</code>
-- <code title="get /v1/evaluation-results/tags">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">listTags</a>() -> EvaluationResultListTagsResponse</code>
-- <code title="post /v1/evaluation-results/search">client.evaluationResults.<a href="./src/resources/evaluation-results/evaluation-results.ts">search</a>({ ...params }) -> EvaluationResultSearchResponse</code>
-
-## Favorite
-
-Methods:
-
-- <code title="post /v1/evaluation-results/{id}/favorite">client.evaluationResults.favorite.<a href="./src/resources/evaluation-results/favorite.ts">mark</a>(id) -> void</code>
-- <code title="delete /v1/evaluation-results/{id}/favorite">client.evaluationResults.favorite.<a href="./src/resources/evaluation-results/favorite.ts">unmark</a>(id) -> void</code>
-
-## EvaluationFeedback
-
-Methods:
-
-- <code title="delete /v1/evaluation-results/{id}/evaluation-feedback">client.evaluationResults.evaluationFeedback.<a href="./src/resources/evaluation-results/evaluation-feedback.ts">delete</a>(id) -> void</code>
-- <code title="post /v1/evaluation-results/{id}/evaluation-feedback">client.evaluationResults.evaluationFeedback.<a href="./src/resources/evaluation-results/evaluation-feedback.ts">submit</a>(id, { ...params }) -> void</code>
-
 # EvaluatorCriteria
 
 Types:
@@ -122,68 +46,13 @@ Methods:
 - <code title="get /v1/projects">client.projects.<a href="./src/resources/projects.ts">list</a>({ ...params }) -> ProjectListResponse</code>
 - <code title="delete /v1/projects/{id}">client.projects.<a href="./src/resources/projects.ts">delete</a>(id) -> void</code>
 
-# AnnotationCriteria
-
-Types:
-
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationCategory</a></code>
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationCriteria</a></code>
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationType</a></code>
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationCriterionCreateResponse</a></code>
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationCriterionRetrieveResponse</a></code>
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationCriterionUpdateResponse</a></code>
-- <code><a href="./src/resources/annotation-criteria.ts">AnnotationCriterionListResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/annotation-criteria">client.annotationCriteria.<a href="./src/resources/annotation-criteria.ts">create</a>({ ...params }) -> AnnotationCriterionCreateResponse</code>
-- <code title="get /v1/annotation-criteria/{id}">client.annotationCriteria.<a href="./src/resources/annotation-criteria.ts">retrieve</a>(id) -> AnnotationCriterionRetrieveResponse</code>
-- <code title="put /v1/annotation-criteria/{id}">client.annotationCriteria.<a href="./src/resources/annotation-criteria.ts">update</a>(id, { ...params }) -> AnnotationCriterionUpdateResponse</code>
-- <code title="get /v1/annotation-criteria">client.annotationCriteria.<a href="./src/resources/annotation-criteria.ts">list</a>({ ...params }) -> AnnotationCriterionListResponse</code>
-- <code title="delete /v1/annotation-criteria/{id}">client.annotationCriteria.<a href="./src/resources/annotation-criteria.ts">delete</a>(id) -> void</code>
-
-# PairwiseAnnotations
-
-Types:
-
-- <code><a href="./src/resources/pairwise-annotations.ts">PairwiseAnnotation</a></code>
-- <code><a href="./src/resources/pairwise-annotations.ts">PairwiseAnnotationCreateResponse</a></code>
-- <code><a href="./src/resources/pairwise-annotations.ts">PairwiseAnnotationListResponse</a></code>
-- <code><a href="./src/resources/pairwise-annotations.ts">PairwiseAnnotationGetBatchResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/pairwise-annotations">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">create</a>({ ...params }) -> PairwiseAnnotationCreateResponse</code>
-- <code title="get /v1/pairwise-annotations">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">list</a>({ ...params }) -> PairwiseAnnotationListResponse</code>
-- <code title="delete /v1/pairwise-annotations">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">delete</a>({ ...params }) -> void</code>
-- <code title="post /v1/pairwise-annotations/get-batch">client.pairwiseAnnotations.<a href="./src/resources/pairwise-annotations.ts">getBatch</a>({ ...params }) -> PairwiseAnnotationGetBatchResponse</code>
-
-# Logs
-
-Types:
-
-- <code><a href="./src/resources/logs.ts">LogSearchResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/logs/search">client.logs.<a href="./src/resources/logs.ts">search</a>({ ...params }) -> LogSearchResponse</code>
-
-# Spans
-
-Types:
-
-- <code><a href="./src/resources/spans.ts">SpanSearchResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/spans/search">client.spans.<a href="./src/resources/spans.ts">search</a>({ ...params }) -> SpanSearchResponse</code>
-
 # Evaluations
 
 Types:
 
 - <code><a href="./src/resources/evaluations.ts">EvaluationRetrieveResponse</a></code>
 - <code><a href="./src/resources/evaluations.ts">EvaluationBatchCreateResponse</a></code>
+- <code><a href="./src/resources/evaluations.ts">EvaluationEvaluateResponse</a></code>
 - <code><a href="./src/resources/evaluations.ts">EvaluationSearchResponse</a></code>
 
 Methods:
@@ -191,4 +60,92 @@ Methods:
 - <code title="get /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">retrieve</a>(id) -> EvaluationRetrieveResponse</code>
 - <code title="delete /v1/evaluations/{id}">client.evaluations.<a href="./src/resources/evaluations.ts">delete</a>(id) -> void</code>
 - <code title="post /v1/evaluations/batch">client.evaluations.<a href="./src/resources/evaluations.ts">batchCreate</a>({ ...params }) -> EvaluationBatchCreateResponse</code>
+- <code title="post /v1/evaluate">client.evaluations.<a href="./src/resources/evaluations.ts">evaluate</a>({ ...params }) -> EvaluationEvaluateResponse</code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/resources/evaluations.ts">search</a>({ ...params }) -> EvaluationSearchResponse</code>
+
+# Prompts
+
+Types:
+
+- <code><a href="./src/resources/prompts.ts">PromptCreateResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptUpdateResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptListResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptDeleteResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptCreateRevisionResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/prompts">client.prompts.<a href="./src/resources/prompts.ts">create</a>({ ...params }) -> PromptCreateResponse</code>
+- <code title="patch /v1/prompts/{name}">client.prompts.<a href="./src/resources/prompts.ts">update</a>(pathName, { ...params }) -> unknown</code>
+- <code title="get /v1/prompts">client.prompts.<a href="./src/resources/prompts.ts">list</a>({ ...params }) -> PromptListResponse</code>
+- <code title="delete /v1/prompts/{name}">client.prompts.<a href="./src/resources/prompts.ts">delete</a>(name, { ...params }) -> unknown</code>
+- <code title="post /v1/prompts/{name}/revision">client.prompts.<a href="./src/resources/prompts.ts">createRevision</a>(name, { ...params }) -> PromptCreateRevisionResponse</code>
+- <code title="post /v1/prompts/{name}/set-labels">client.prompts.<a href="./src/resources/prompts.ts">setLabels</a>(name, { ...params }) -> void</code>
+
+# Otel
+
+## Logs
+
+Types:
+
+- <code><a href="./src/resources/otel/logs.ts">LogSearchResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/otel/logs/search">client.otel.logs.<a href="./src/resources/otel/logs.ts">search</a>({ ...params }) -> LogSearchResponse</code>
+
+## Spans
+
+Types:
+
+- <code><a href="./src/resources/otel/spans.ts">SpanSearchResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/otel/spans/search">client.otel.spans.<a href="./src/resources/otel/spans.ts">search</a>({ ...params }) -> SpanSearchResponse</code>
+
+# TraceInsight
+
+Types:
+
+- <code><a href="./src/resources/trace-insight.ts">TraceInsightListResponse</a></code>
+- <code><a href="./src/resources/trace-insight.ts">TraceInsightCreateJobResponse</a></code>
+- <code><a href="./src/resources/trace-insight.ts">TraceInsightListJobsResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/trace-insight">client.traceInsight.<a href="./src/resources/trace-insight.ts">list</a>({ ...params }) -> TraceInsightListResponse</code>
+- <code title="post /v1/trace-insight-jobs">client.traceInsight.<a href="./src/resources/trace-insight.ts">createJob</a>({ ...params }) -> TraceInsightCreateJobResponse</code>
+- <code title="get /v1/trace-insight-jobs">client.traceInsight.<a href="./src/resources/trace-insight.ts">listJobs</a>({ ...params }) -> TraceInsightListJobsResponse</code>
+
+# Evaluators
+
+Types:
+
+- <code><a href="./src/resources/evaluators.ts">EvaluatorListResponse</a></code>
+- <code><a href="./src/resources/evaluators.ts">EvaluatorListFamiliesResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/evaluators">client.evaluators.<a href="./src/resources/evaluators.ts">list</a>() -> EvaluatorListResponse</code>
+- <code title="get /v1/evaluator-families">client.evaluators.<a href="./src/resources/evaluators.ts">listFamilies</a>() -> EvaluatorListFamiliesResponse</code>
+
+# Whoami
+
+Types:
+
+- <code><a href="./src/resources/whoami.ts">WhoamiRetrieveResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/whoami">client.whoami.<a href="./src/resources/whoami.ts">retrieve</a>() -> WhoamiRetrieveResponse</code>
+
+# Apps
+
+Types:
+
+- <code><a href="./src/resources/apps.ts">AppListResponse</a></code>
+
+Methods:
+
+- <code title="get /v1/apps">client.apps.<a href="./src/resources/apps.ts">list</a>({ ...params }) -> AppListResponse</code>

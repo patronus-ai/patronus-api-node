@@ -1,53 +1,16 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { isRequestOptions } from './core';
 import { type Agent } from './_shims/index';
-import * as qs from './internal/qs';
 import * as Core from './core';
 import * as Errors from './error';
 import * as Uploads from './uploads';
 import * as API from './resources/index';
-import * as TopLevelAPI from './resources/top-level';
-import {
-  AnnotateParams,
-  AnnotateResponse,
-  EvaluateParams,
-  EvaluateResponse,
-  ListAppsParams,
-  ListAppsResponse,
-  ListEvaluatorFamiliesResponse,
-  ListEvaluatorsResponse,
-  WhoamiResponse,
-} from './resources/top-level';
-import {
-  AnnotationCategory,
-  AnnotationCriteria,
-  AnnotationCriterionCreateParams,
-  AnnotationCriterionCreateResponse,
-  AnnotationCriterionListParams,
-  AnnotationCriterionListResponse,
-  AnnotationCriterionRetrieveResponse,
-  AnnotationCriterionUpdateParams,
-  AnnotationCriterionUpdateResponse,
-  AnnotationType,
-} from './resources/annotation-criteria';
-import {
-  Dataset,
-  DatasetHasValues,
-  DatasetListDataResponse,
-  DatasetListParams,
-  DatasetListResponse,
-  DatasetRetrieveResponse,
-  DatasetType,
-  DatasetUpdateParams,
-  DatasetUpdateResponse,
-  DatasetUploadParams,
-  DatasetUploadResponse,
-  Datasets,
-} from './resources/datasets';
+import { AppListParams, AppListResponse, Apps } from './resources/apps';
 import {
   EvaluationBatchCreateParams,
   EvaluationBatchCreateResponse,
+  EvaluationEvaluateParams,
+  EvaluationEvaluateResponse,
   EvaluationRetrieveResponse,
   EvaluationSearchParams,
   EvaluationSearchResponse,
@@ -63,6 +26,7 @@ import {
   EvaluatorCriterionListParams,
   EvaluatorCriterionListResponse,
 } from './resources/evaluator-criteria';
+import { EvaluatorListFamiliesResponse, EvaluatorListResponse, Evaluators } from './resources/evaluators';
 import {
   Experiment,
   ExperimentCreateParams,
@@ -72,18 +36,6 @@ import {
   ExperimentRetrieveResponse,
   Experiments,
 } from './resources/experiments';
-import { LogSearchParams, LogSearchResponse, Logs } from './resources/logs';
-import {
-  PairwiseAnnotation,
-  PairwiseAnnotationCreateParams,
-  PairwiseAnnotationCreateResponse,
-  PairwiseAnnotationDeleteParams,
-  PairwiseAnnotationGetBatchParams,
-  PairwiseAnnotationGetBatchResponse,
-  PairwiseAnnotationListParams,
-  PairwiseAnnotationListResponse,
-  PairwiseAnnotations,
-} from './resources/pairwise-annotations';
 import {
   Project,
   ProjectCreateParams,
@@ -92,24 +44,39 @@ import {
   ProjectRetrieveResponse,
   Projects,
 } from './resources/projects';
-import { SpanSearchParams, SpanSearchResponse, Spans } from './resources/spans';
 import {
-  EvaluationExplainStrategies,
-  EvaluationResult,
-  EvaluationResultCreateBatchParams,
-  EvaluationResultCreateBatchResponse,
-  EvaluationResultListTagsResponse,
-  EvaluationResultRetrieveResponse,
-  EvaluationResultSearchParams,
-  EvaluationResultSearchResponse,
-  EvaluationResults,
-} from './resources/evaluation-results/evaluation-results';
+  PromptCreateParams,
+  PromptCreateResponse,
+  PromptCreateRevisionParams,
+  PromptCreateRevisionResponse,
+  PromptDeleteParams,
+  PromptDeleteResponse,
+  PromptListParams,
+  PromptListResponse,
+  PromptSetLabelsParams,
+  PromptUpdateParams,
+  PromptUpdateResponse,
+  Prompts,
+} from './resources/prompts';
+import {
+  TraceInsight,
+  TraceInsightCreateJobParams,
+  TraceInsightCreateJobResponse,
+  TraceInsightListJobsParams,
+  TraceInsightListJobsResponse,
+  TraceInsightListParams,
+  TraceInsightListResponse,
+} from './resources/trace-insight';
+import { Whoami, WhoamiRetrieveResponse } from './resources/whoami';
+import { Otel } from './resources/otel/otel';
 
 export interface ClientOptions {
   /**
    * Defaults to process.env['PATRONUS_API_KEY'].
    */
-  apiKey?: string | undefined;
+  apiKey?: string | null | undefined;
+
+  accessToken?: string | null | undefined;
 
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
@@ -172,14 +139,16 @@ export interface ClientOptions {
  * API Client for interfacing with the Patronus API API.
  */
 export class PatronusAPI extends Core.APIClient {
-  apiKey: string;
+  apiKey: string | null;
+  accessToken: string | null;
 
   private _options: ClientOptions;
 
   /**
    * API Client for interfacing with the Patronus API API.
    *
-   * @param {string | undefined} [opts.apiKey=process.env['PATRONUS_API_KEY'] ?? undefined]
+   * @param {string | null | undefined} [opts.apiKey=process.env['PATRONUS_API_KEY'] ?? null]
+   * @param {string | null | undefined} [opts.accessToken]
    * @param {string} [opts.baseURL=process.env['PATRONUS_API_BASE_URL'] ?? https://api.patronus.ai] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {number} [opts.httpAgent] - An HTTP agent used to manage HTTP(s) connections.
@@ -190,17 +159,13 @@ export class PatronusAPI extends Core.APIClient {
    */
   constructor({
     baseURL = Core.readEnv('PATRONUS_API_BASE_URL'),
-    apiKey = Core.readEnv('PATRONUS_API_KEY'),
+    apiKey = Core.readEnv('PATRONUS_API_KEY') ?? null,
+    accessToken = null,
     ...opts
   }: ClientOptions = {}) {
-    if (apiKey === undefined) {
-      throw new Errors.PatronusAPIError(
-        "The PATRONUS_API_KEY environment variable is missing or empty; either provide it, or instantiate the PatronusAPI client with an apiKey option, like new PatronusAPI({ apiKey: 'My API Key' }).",
-      );
-    }
-
     const options: ClientOptions = {
       apiKey,
+      accessToken,
       ...opts,
       baseURL: baseURL || `https://api.patronus.ai`,
     };
@@ -216,80 +181,19 @@ export class PatronusAPI extends Core.APIClient {
     this._options = options;
 
     this.apiKey = apiKey;
+    this.accessToken = accessToken;
   }
 
-  datasets: API.Datasets = new API.Datasets(this);
-  evaluationResults: API.EvaluationResults = new API.EvaluationResults(this);
   evaluatorCriteria: API.EvaluatorCriteria = new API.EvaluatorCriteria(this);
   experiments: API.Experiments = new API.Experiments(this);
   projects: API.Projects = new API.Projects(this);
-  annotationCriteria: API.AnnotationCriteria = new API.AnnotationCriteria(this);
-  pairwiseAnnotations: API.PairwiseAnnotations = new API.PairwiseAnnotations(this);
-  logs: API.Logs = new API.Logs(this);
-  spans: API.Spans = new API.Spans(this);
   evaluations: API.Evaluations = new API.Evaluations(this);
-
-  /**
-   * Annotate
-   */
-  annotate(
-    body: TopLevelAPI.AnnotateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.AnnotateResponse> {
-    return this.post('/v1/annotate', { body, ...options });
-  }
-
-  /**
-   * Requires either **input** or **output** field to be specified. Absence of both
-   * leads to an HTTP_422 (Unprocessable Entity) error.
-   */
-  evaluate(
-    body: TopLevelAPI.EvaluateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.EvaluateResponse> {
-    return this.post('/v1/evaluate', { body, ...options });
-  }
-
-  /**
-   * List Apps
-   */
-  listApps(
-    query?: TopLevelAPI.ListAppsParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.ListAppsResponse>;
-  listApps(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.ListAppsResponse>;
-  listApps(
-    query: TopLevelAPI.ListAppsParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.ListAppsResponse> {
-    if (isRequestOptions(query)) {
-      return this.listApps({}, query);
-    }
-    return this.get('/v1/apps', { query, ...options });
-  }
-
-  /**
-   * List Evaluator Families
-   */
-  listEvaluatorFamilies(
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<TopLevelAPI.ListEvaluatorFamiliesResponse> {
-    return this.get('/v1/evaluator-families', options);
-  }
-
-  /**
-   * List of available evaluators for Evaluation Runs and LLM Monitoring.
-   */
-  listEvaluators(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.ListEvaluatorsResponse> {
-    return this.get('/v1/evaluators', options);
-  }
-
-  /**
-   * Whoami
-   */
-  whoami(options?: Core.RequestOptions): Core.APIPromise<TopLevelAPI.WhoamiResponse> {
-    return this.get('/v1/whoami', options);
-  }
+  prompts: API.Prompts = new API.Prompts(this);
+  otel: API.Otel = new API.Otel(this);
+  traceInsight: API.TraceInsight = new API.TraceInsight(this);
+  evaluators: API.Evaluators = new API.Evaluators(this);
+  whoami: API.Whoami = new API.Whoami(this);
+  apps: API.Apps = new API.Apps(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -302,12 +206,45 @@ export class PatronusAPI extends Core.APIClient {
     };
   }
 
+  protected override validateHeaders(headers: Core.Headers, customHeaders: Core.Headers) {
+    if (this.apiKey && headers['x-api-key']) {
+      return;
+    }
+    if (customHeaders['x-api-key'] === null) {
+      return;
+    }
+
+    if (this.accessToken && headers['authorization']) {
+      return;
+    }
+    if (customHeaders['authorization'] === null) {
+      return;
+    }
+
+    throw new Error(
+      'Could not resolve authentication method. Expected either apiKey or accessToken to be set. Or for one of the "X-API-KEY" or "Authorization" headers to be explicitly omitted',
+    );
+  }
+
   protected override authHeaders(opts: Core.FinalRequestOptions): Core.Headers {
+    return {
+      ...this.apiKeyAuth(opts),
+      ...this.bearerAuth(opts),
+    };
+  }
+
+  protected apiKeyAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.apiKey == null) {
+      return {};
+    }
     return { 'X-API-KEY': this.apiKey };
   }
 
-  protected override stringifyQuery(query: Record<string, unknown>): string {
-    return qs.stringify(query, { arrayFormat: 'comma' });
+  protected bearerAuth(opts: Core.FinalRequestOptions): Core.Headers {
+    if (this.accessToken == null) {
+      return {};
+    }
+    return { Authorization: `Bearer ${this.accessToken}` };
   }
 
   static PatronusAPI = this;
@@ -331,55 +268,17 @@ export class PatronusAPI extends Core.APIClient {
   static fileFromPath = Uploads.fileFromPath;
 }
 
-PatronusAPI.Datasets = Datasets;
-PatronusAPI.EvaluationResults = EvaluationResults;
 PatronusAPI.Experiments = Experiments;
 PatronusAPI.Projects = Projects;
-PatronusAPI.PairwiseAnnotations = PairwiseAnnotations;
-PatronusAPI.Logs = Logs;
-PatronusAPI.Spans = Spans;
 PatronusAPI.Evaluations = Evaluations;
+PatronusAPI.Prompts = Prompts;
+PatronusAPI.Otel = Otel;
+PatronusAPI.TraceInsight = TraceInsight;
+PatronusAPI.Evaluators = Evaluators;
+PatronusAPI.Whoami = Whoami;
+PatronusAPI.Apps = Apps;
 export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
-
-  export {
-    type AnnotateResponse as AnnotateResponse,
-    type EvaluateResponse as EvaluateResponse,
-    type ListAppsResponse as ListAppsResponse,
-    type ListEvaluatorFamiliesResponse as ListEvaluatorFamiliesResponse,
-    type ListEvaluatorsResponse as ListEvaluatorsResponse,
-    type WhoamiResponse as WhoamiResponse,
-    type AnnotateParams as AnnotateParams,
-    type EvaluateParams as EvaluateParams,
-    type ListAppsParams as ListAppsParams,
-  };
-
-  export {
-    Datasets as Datasets,
-    type Dataset as Dataset,
-    type DatasetHasValues as DatasetHasValues,
-    type DatasetType as DatasetType,
-    type DatasetRetrieveResponse as DatasetRetrieveResponse,
-    type DatasetUpdateResponse as DatasetUpdateResponse,
-    type DatasetListResponse as DatasetListResponse,
-    type DatasetListDataResponse as DatasetListDataResponse,
-    type DatasetUploadResponse as DatasetUploadResponse,
-    type DatasetUpdateParams as DatasetUpdateParams,
-    type DatasetListParams as DatasetListParams,
-    type DatasetUploadParams as DatasetUploadParams,
-  };
-
-  export {
-    EvaluationResults as EvaluationResults,
-    type EvaluationExplainStrategies as EvaluationExplainStrategies,
-    type EvaluationResult as EvaluationResult,
-    type EvaluationResultRetrieveResponse as EvaluationResultRetrieveResponse,
-    type EvaluationResultCreateBatchResponse as EvaluationResultCreateBatchResponse,
-    type EvaluationResultListTagsResponse as EvaluationResultListTagsResponse,
-    type EvaluationResultSearchResponse as EvaluationResultSearchResponse,
-    type EvaluationResultCreateBatchParams as EvaluationResultCreateBatchParams,
-    type EvaluationResultSearchParams as EvaluationResultSearchParams,
-  };
 
   export {
     type EvaluatorCriteria as EvaluatorCriteria,
@@ -412,50 +311,52 @@ export declare namespace PatronusAPI {
   };
 
   export {
-    type AnnotationCriteria as AnnotationCriteria,
-    type AnnotationCategory as AnnotationCategory,
-    type AnnotationType as AnnotationType,
-    type AnnotationCriterionCreateResponse as AnnotationCriterionCreateResponse,
-    type AnnotationCriterionRetrieveResponse as AnnotationCriterionRetrieveResponse,
-    type AnnotationCriterionUpdateResponse as AnnotationCriterionUpdateResponse,
-    type AnnotationCriterionListResponse as AnnotationCriterionListResponse,
-    type AnnotationCriterionCreateParams as AnnotationCriterionCreateParams,
-    type AnnotationCriterionUpdateParams as AnnotationCriterionUpdateParams,
-    type AnnotationCriterionListParams as AnnotationCriterionListParams,
-  };
-
-  export {
-    PairwiseAnnotations as PairwiseAnnotations,
-    type PairwiseAnnotation as PairwiseAnnotation,
-    type PairwiseAnnotationCreateResponse as PairwiseAnnotationCreateResponse,
-    type PairwiseAnnotationListResponse as PairwiseAnnotationListResponse,
-    type PairwiseAnnotationGetBatchResponse as PairwiseAnnotationGetBatchResponse,
-    type PairwiseAnnotationCreateParams as PairwiseAnnotationCreateParams,
-    type PairwiseAnnotationListParams as PairwiseAnnotationListParams,
-    type PairwiseAnnotationDeleteParams as PairwiseAnnotationDeleteParams,
-    type PairwiseAnnotationGetBatchParams as PairwiseAnnotationGetBatchParams,
-  };
-
-  export {
-    Logs as Logs,
-    type LogSearchResponse as LogSearchResponse,
-    type LogSearchParams as LogSearchParams,
-  };
-
-  export {
-    Spans as Spans,
-    type SpanSearchResponse as SpanSearchResponse,
-    type SpanSearchParams as SpanSearchParams,
-  };
-
-  export {
     Evaluations as Evaluations,
     type EvaluationRetrieveResponse as EvaluationRetrieveResponse,
     type EvaluationBatchCreateResponse as EvaluationBatchCreateResponse,
+    type EvaluationEvaluateResponse as EvaluationEvaluateResponse,
     type EvaluationSearchResponse as EvaluationSearchResponse,
     type EvaluationBatchCreateParams as EvaluationBatchCreateParams,
+    type EvaluationEvaluateParams as EvaluationEvaluateParams,
     type EvaluationSearchParams as EvaluationSearchParams,
   };
+
+  export {
+    Prompts as Prompts,
+    type PromptCreateResponse as PromptCreateResponse,
+    type PromptUpdateResponse as PromptUpdateResponse,
+    type PromptListResponse as PromptListResponse,
+    type PromptDeleteResponse as PromptDeleteResponse,
+    type PromptCreateRevisionResponse as PromptCreateRevisionResponse,
+    type PromptCreateParams as PromptCreateParams,
+    type PromptUpdateParams as PromptUpdateParams,
+    type PromptListParams as PromptListParams,
+    type PromptDeleteParams as PromptDeleteParams,
+    type PromptCreateRevisionParams as PromptCreateRevisionParams,
+    type PromptSetLabelsParams as PromptSetLabelsParams,
+  };
+
+  export { Otel as Otel };
+
+  export {
+    TraceInsight as TraceInsight,
+    type TraceInsightListResponse as TraceInsightListResponse,
+    type TraceInsightCreateJobResponse as TraceInsightCreateJobResponse,
+    type TraceInsightListJobsResponse as TraceInsightListJobsResponse,
+    type TraceInsightListParams as TraceInsightListParams,
+    type TraceInsightCreateJobParams as TraceInsightCreateJobParams,
+    type TraceInsightListJobsParams as TraceInsightListJobsParams,
+  };
+
+  export {
+    Evaluators as Evaluators,
+    type EvaluatorListResponse as EvaluatorListResponse,
+    type EvaluatorListFamiliesResponse as EvaluatorListFamiliesResponse,
+  };
+
+  export { Whoami as Whoami, type WhoamiRetrieveResponse as WhoamiRetrieveResponse };
+
+  export { Apps as Apps, type AppListResponse as AppListResponse, type AppListParams as AppListParams };
 }
 
 export { toFile, fileFromPath } from './uploads';
