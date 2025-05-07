@@ -25,7 +25,9 @@ The full API of this library can be found in [api.md](api.md).
 ```js
 import PatronusAPI from 'patronus-api';
 
-const client = new PatronusAPI();
+const client = new PatronusAPI({
+  accessToken: 'My Access Token',
+});
 
 async function main() {
   const response = await client.evaluations.evaluate({
@@ -49,7 +51,9 @@ This library includes TypeScript definitions for all request params and response
 ```ts
 import PatronusAPI from 'patronus-api';
 
-const client = new PatronusAPI();
+const client = new PatronusAPI({
+  accessToken: 'My Access Token',
+});
 
 async function main() {
   const params: PatronusAPI.EvaluationEvaluateParams = {
