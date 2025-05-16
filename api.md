@@ -63,25 +63,6 @@ Methods:
 - <code title="post /v1/evaluate">client.evaluations.<a href="./src/resources/evaluations.ts">evaluate</a>({ ...params }) -> EvaluationEvaluateResponse</code>
 - <code title="post /v1/evaluations/search">client.evaluations.<a href="./src/resources/evaluations.ts">search</a>({ ...params }) -> EvaluationSearchResponse</code>
 
-# Prompts
-
-Types:
-
-- <code><a href="./src/resources/prompts.ts">PromptCreateResponse</a></code>
-- <code><a href="./src/resources/prompts.ts">PromptUpdateResponse</a></code>
-- <code><a href="./src/resources/prompts.ts">PromptListResponse</a></code>
-- <code><a href="./src/resources/prompts.ts">PromptDeleteResponse</a></code>
-- <code><a href="./src/resources/prompts.ts">PromptCreateRevisionResponse</a></code>
-
-Methods:
-
-- <code title="post /v1/prompts">client.prompts.<a href="./src/resources/prompts.ts">create</a>({ ...params }) -> PromptCreateResponse</code>
-- <code title="patch /v1/prompts/{name}">client.prompts.<a href="./src/resources/prompts.ts">update</a>(pathName, { ...params }) -> unknown</code>
-- <code title="get /v1/prompts">client.prompts.<a href="./src/resources/prompts.ts">list</a>({ ...params }) -> PromptListResponse</code>
-- <code title="delete /v1/prompts/{name}">client.prompts.<a href="./src/resources/prompts.ts">delete</a>(name, { ...params }) -> unknown</code>
-- <code title="post /v1/prompts/{name}/revision">client.prompts.<a href="./src/resources/prompts.ts">createRevision</a>(name, { ...params }) -> PromptCreateRevisionResponse</code>
-- <code title="post /v1/prompts/{name}/set-labels">client.prompts.<a href="./src/resources/prompts.ts">setLabels</a>(name, { ...params }) -> void</code>
-
 # Otel
 
 ## Logs
@@ -149,3 +130,22 @@ Types:
 Methods:
 
 - <code title="get /v1/apps">client.apps.<a href="./src/resources/apps.ts">list</a>({ ...params }) -> AppListResponse</code>
+
+# Prompts
+
+Types:
+
+- <code><a href="./src/resources/prompts.ts">PromptCreateRevisionResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptListDefinitionsResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptListRevisionsResponse</a></code>
+- <code><a href="./src/resources/prompts.ts">PromptUpdateDefinitionResponse</a></code>
+
+Methods:
+
+- <code title="post /v1/prompt-revisions">client.prompts.<a href="./src/resources/prompts.ts">createRevision</a>({ ...params }) -> PromptCreateRevisionResponse</code>
+- <code title="delete /v1/prompt-definitions">client.prompts.<a href="./src/resources/prompts.ts">deleteDefinitions</a>({ ...params }) -> void</code>
+- <code title="get /v1/prompt-definitions">client.prompts.<a href="./src/resources/prompts.ts">listDefinitions</a>({ ...params }) -> PromptListDefinitionsResponse</code>
+- <code title="get /v1/prompt-revisions">client.prompts.<a href="./src/resources/prompts.ts">listRevisions</a>({ ...params }) -> PromptListRevisionsResponse</code>
+- <code title="post /v1/prompt-revisions/{revision_id}/remove-labels">client.prompts.<a href="./src/resources/prompts.ts">removeLabels</a>(revisionId, { ...params }) -> void</code>
+- <code title="post /v1/prompt-revisions/{revision_id}/set-labels">client.prompts.<a href="./src/resources/prompts.ts">setLabels</a>(revisionId, { ...params }) -> void</code>
+- <code title="patch /v1/prompt-definitions/{prompt_id}">client.prompts.<a href="./src/resources/prompts.ts">updateDefinition</a>(promptId, { ...params }) -> PromptUpdateDefinitionResponse</code>

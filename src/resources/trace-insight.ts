@@ -107,7 +107,7 @@ export namespace TraceInsightListResponse {
 
           impact_details: string | null;
 
-          impact_level: 'LOW' | 'MEDIUM' | 'MEDIUM-HIGH' | 'HIGH' | 'UNKNOWN' | null;
+          impact_level: 'LOW' | 'MEDIUM' | 'MEDIUM-HIGH' | 'HIGH' | 'UNKNOWN' | 'NONE' | null;
 
           spans: Array<string> | null;
 

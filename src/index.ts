@@ -45,17 +45,17 @@ import {
   Projects,
 } from './resources/projects';
 import {
-  PromptCreateParams,
-  PromptCreateResponse,
   PromptCreateRevisionParams,
   PromptCreateRevisionResponse,
-  PromptDeleteParams,
-  PromptDeleteResponse,
-  PromptListParams,
-  PromptListResponse,
+  PromptDeleteDefinitionsParams,
+  PromptListDefinitionsParams,
+  PromptListDefinitionsResponse,
+  PromptListRevisionsParams,
+  PromptListRevisionsResponse,
+  PromptRemoveLabelsParams,
   PromptSetLabelsParams,
-  PromptUpdateParams,
-  PromptUpdateResponse,
+  PromptUpdateDefinitionParams,
+  PromptUpdateDefinitionResponse,
   Prompts,
 } from './resources/prompts';
 import {
@@ -188,12 +188,12 @@ export class PatronusAPI extends Core.APIClient {
   experiments: API.Experiments = new API.Experiments(this);
   projects: API.Projects = new API.Projects(this);
   evaluations: API.Evaluations = new API.Evaluations(this);
-  prompts: API.Prompts = new API.Prompts(this);
   otel: API.Otel = new API.Otel(this);
   traceInsight: API.TraceInsight = new API.TraceInsight(this);
   evaluators: API.Evaluators = new API.Evaluators(this);
   whoami: API.Whoami = new API.Whoami(this);
   apps: API.Apps = new API.Apps(this);
+  prompts: API.Prompts = new API.Prompts(this);
 
   protected override defaultQuery(): Core.DefaultQuery | undefined {
     return this._options.defaultQuery;
@@ -271,12 +271,12 @@ export class PatronusAPI extends Core.APIClient {
 PatronusAPI.Experiments = Experiments;
 PatronusAPI.Projects = Projects;
 PatronusAPI.Evaluations = Evaluations;
-PatronusAPI.Prompts = Prompts;
 PatronusAPI.Otel = Otel;
 PatronusAPI.TraceInsight = TraceInsight;
 PatronusAPI.Evaluators = Evaluators;
 PatronusAPI.Whoami = Whoami;
 PatronusAPI.Apps = Apps;
+PatronusAPI.Prompts = Prompts;
 export declare namespace PatronusAPI {
   export type RequestOptions = Core.RequestOptions;
 
@@ -321,21 +321,6 @@ export declare namespace PatronusAPI {
     type EvaluationSearchParams as EvaluationSearchParams,
   };
 
-  export {
-    Prompts as Prompts,
-    type PromptCreateResponse as PromptCreateResponse,
-    type PromptUpdateResponse as PromptUpdateResponse,
-    type PromptListResponse as PromptListResponse,
-    type PromptDeleteResponse as PromptDeleteResponse,
-    type PromptCreateRevisionResponse as PromptCreateRevisionResponse,
-    type PromptCreateParams as PromptCreateParams,
-    type PromptUpdateParams as PromptUpdateParams,
-    type PromptListParams as PromptListParams,
-    type PromptDeleteParams as PromptDeleteParams,
-    type PromptCreateRevisionParams as PromptCreateRevisionParams,
-    type PromptSetLabelsParams as PromptSetLabelsParams,
-  };
-
   export { Otel as Otel };
 
   export {
@@ -357,6 +342,21 @@ export declare namespace PatronusAPI {
   export { Whoami as Whoami, type WhoamiRetrieveResponse as WhoamiRetrieveResponse };
 
   export { Apps as Apps, type AppListResponse as AppListResponse, type AppListParams as AppListParams };
+
+  export {
+    Prompts as Prompts,
+    type PromptCreateRevisionResponse as PromptCreateRevisionResponse,
+    type PromptListDefinitionsResponse as PromptListDefinitionsResponse,
+    type PromptListRevisionsResponse as PromptListRevisionsResponse,
+    type PromptUpdateDefinitionResponse as PromptUpdateDefinitionResponse,
+    type PromptCreateRevisionParams as PromptCreateRevisionParams,
+    type PromptDeleteDefinitionsParams as PromptDeleteDefinitionsParams,
+    type PromptListDefinitionsParams as PromptListDefinitionsParams,
+    type PromptListRevisionsParams as PromptListRevisionsParams,
+    type PromptRemoveLabelsParams as PromptRemoveLabelsParams,
+    type PromptSetLabelsParams as PromptSetLabelsParams,
+    type PromptUpdateDefinitionParams as PromptUpdateDefinitionParams,
+  };
 }
 
 export { toFile, fileFromPath } from './uploads';
