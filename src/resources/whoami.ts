@@ -56,6 +56,14 @@ export namespace WhoamiRetrieveResponse {
 
         role: string | null;
 
+        custom_link_pp?: string | null;
+
+        custom_link_tos?: string | null;
+
+        custom_pp_accepted?: boolean | null;
+
+        custom_tos_accepted?: boolean | null;
+
         features_enabled?: Array<string>;
       }
     }
