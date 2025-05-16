@@ -42,17 +42,17 @@ export {
 } from './projects';
 export {
   Prompts,
-  type PromptCreateResponse,
-  type PromptUpdateResponse,
-  type PromptListResponse,
-  type PromptDeleteResponse,
   type PromptCreateRevisionResponse,
-  type PromptCreateParams,
-  type PromptUpdateParams,
-  type PromptListParams,
-  type PromptDeleteParams,
+  type PromptListDefinitionsResponse,
+  type PromptListRevisionsResponse,
+  type PromptUpdateDefinitionResponse,
   type PromptCreateRevisionParams,
+  type PromptDeleteDefinitionsParams,
+  type PromptListDefinitionsParams,
+  type PromptListRevisionsParams,
+  type PromptRemoveLabelsParams,
   type PromptSetLabelsParams,
+  type PromptUpdateDefinitionParams,
 } from './prompts';
 export {
   TraceInsight,
