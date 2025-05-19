@@ -400,6 +400,12 @@ export interface PromptCreateRevisionParams {
   body: string;
 
   /**
+   * If true, creation will fail if a prompt with the same name already exists in the
+   * project. Only applies when creating a new prompt (not providing prompt_id).
+   */
+  create_only_if_not_exists?: boolean;
+
+  /**
    * Optional JSON metadata to associate with this revision
    */
   metadata?: unknown | null;
@@ -476,10 +482,20 @@ export interface PromptListRevisionsParams {
   latest_revision_only?: boolean;
 
   /**
-   * Filter by SHA-256 hash of prompt body with whitespace stripped from start and
-   * end
+   * Maximum number of records to return
+   */
+  limit?: number;
+
+  /**
+   * Filter by SHA-256 hash prefix of prompt body with whitespace stripped from start
+   * and end
    */
   normalized_body_sha256?: string | null;
+
+  /**
+   * Number of records to skip
+   */
+  offset?: number;
 
   /**
    * Filter by project ID

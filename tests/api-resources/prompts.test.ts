@@ -23,6 +23,7 @@ describe('resource prompts', () => {
   test('createRevision: required and optional params', async () => {
     const response = await client.prompts.createRevision({
       body: 'body',
+      create_only_if_not_exists: true,
       metadata: {},
       project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
       project_name: 'project_name',
@@ -124,7 +125,9 @@ describe('resource prompts', () => {
         {
           label: 'label',
           latest_revision_only: true,
+          limit: 0,
           normalized_body_sha256: 'normalized_body_sha256',
+          offset: 0,
           project_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
           project_name: 'project_name',
           prompt_id: '182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e',
