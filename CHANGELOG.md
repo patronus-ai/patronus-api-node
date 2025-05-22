@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.2.0 (2025-05-22)
+
+Full Changelog: [v0.1.0...v0.2.0](https://github.com/patronus-ai/patronus-api-node/compare/v0.1.0...v0.2.0)
+
+### Features
+
+* **api:** update via SDK Studio ([2ff831b](https://github.com/patronus-ai/patronus-api-node/commit/2ff831b5302efa67eb8d064e3548eecac93ab0ea))
+* **api:** update via SDK Studio ([f12960b](https://github.com/patronus-ai/patronus-api-node/commit/f12960b000187b720e0a49f06d149fdd102de4d9))
+
+
+### Chores
+
+* **docs:** grammar improvements ([4410d98](https://github.com/patronus-ai/patronus-api-node/commit/4410d981c1d0d95fa871635af259af03823a355f))
+
 ## 0.1.0 (2025-05-07)
 
 Full Changelog: [v0.0.1-alpha.0...v0.1.0](https://github.com/patronus-ai/patronus-api-node/compare/v0.0.1-alpha.0...v0.1.0)
