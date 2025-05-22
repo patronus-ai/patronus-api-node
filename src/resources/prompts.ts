@@ -6,273 +6,240 @@ import * as Core from '../core';
 
 export class Prompts extends APIResource {
   /**
-   * Create a new prompt.
+   * Create a new prompt revision.
    *
-   * Creates the first version of a prompt in the specified project. Either
-   * project_id or project_name must be provided in the request. Prompts are
-   * versioned, with the first version starting at 1.
+   * If prompt_id is provided, creates a new revision of an existing prompt
+   * definition. If prompt_id is not provided but prompt_name is, creates a new
+   * prompt definition with its first revision.
    *
-   * To create additional versions of an existing prompt, use the Create Prompt
-   * Revision endpoint.
+   * Either project_id or project_name must be provided. If project_name is provided
+   * and doesn't exist, a new project will be created.
    *
-   * Naming recommendations: For organizing related prompts (e.g., system, user
-   * prompts), we recommend following a convention:
-   *
-   * - `<name>/<role>[/<number>]`
-   * - Examples: `"my-agent/system/1"`, `"my-agent/system/2"`, `"my-agent/user"`
-   *
-   * For simple templating needs, we recommend using Python format strings:
-   *
-   * - Example: `"You're an agent that is a specialist in {subject} subject"`
-   * - Client usage: `prompt.body.format(subject="Astronomy")`
-   */
-  create(body: PromptCreateParams, options?: Core.RequestOptions): Core.APIPromise<PromptCreateResponse> {
-    return this._client.post('/v1/prompts', { body, ...options });
-  }
-
-  /**
-   * Update prompt metadata.
-   *
-   * Updates the name and/or description of a prompt. This affects all versions of
-   * the prompt. Either project_id or project_name must be provided to identify the
-   * project.
-   *
-   * Important: This endpoint does not update the prompt's body content. To create a
-   * new version with updated content, use the Create Prompt Revision endpoint.
-   */
-  update(
-    pathName: string,
-    params: PromptUpdateParams,
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<unknown> {
-    const { project_id, project_name, ...body } = params;
-    return this._client.patch(`/v1/prompts/${pathName}`, {
-      query: { project_id, project_name },
-      body,
-      ...options,
-    });
-  }
-
-  /**
-   * List prompts with optional filtering.
-   *
-   * Returns a list of prompt versions that match the provided filter criteria.
-   * Either project_id or project_name must be provided, but not both. Results can be
-   * further filtered by name, id, version, or label.
-   */
-  list(query?: PromptListParams, options?: Core.RequestOptions): Core.APIPromise<PromptListResponse>;
-  list(options?: Core.RequestOptions): Core.APIPromise<PromptListResponse>;
-  list(
-    query: PromptListParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<PromptListResponse> {
-    if (isRequestOptions(query)) {
-      return this.list({}, query);
-    }
-    return this._client.get('/v1/prompts', { query, ...options });
-  }
-
-  /**
-   * Delete Prompt
-   */
-  delete(name: string, params?: PromptDeleteParams, options?: Core.RequestOptions): Core.APIPromise<unknown>;
-  delete(name: string, options?: Core.RequestOptions): Core.APIPromise<unknown>;
-  delete(
-    name: string,
-    params: PromptDeleteParams | Core.RequestOptions = {},
-    options?: Core.RequestOptions,
-  ): Core.APIPromise<unknown> {
-    if (isRequestOptions(params)) {
-      return this.delete(name, {}, params);
-    }
-    const { project_id, project_name } = params;
-    return this._client.delete(`/v1/prompts/${name}`, { query: { project_id, project_name }, ...options });
-  }
-
-  /**
-   * Create a new revision of an existing prompt.
-   *
-   * Creates a new version of the prompt with an updated body. The version number is
-   * automatically incremented. Either project_id or project_name must be provided to
-   * identify the project.
-   *
-   * Use this endpoint to update the content of an existing prompt rather than
-   * creating a new prompt with the Create Prompt endpoint.
+   * Returns the newly created prompt revision.
    */
   createRevision(
-    name: string,
-    params: PromptCreateRevisionParams,
+    body: PromptCreateRevisionParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<PromptCreateRevisionResponse> {
-    const { project_id, project_name, ...body } = params;
-    return this._client.post(`/v1/prompts/${name}/revision`, {
-      query: { project_id, project_name },
-      body,
+    return this._client.post('/v1/prompt-revisions', { body, ...options });
+  }
+
+  /**
+   * Delete prompt definitions with either a specific ID or all for a project.
+   *
+   * Either prompt_id or project_id must be provided. If prompt_id is provided,
+   * deletes only that prompt definition. If project_id is provided, deletes all
+   * prompt definitions for that project. Returns 204 No Content on success.
+   */
+  deleteDefinitions(
+    params?: PromptDeleteDefinitionsParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<void>;
+  deleteDefinitions(options?: Core.RequestOptions): Core.APIPromise<void>;
+  deleteDefinitions(
+    params: PromptDeleteDefinitionsParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<void> {
+    if (isRequestOptions(params)) {
+      return this.deleteDefinitions({}, params);
+    }
+    const { project_id, prompt_id } = params;
+    return this._client.delete('/v1/prompt-definitions', {
+      query: { project_id, prompt_id },
       ...options,
+      headers: { Accept: '*/*', ...options?.headers },
     });
   }
 
   /**
-   * Set Labels
+   * List prompt definitions with optional filtering.
+   *
+   * Returns prompt definitions with their latest revision number. If no filters are
+   * provided, returns all prompt definitions for the account (up to limit).
    */
-  setLabels(
-    name: string,
-    params: PromptSetLabelsParams,
+  listDefinitions(
+    query?: PromptListDefinitionsParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PromptListDefinitionsResponse>;
+  listDefinitions(options?: Core.RequestOptions): Core.APIPromise<PromptListDefinitionsResponse>;
+  listDefinitions(
+    query: PromptListDefinitionsParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PromptListDefinitionsResponse> {
+    if (isRequestOptions(query)) {
+      return this.listDefinitions({}, query);
+    }
+    return this._client.get('/v1/prompt-definitions', { query, ...options });
+  }
+
+  /**
+   * List prompt revisions with optional filtering.
+   *
+   * Returns prompt revisions matching the criteria. If project_name is provided, it
+   * resolves to project_id. If no filters are provided, returns all prompt revisions
+   * for the account.
+   */
+  listRevisions(
+    query?: PromptListRevisionsParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PromptListRevisionsResponse>;
+  listRevisions(options?: Core.RequestOptions): Core.APIPromise<PromptListRevisionsResponse>;
+  listRevisions(
+    query: PromptListRevisionsParams | Core.RequestOptions = {},
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PromptListRevisionsResponse> {
+    if (isRequestOptions(query)) {
+      return this.listRevisions({}, query);
+    }
+    return this._client.get('/v1/prompt-revisions', { query, ...options });
+  }
+
+  /**
+   * Remove labels from a prompt revision.
+   *
+   * Returns 204 No Content on success.
+   */
+  removeLabels(
+    revisionId: string,
+    body: PromptRemoveLabelsParams,
     options?: Core.RequestOptions,
   ): Core.APIPromise<void> {
-    const { project_id, project_name, ...body } = params;
-    return this._client.post(`/v1/prompts/${name}/set-labels`, {
-      query: { project_id, project_name },
+    return this._client.post(`/v1/prompt-revisions/${revisionId}/remove-labels`, {
       body,
       ...options,
       headers: { Accept: '*/*', ...options?.headers },
     });
   }
-}
 
-export interface PromptCreateResponse {
   /**
-   * The prompt version data
+   * Add labels to a prompt revision.
+   *
+   * Removes these labels from other revisions and adds them to the specified
+   * revision. Returns 204 No Content on success.
    */
-  prompt: PromptCreateResponse.Prompt;
-}
+  setLabels(
+    revisionId: string,
+    body: PromptSetLabelsParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<void> {
+    return this._client.post(`/v1/prompt-revisions/${revisionId}/set-labels`, {
+      body,
+      ...options,
+      headers: { Accept: '*/*', ...options?.headers },
+    });
+  }
 
-export namespace PromptCreateResponse {
   /**
-   * The prompt version data
+   * Update a prompt definition's name or description.
+   *
+   * Only updates fields that are provided (not null). Returns the updated prompt
+   * definition.
    */
-  export interface Prompt {
-    id: string;
-
-    /**
-     * The actual content of the prompt
-     */
-    body: string;
-
-    /**
-     * Timestamp when this prompt version was created
-     */
-    created_at: string;
-
-    /**
-     * List of labels associated with this prompt version
-     */
-    labels: Array<string>;
-
-    /**
-     * Unique name for the prompt, used to group different versions
-     */
-    name: string;
-
-    /**
-     * ID of the project this prompt belongs to
-     */
-    project_id: string;
-
-    /**
-     * Version number of the prompt, starting from 1
-     */
-    version: number;
-
-    /**
-     * Optional description of the prompt's purpose or usage
-     */
-    description?: string | null;
+  updateDefinition(
+    promptId: string,
+    body: PromptUpdateDefinitionParams,
+    options?: Core.RequestOptions,
+  ): Core.APIPromise<PromptUpdateDefinitionResponse> {
+    return this._client.patch(`/v1/prompt-definitions/${promptId}`, { body, ...options });
   }
 }
-
-export type PromptUpdateResponse = unknown;
 
 /**
- * Response model containing a list of prompts.
+ * Response model for creating a prompt revision.
  */
-export interface PromptListResponse {
-  /**
-   * List of prompts matching the filter criteria
-   */
-  prompts: Array<PromptListResponse.Prompt>;
-}
-
-export namespace PromptListResponse {
-  /**
-   * Represents a specific version of a prompt.
-   *
-   * Each prompt is uniquely identified by its ID and belongs to a specific project.
-   * Prompts with the same name are considered different versions of the same prompt.
-   */
-  export interface Prompt {
-    id: string;
-
-    /**
-     * The actual content of the prompt
-     */
-    body: string;
-
-    /**
-     * Timestamp when this prompt version was created
-     */
-    created_at: string;
-
-    /**
-     * List of labels associated with this prompt version
-     */
-    labels: Array<string>;
-
-    /**
-     * Unique name for the prompt, used to group different versions
-     */
-    name: string;
-
-    /**
-     * ID of the project this prompt belongs to
-     */
-    project_id: string;
-
-    /**
-     * Version number of the prompt, starting from 1
-     */
-    version: number;
-
-    /**
-     * Optional description of the prompt's purpose or usage
-     */
-    description?: string | null;
-  }
-}
-
-export type PromptDeleteResponse = unknown;
-
 export interface PromptCreateRevisionResponse {
   /**
-   * The prompt version data
+   * Represents a specific revision of a prompt.
    */
-  prompt: PromptCreateRevisionResponse.Prompt;
+  prompt_revision: PromptCreateRevisionResponse.PromptRevision;
 }
 
 export namespace PromptCreateRevisionResponse {
   /**
-   * The prompt version data
+   * Represents a specific revision of a prompt.
    */
-  export interface Prompt {
+  export interface PromptRevision {
+    /**
+     * Unique identifier for this specific prompt revision
+     */
     id: string;
 
     /**
-     * The actual content of the prompt
+     * The actual content/text of the prompt - immutable for a specific revision
      */
     body: string;
 
     /**
-     * Timestamp when this prompt version was created
+     * Timestamp when this revision was created
      */
     created_at: string;
 
     /**
-     * List of labels associated with this prompt version
+     * List of tags/labels associated with this specific revision
      */
     labels: Array<string>;
 
     /**
-     * Unique name for the prompt, used to group different versions
+     * SHA-256 hash of the prompt body with whitespace stripped from start and end
+     */
+    normalized_body_sha256: string;
+
+    /**
+     * ID of the project this prompt belongs to
+     */
+    project_id: string;
+
+    /**
+     * Name of the project this prompt belongs to
+     */
+    project_name: string;
+
+    /**
+     * Identifier of the prompt definition this revision belongs to
+     */
+    prompt_definition_id: string;
+
+    /**
+     * Name of the prompt definition this revision belongs to
+     */
+    prompt_definition_name: string;
+
+    /**
+     * Sequential revision number, starting from 1 for the first version
+     */
+    revision: number;
+
+    /**
+     * Optional JSON metadata associated with this revision
+     */
+    metadata?: unknown | null;
+  }
+}
+
+/**
+ * Response model for listing prompt definitions.
+ */
+export interface PromptListDefinitionsResponse {
+  prompt_definitions: Array<PromptListDefinitionsResponse.PromptDefinition>;
+}
+
+export namespace PromptListDefinitionsResponse {
+  /**
+   * Represents a prompt definition with basic information.
+   */
+  export interface PromptDefinition {
+    /**
+     * Unique identifier for the prompt definition
+     */
+    id: string;
+
+    /**
+     * Timestamp when the prompt definition was created
+     */
+    created_at: string;
+
+    /**
+     * Name of the prompt definition
      */
     name: string;
 
@@ -282,168 +249,316 @@ export namespace PromptCreateRevisionResponse {
     project_id: string;
 
     /**
-     * Version number of the prompt, starting from 1
+     * Name of the project this prompt belongs to
      */
-    version: number;
+    project_name: string;
 
     /**
-     * Optional description of the prompt's purpose or usage
+     * Timestamp when the prompt definition was last updated
+     */
+    updated_at: string;
+
+    /**
+     * Optional description of the prompt's purpose or contents
      */
     description?: string | null;
+
+    /**
+     * Latest revision number, if available
+     */
+    latest_revision?: number | null;
   }
 }
 
-export interface PromptCreateParams {
+/**
+ * Response model for listing prompt revisions.
+ */
+export interface PromptListRevisionsResponse {
+  prompt_revisions: Array<PromptListRevisionsResponse.PromptRevision>;
+}
+
+export namespace PromptListRevisionsResponse {
   /**
-   * Content of the prompt
+   * Represents a specific revision of a prompt.
    */
+  export interface PromptRevision {
+    /**
+     * Unique identifier for this specific prompt revision
+     */
+    id: string;
+
+    /**
+     * The actual content/text of the prompt - immutable for a specific revision
+     */
+    body: string;
+
+    /**
+     * Timestamp when this revision was created
+     */
+    created_at: string;
+
+    /**
+     * List of tags/labels associated with this specific revision
+     */
+    labels: Array<string>;
+
+    /**
+     * SHA-256 hash of the prompt body with whitespace stripped from start and end
+     */
+    normalized_body_sha256: string;
+
+    /**
+     * ID of the project this prompt belongs to
+     */
+    project_id: string;
+
+    /**
+     * Name of the project this prompt belongs to
+     */
+    project_name: string;
+
+    /**
+     * Identifier of the prompt definition this revision belongs to
+     */
+    prompt_definition_id: string;
+
+    /**
+     * Name of the prompt definition this revision belongs to
+     */
+    prompt_definition_name: string;
+
+    /**
+     * Sequential revision number, starting from 1 for the first version
+     */
+    revision: number;
+
+    /**
+     * Optional JSON metadata associated with this revision
+     */
+    metadata?: unknown | null;
+  }
+}
+
+/**
+ * Response model for a single prompt definition.
+ */
+export interface PromptUpdateDefinitionResponse {
+  /**
+   * Represents a prompt definition with basic information.
+   */
+  prompt_definition: PromptUpdateDefinitionResponse.PromptDefinition;
+}
+
+export namespace PromptUpdateDefinitionResponse {
+  /**
+   * Represents a prompt definition with basic information.
+   */
+  export interface PromptDefinition {
+    /**
+     * Unique identifier for the prompt definition
+     */
+    id: string;
+
+    /**
+     * Timestamp when the prompt definition was created
+     */
+    created_at: string;
+
+    /**
+     * Name of the prompt definition
+     */
+    name: string;
+
+    /**
+     * ID of the project this prompt belongs to
+     */
+    project_id: string;
+
+    /**
+     * Name of the project this prompt belongs to
+     */
+    project_name: string;
+
+    /**
+     * Timestamp when the prompt definition was last updated
+     */
+    updated_at: string;
+
+    /**
+     * Optional description of the prompt's purpose or contents
+     */
+    description?: string | null;
+
+    /**
+     * Latest revision number, if available
+     */
+    latest_revision?: number | null;
+  }
+}
+
+export interface PromptCreateRevisionParams {
   body: string;
 
   /**
-   * Name for the prompt, must contain only alphanumeric characters, hyphens, and
-   * underscores
+   * If true, creation will fail if a prompt with the same name already exists in the
+   * project. Only applies when creating a new prompt (not providing prompt_id).
    */
-  name: string;
+  create_only_if_not_exists?: boolean;
 
   /**
-   * Optional description of the prompt's purpose or usage
+   * Optional JSON metadata to associate with this revision
    */
-  description?: string | null;
+  metadata?: unknown | null;
 
-  /**
-   * Optional labels to associate with this prompt version
-   */
-  labels?: Array<string>;
+  project_id?: string | null;
 
+  project_name?: string | null;
+
+  prompt_description?: string | null;
+
+  prompt_id?: string | null;
+
+  prompt_name?: string | null;
+}
+
+export interface PromptDeleteDefinitionsParams {
   /**
-   * ID of the project to create the prompt in
+   * Delete all prompt definitions for this project
    */
   project_id?: string | null;
 
   /**
-   * Name of the project to create the prompt in
+   * Delete a specific prompt definition by ID
    */
-  project_name?: string | null;
+  prompt_id?: string | null;
 }
 
-export interface PromptUpdateParams {
+export interface PromptListDefinitionsParams {
   /**
-   * Query param: Project ID containing the prompt
+   * Maximum number of records to return
    */
-  project_id?: string | null;
+  limit?: number;
 
   /**
-   * Query param: Project name containing the prompt
-   */
-  project_name?: string | null;
-
-  /**
-   * Body param: New description for the prompt
-   */
-  description?: string | null;
-
-  /**
-   * Body param: New name for the prompt, must contain only alphanumeric characters,
-   * hyphens, and underscores
-   */
-  body_name?: string | null;
-}
-
-export interface PromptListParams {
-  /**
-   * Filter prompts by specific UUID
-   */
-  id?: string | null;
-
-  /**
-   * Filter prompts by label
-   */
-  label?: string | null;
-
-  /**
-   * Filter prompts by name
+   * Filter by exact prompt definition name
    */
   name?: string | null;
 
   /**
-   * Filter prompts by project ID
+   * Filter by prompt definition name prefix
+   */
+  name_startswith?: string | null;
+
+  /**
+   * Number of records to skip
+   */
+  offset?: number;
+
+  /**
+   * Filter by project ID
    */
   project_id?: string | null;
 
   /**
-   * Filter prompts by project name
+   * Filter by project name
    */
   project_name?: string | null;
 
   /**
-   * Filter prompts by version number
+   * Filter by specific prompt definition ID
    */
-  version?: number | null;
+  prompt_id?: string | null;
 }
 
-export interface PromptDeleteParams {
+export interface PromptListRevisionsParams {
   /**
-   * Project ID containing the prompt
+   * Filter by revisions that have this label
+   */
+  label?: string | null;
+
+  /**
+   * Only return the latest revision for each prompt
+   */
+  latest_revision_only?: boolean;
+
+  /**
+   * Maximum number of records to return
+   */
+  limit?: number;
+
+  /**
+   * Filter by SHA-256 hash prefix of prompt body with whitespace stripped from start
+   * and end
+   */
+  normalized_body_sha256?: string | null;
+
+  /**
+   * Number of records to skip
+   */
+  offset?: number;
+
+  /**
+   * Filter by project ID
    */
   project_id?: string | null;
 
   /**
-   * Project name containing the prompt
+   * Filter by project name
    */
   project_name?: string | null;
+
+  /**
+   * Filter by prompt definition ID
+   */
+  prompt_id?: string | null;
+
+  /**
+   * Filter by prompt definition name
+   */
+  prompt_name?: string | null;
+
+  /**
+   * Filter by prompt definition name prefix
+   */
+  prompt_name_startswith?: string | null;
+
+  /**
+   * Filter by revision number
+   */
+  revision?: number | null;
+
+  /**
+   * Filter by specific revision ID
+   */
+  revision_id?: string | null;
 }
 
-export interface PromptCreateRevisionParams {
-  /**
-   * Body param: New content for the prompt revision
-   */
-  body: string;
-
-  /**
-   * Query param: Project ID containing the prompt
-   */
-  project_id?: string | null;
-
-  /**
-   * Query param: Project name containing the prompt
-   */
-  project_name?: string | null;
+export interface PromptRemoveLabelsParams {
+  labels: Array<string>;
 }
 
 export interface PromptSetLabelsParams {
-  /**
-   * Body param: List of labels to set on the prompt version
-   */
   labels: Array<string>;
+}
 
-  /**
-   * Body param: The version number of the prompt to set labels on
-   */
-  version: number;
+export interface PromptUpdateDefinitionParams {
+  description?: string | null;
 
-  /**
-   * Query param: Project ID containing the prompt
-   */
-  project_id?: string | null;
-
-  /**
-   * Query param: Project name containing the prompt
-   */
-  project_name?: string | null;
+  name?: string | null;
 }
 
 export declare namespace Prompts {
   export {
-    type PromptCreateResponse as PromptCreateResponse,
-    type PromptUpdateResponse as PromptUpdateResponse,
-    type PromptListResponse as PromptListResponse,
-    type PromptDeleteResponse as PromptDeleteResponse,
     type PromptCreateRevisionResponse as PromptCreateRevisionResponse,
-    type PromptCreateParams as PromptCreateParams,
-    type PromptUpdateParams as PromptUpdateParams,
-    type PromptListParams as PromptListParams,
-    type PromptDeleteParams as PromptDeleteParams,
+    type PromptListDefinitionsResponse as PromptListDefinitionsResponse,
+    type PromptListRevisionsResponse as PromptListRevisionsResponse,
+    type PromptUpdateDefinitionResponse as PromptUpdateDefinitionResponse,
     type PromptCreateRevisionParams as PromptCreateRevisionParams,
+    type PromptDeleteDefinitionsParams as PromptDeleteDefinitionsParams,
+    type PromptListDefinitionsParams as PromptListDefinitionsParams,
+    type PromptListRevisionsParams as PromptListRevisionsParams,
+    type PromptRemoveLabelsParams as PromptRemoveLabelsParams,
     type PromptSetLabelsParams as PromptSetLabelsParams,
+    type PromptUpdateDefinitionParams as PromptUpdateDefinitionParams,
   };
 }
